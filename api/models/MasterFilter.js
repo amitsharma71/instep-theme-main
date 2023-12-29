@@ -1,28 +1,8 @@
 const mongoose = require("mongoose");
 
 const masterTable = new mongoose.Schema({
-  categoryID: {
+  typesubcategoryid: {
     type: mongoose.Schema.ObjectId,
-    required: true,
-  },
-  types: {
-    type: String,
-    enum: [
-      "waistsize",
-      "inseamlength",
-      "jeancolour",
-      "pantfit",
-      "pattern",
-      "clothingpattern",
-      "typejeanstyleformen",
-      "womensize",
-      "waistsizeofwomen",
-      "colourofjeanswomen",
-      "pantfitwomen",
-      "typeofjeansstyleformen",
-      "patternforwomen",
-      "closuretypeforwomenz",
-    ],
     required: true,
   },
   name: {

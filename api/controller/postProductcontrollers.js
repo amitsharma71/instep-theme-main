@@ -486,6 +486,9 @@ const subcategoryfilter = expressAsyncHandler(async (req, res) => {
   }
 });
 
+
+
+
 // getSingleProduct
 const getSingleProduct = expressAsyncHandler(async (req, res) => {
   const productId = req.body._id; // Assuming the product ID is in the URL params
@@ -797,7 +800,7 @@ const orderSummary = expressAsyncHandler(async (req, res) => {
 
     // Find the product by ID to update stock
     const findbyid = await Userproducts.findById(productID);
-  
+
 
     if (!findbyid) {
       return res
@@ -911,23 +914,36 @@ const getorderSummary = expressAsyncHandler(async (req, res) => {
       .json({ message: "An error occurred", error: error.message });
   }
 });
-// master filter
+// spacifeaction create for producst and mastertable work
 const spacifeaction = expressAsyncHandler(async (req, res) => {
   try {
-    const findtable = await MasterFilerTable.find();
-    console.log(findtable, "findtable");
-    res.status(200).send({ data: findtable, success: true });
+    const findtable = await MasterFilerTable.aggregate([
+      {
+        $lookup: {
+          from: "typesubcategoryschemas",
+          localField: "typesubcategoryid",
+          foreignField: "_id",
+          as: "typesubcategory",
+        },
+      }]);
+
+    // Extract only the names from the typesubcategory array
+    const names = findtable.map(item => ({
+      typesubcategory: item.typesubcategory.map(subcat => subcat.typesubcategory),
+      data: item.name,
+    }));
+
+    console.log(names, "typesubcategory names");
+    res.status(200).send({ data: names, success: true });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "An error occurred", error: error.message });
+    res.status(500).json({ message: "An error occurred", error: error.message });
   }
 });
 const masterTablecreater = expressAsyncHandler(async (req, res) => {
   try {
-    const { categoryID, types, name } = req.body; // Assuming these values come from the request body
+    const { typesubcategoryid, name } = req.body; // Assuming these values come from the request body
 
-    const newEntry = await MasterFilerTable.create({ categoryID, types, name });
+    const newEntry = await MasterFilerTable.create({ typesubcategoryid, name });
     console.log(newEntry, "newEntry");
 
     res.status(201).send({ data: newEntry, success: true }); // Use 201 for successful creation
@@ -937,16 +953,16 @@ const masterTablecreater = expressAsyncHandler(async (req, res) => {
       .json({ message: "An error occurred", error: error.message });
   }
 });
+
+
 const spacifeactionPost = expressAsyncHandler(async (req, res) => {
   try {
-    const { category_id, subcategory, type_subcategory_id, name } = req.body;
-    if (category_id && subcategory && type_subcategory_id && name) {
+    const { specification_id, values } = req.body;
+    if (specification_id && values) {
       console.log("first");
       const create = new speccificationsubcatetable({
-        category_id: category_id,
-        subcategory: subcategory,
-        type_subcategory_id: type_subcategory_id,
-        name: Array.isArray(name) ? name : [name], // Ensure name is an array
+        specification_id: specification_id,
+        values: Array.isArray(values) ? values : [values],
       });
       await create.save();
       res.status(200).send({ success: true, data: create });

@@ -1,19 +1,11 @@
 const mongoose = require("mongoose");
 
 const specificationTypecatSchema = new mongoose.Schema({
-    category_id: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-    },
-    subcategory: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-    },
-    type_subcategory_id: {
+    specification_id: {
         type: mongoose.Schema.ObjectId,
         require: true,
     },
-    name: [{
+    values: [{
         type: String,
         required: true,
     }],

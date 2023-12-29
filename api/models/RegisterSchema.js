@@ -3,14 +3,23 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
+ 
   },
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
+    required: true,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationOTP: {
+    type: Number,
     required: true,
   },
   number: [
@@ -25,7 +34,6 @@ const userSchema = new mongoose.Schema({
   firstname: {
     type: String,
     required: true,
-   
   },
   lastname: String,
   role: {
@@ -34,6 +42,6 @@ const userSchema = new mongoose.Schema({
 });
 userSchema.set("timestamps", true);
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
