@@ -22,17 +22,14 @@ function Productsale() {
               <Row>
                 <Col lg={8}>
                   <div className="all_product_search category_search">
-                    <FiSearch className="allproduct_searchicon " />{" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Search"
-                      className=" mr-sm-2 adminsearch_bar"
-                    />
-                  </div>
-                </Col>
-                <Col lg={4}>
-                  <div className="d-flex">
-                    {" "}
+                    <div className="d-flex">
+                      <FiSearch className="allproduct_searchicon " />{" "}
+                      <Form.Control
+                        type="text"
+                        placeholder="Search"
+                        className=" mr-sm-2 adminsearch_bar"
+                      />
+                    </div>
                     <Form.Select className="order_div">
                       <option>High - Low</option>
                       <option>Low -High </option>

@@ -13,7 +13,7 @@ import Allpagination from "../../../Pagination/pagination";
 import { MdDelete } from "react-icons/md";
 import Delete from "../../../deleteModel/delete";
 import { typesubcategoryget } from "../../../../../Redux/action/typesubcatpost";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineSearch } from "react-icons/ai";
 
@@ -65,16 +65,25 @@ const Allsubcategory = () => {
     };
 
     dispatch(addbrands(asd)).then((res) => {
-      console.log(res, "fdsfdf")
-      toast.success("successful Submited")
-      form.reset()
-    })
+      console.log(res, "fdsfdf");
+      toast.success("successful Submited");
+      form.reset();
+      setSelectedCategoryId("");
+      setSelectedSubcategoryId("");
+      SetTypeSubCategory("");
+    });
   };
   useEffect(() => {
     dispatch(allCategoryList());
     dispatch(allSubCategoryList());
     dispatch(typesubcategoryget());
-    dispatch(allBrandsList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+    dispatch(
+      allBrandsList({
+        search: searchQuery,
+        page: currentPage,
+        perPage: postPerPage,
+      })
+    );
   }, [currentPage, searchQuery]);
 
   var selectedId;
@@ -108,7 +117,13 @@ const Allsubcategory = () => {
 
   const handleDelete = (id) => {
     dispatch(removeFromBrand({ _id: id })).then((res) => {
-      dispatch(allBrandsList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+      dispatch(
+        allBrandsList({
+          search: searchQuery,
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
       if (res?.data?.success) {
       }
       handleClose();
@@ -128,7 +143,9 @@ const Allsubcategory = () => {
     if (searchQuery) {
       dispatch(allBrandsList({ search: searchQuery }));
     } else {
-      dispatch(allBrandsList({ search: '', page: currentPage, perPage: postPerPage }));
+      dispatch(
+        allBrandsList({ search: "", page: currentPage, perPage: postPerPage })
+      );
     }
   };
 
@@ -155,43 +172,58 @@ const Allsubcategory = () => {
             render={({ handleSubmit, form, submitting, pristine }) => (
               <form onSubmit={handleSubmit}>
                 <div>
-                  <select
-                    className="subcategory_drop margin_bottom"
-                    onChange={handleCategoryChangeCat}
-                    value={selectedCategoryId}
-                  >
-                    <option value="">Select Category</option>
-                    {getcategorylist &&
-                      getcategorylist?.map((e) => (
-                        <option key={e?._id} value={e?._id}>
-                          {e?.category}
-                        </option>
-                      ))}
-                  </select>
-                  <select
-                    className="subcategory_drop margin_bottom"
-                    onChange={handleCategoryChange2}
-                    value={selectedSubcategoryId}
-                  >
-                    <option value="">Select a Subcategory</option>
-                    {getsubcat?.map((i) => (
-                      <option key={i?._id} value={i?._id}>
-                        {i?.subcategory}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    className="subcategory_drop margin_bottom"
-                    onChange={handleCategoryChange3}
-                    value={typeSubCategory}
-                  >
-                    <option value="">Select a typesubcategory</option>
-                    {typesubcatgory?.map((i) => (
-                      <option key={i?._id} value={i?._id}>
-                        {i?.typesubcategory}
-                      </option>
-                    ))}
-                  </select>
+                  <Field name="xyz">
+                    {({ input, meta }) => (
+                      <select
+                        {...input}
+                        className="subcategory_drop margin_bottom"
+                        onChange={handleCategoryChangeCat}
+                        value={selectedCategoryId}
+                      >
+                        <option value="">Select Category</option>
+                        {getcategorylist &&
+                          getcategorylist?.map((e) => (
+                            <option key={e?._id} value={e?._id}>
+                              {e?.category}
+                            </option>
+                          ))}
+                      </select>
+                    )}
+                  </Field>
+                  <Field name="ydf">
+                    {({ input, meta }) => (
+                      <select
+                        {...input}
+                        className="subcategory_drop margin_bottom"
+                        onChange={handleCategoryChange2}
+                        value={selectedSubcategoryId}
+                      >
+                        <option value="">Select a Subcategory</option>
+                        {getsubcat?.map((i) => (
+                          <option key={i?._id} value={i?._id}>
+                            {i?.subcategory}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </Field>
+                  <Field name="gds">
+                    {({ input, meta }) => (
+                      <select
+                        {...input}
+                        className="subcategory_drop margin_bottom"
+                        onChange={handleCategoryChange3}
+                        value={typeSubCategory}
+                      >
+                        <option value="">Select a typesubcategory</option>
+                        {typesubcatgory?.map((i) => (
+                          <option key={i?._id} value={i?._id}>
+                            {i?.typesubcategory}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </Field>
                   <div className="mb-2">
                     <Field
                       className="subcategory_drop"
@@ -220,11 +252,13 @@ const Allsubcategory = () => {
             <div className="form_control_or_btngroup">
               <div className="all_product_search ">
                 <FiSearch className="allproduct_searchicon " />
-                <input type="search" className=" mr-sm-2 adminsearch_bar" value={searchQuery}
+                <input
+                  type="search"
+                  className=" mr-sm-2 adminsearch_bar"
+                  value={searchQuery}
                   onKeyDown={onKeyDownHandler}
-                  onChange={(e) =>
-                    setSearchQuery(e?.target?.value)
-                  } />
+                  onChange={(e) => setSearchQuery(e?.target?.value)}
+                />
               </div>
               {/* <div className="btngroup">
                 <Button className="select_button " type="submit" onClick={handleSearch}>
@@ -232,62 +266,61 @@ const Allsubcategory = () => {
                 </Button>
               </div> */}
             </div>
-            <Table responsive="md">
-              <thead>
-                <tr>
-                  <th>S/L</th>
-                  <th> Brand Name</th>
-                  <th className="d-flex justify-content-end">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <div className="table_Spinner">
-                    <Spinner animation="border" variant="dark" />
-                  </div>
-                ) : (
-                  getbrandlist &&
-                  getbrandlist?.map((e, index) => {
-                    console.log(e, "brnds");
-                    return (
-                      <>
-                        <tr>
-                          <td>
-                            {(currentPage - 1) * postPerPage + (index + 1)}
-                          </td>
-                          <td>{e.brand}</td>
-                          <td>
-                            <div className="d-flex justify-content-end">
-                              <MdDelete
-                                className="deleteicn_forpro"
-                                onClick={() => {
-                                  handleShow(e?._id);
-                                }}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })
-                )}
-              </tbody>
-            </Table>
-            {searchQuery && searchQuery.length !== 10 ? (
-              <div className="d-flex justify-content-end">
+            {isLoading ? (
+              <div className="table_Spinner">
+                <Spinner animation="border" variant="dark" />
               </div>
-            ) :
-              (
-                <div className="d-flex justify-content-end">
-                  <Allpagination
-                    currentPage={currentPage}
-                    postPerPage={postPerPage}
-                    setPostPerPage={setPostPerPage}
-                    setCurrentPage={setCurrentPage}
-                    listCount={listCount}
-                  />
-                </div>
-              )}
+            ) : (
+              <Table responsive="md">
+                <thead>
+                  <tr>
+                    <th>S/L</th>
+                    <th> Brand Name</th>
+                    <th className="d-flex justify-content-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {getbrandlist &&
+                    getbrandlist?.map((e, index) => {
+                      console.log(e, "brnds");
+                      return (
+                        <>
+                          <tr>
+                            <td>
+                              {(currentPage - 1) * postPerPage + (index + 1)}
+                            </td>
+                            <td>{e.brand}</td>
+                            <td>
+                              <div className="d-flex justify-content-end">
+                                <MdDelete
+                                  className="deleteicn_forpro"
+                                  onClick={() => {
+                                    handleShow(e?._id);
+                                  }}
+                                />
+                              </div>
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            )}
+
+            {searchQuery && searchQuery.length !== 10 ? (
+              <div className="d-flex justify-content-end"></div>
+            ) : (
+              <div className="d-flex justify-content-end">
+                <Allpagination
+                  currentPage={currentPage}
+                  postPerPage={postPerPage}
+                  setPostPerPage={setPostPerPage}
+                  setCurrentPage={setCurrentPage}
+                  listCount={listCount}
+                />
+              </div>
+            )}
           </div>
         </Col>
       </Row>

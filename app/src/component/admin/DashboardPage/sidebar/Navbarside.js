@@ -8,7 +8,11 @@ import {
   AiOutlineDashboard,
 } from "react-icons/ai";
 import { HiDocument, HiOutlineUserGroup } from "react-icons/hi";
-import { MdOutlineSpaceBar, MdPermMedia, MdProductionQuantityLimits } from "react-icons/md";
+import {
+  MdOutlineSpaceBar,
+  MdPermMedia,
+  MdProductionQuantityLimits,
+} from "react-icons/md";
 import { BsArrow90DegLeft, BsAwardFill, BsFilePostFill } from "react-icons/bs";
 import { GoDatabase } from "react-icons/go";
 import { FaShoppingCart, FaUserCheck } from "react-icons/fa";
@@ -16,46 +20,17 @@ import { SiPowerpages } from "react-icons/si";
 import { BiCut, BiSolidReport } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 
-const SidebarFun = () => {
+const SidebarFun = (props) => {
+  const { onHide } = props;
   const navigate = useNavigate();
-
-  const AllProductClick = () => {
-    //   navigate("/allproductlist");
-  };
-  const AddProductClick = () => {
-    //   navigate("/productform");
-  };
 
   const dashClick = () => {
     navigate("/");
   };
 
-  // const [show, setShow] = useState();
-
-  // const handleShow = () => setShow(true);
-  // const handleClose = () => setShow(false);
-
-  // let navOptions = [
-  //   { value: "all Product", click: `${handleshow}` },
-
-  //   { value: "All Categories" },
-  //   { value: "All Subcategory" },
-  //   { value: "All Subtypecategory" },
-  //   { value: "All Brands" },
-  //   { value: "All Slider" },
-  // ];
-
-  // const handleshow = () => {
-  //   navigate("/allproduct");
-  // };
-
   return (
     <div className="admin_sidebar col_hide">
-      <Sidenav
-        defaultOpenKeys={["3", "4"]}
-      // show={show}
-      // handleClose={handleClose}
-      >
+      <Sidenav defaultOpenKeys={["3", "4"]}>
         <Sidenav.Body>
           <div className="sidebar_deco">
             <Nav activeKey="1">
@@ -72,23 +47,33 @@ const SidebarFun = () => {
                 title="Products"
                 icon={<MdProductionQuantityLimits />}
               >
-                <Nav.Item eventKey="2-1">
+                <Nav.Item eventKey="2-1" onClick={onHide}>
                   <Link to={"/allproduct"}>- All Products</Link>
                 </Nav.Item>
                 <Nav.Item eventKey="2-2">
-                  <Link to={"/Allcategories"}>- All Categories</Link>
+                  <Link to={"/Allcategories"} onClick={onHide}>
+                    - All Categories
+                  </Link>
                 </Nav.Item>
                 <Nav.Item eventKey="2-3">
-                  <Link to={"/allsubcategory"}>- All Subcategory</Link>
+                  <Link to={"/allsubcategory"} onClick={onHide}>
+                    - All Subcategory
+                  </Link>
                 </Nav.Item>
                 <Nav.Item eventKey="2-4">
-                  <Link to={"/allsubtypecategory"}>- All Subtypecategory</Link>
+                  <Link to={"/allsubtypecategory"} onClick={onHide}>
+                    - All Subtypecategory
+                  </Link>
                 </Nav.Item>
                 <Nav.Item eventKey="2-5">
-                  <Link to={"/Allbrands"}>- All Brands</Link>
+                  <Link to={"/Allbrands"} onClick={onHide}>
+                    - All Brands
+                  </Link>
                 </Nav.Item>
                 <Nav.Item eventKey="2-6">
-                  <Link to={"/slider"}>- Slider</Link>
+                  <Link to={"/slider"} onClick={onHide}>
+                    - Slider
+                  </Link>
                 </Nav.Item>
                 {/* <Nav.Item eventKey="2-7">
                   <Link to={"/trending"}>- Trending Products</Link>
@@ -99,7 +84,7 @@ const SidebarFun = () => {
                 title="User Navbar"
                 icon={<MdOutlineSpaceBar />}
               >
-                <Nav.Item eventKey="2-1">
+                <Nav.Item eventKey="2-1" onClick={onHide}>
                   <Link to={"/headeradmin"}>- User Navbar</Link>
                 </Nav.Item>
               </Nav.Menu>
@@ -109,15 +94,15 @@ const SidebarFun = () => {
                 icon={<BsFilePostFill />}
               ></Nav.Menu>
               <Nav.Menu eventKey="4" title="Order" icon={<HiDocument />}>
-                <Nav.Item eventKey="2-1">
+                <Nav.Item eventKey="2-1" onClick={onHide}>
                   <Link to={"/trackorder"}>- Orders</Link>
                 </Nav.Item>
               </Nav.Menu>
               <Nav.Menu eventKey="5" title="Stock" icon={<GoDatabase />}>
-                <Nav.Item eventKey="5-1">
+                <Nav.Item eventKey="5-1" onClick={onHide}>
                   <Link to={"/Addstock"}>- Add Stock </Link>
                 </Nav.Item>
-                <Nav.Item eventKey="5-2">
+                <Nav.Item eventKey="5-2" onClick={onHide}>
                   <Link to={"/Allloation"}>- All Stock</Link>
                 </Nav.Item>
               </Nav.Menu>
@@ -126,19 +111,27 @@ const SidebarFun = () => {
                 title="Refunds"
                 icon={<BsArrow90DegLeft />}
               >
-                <Nav.Item eventKey="6-1">-Refund Configurations</Nav.Item>
-                <Nav.Item eventKey="6-2">-Refunds Requests</Nav.Item>
-                <Nav.Item eventKey="6-1">-Approved Refunds</Nav.Item>
-                <Nav.Item eventKey="6-2">-Rejected Refunds</Nav.Item>
+                <Nav.Item eventKey="6-1" onClick={onHide}>
+                  -Refund Configurations
+                </Nav.Item>
+                <Nav.Item eventKey="6-2" onClick={onHide}>
+                  -Refunds Requests
+                </Nav.Item>
+                <Nav.Item eventKey="6-1" onClick={onHide}>
+                  -Approved Refunds
+                </Nav.Item>
+                <Nav.Item eventKey="6-2" onClick={onHide}>
+                  -Rejected Refunds
+                </Nav.Item>
               </Nav.Menu>
               <Nav.Menu
                 eventKey="7"
                 title="Rewards & Wallet"
                 icon={<BsAwardFill />}
               >
-                <Nav.Item eventKey="7-1">-Rewards Configurations</Nav.Item>
-                <Nav.Item eventKey="7-2">-Set Reward Points</Nav.Item>
-                <Nav.Item eventKey="7-3">-Wallet Configurations</Nav.Item>
+                <Nav.Item eventKey="7-1" onClick={onHide}>-Rewards Configurations</Nav.Item>
+                <Nav.Item eventKey="7-2" onClick={onHide}>-Set Reward Points</Nav.Item>
+                <Nav.Item eventKey="7-3" onClick={onHide}>-Wallet Configurations</Nav.Item>
               </Nav.Menu>
               <Nav.Menu
                 eventKey="8"
@@ -153,8 +146,8 @@ const SidebarFun = () => {
               <Nav.Menu eventKey="9" title="Tags" icon={<AiFillTags />} />
               <Nav.Menu eventKey="10" title="Pages" icon={<SiPowerpages />} />
               <Nav.Menu eventKey="11" title="Blogs" icon={<BsAwardFill />}>
-                <Nav.Item eventKey="11-1">All Blogs</Nav.Item>
-                <Nav.Item eventKey="11-2">Categories</Nav.Item>
+                <Nav.Item eventKey="11-1" onClick={onHide}>All Blogs</Nav.Item>
+                <Nav.Item eventKey="11-2" onClick={onHide}>Categories</Nav.Item>
               </Nav.Menu>
               <Nav.Menu
                 eventKey="12"
@@ -164,12 +157,12 @@ const SidebarFun = () => {
               <Nav.Menu
                 eventKey="13"
                 title="Newsletters"
-              //  icon={<BsAwardFill />}
+                //  icon={<BsAwardFill />}
               >
-                <Nav.Item eventKey="13-1">
+                <Nav.Item eventKey="13-1" onClick={onHide}>
                   <Link to={"/Bulkemails"}>Bulk Email </Link>
                 </Nav.Item>
-                <Nav.Item eventKey="13-2">
+                <Nav.Item eventKey="13-2" onClick={onHide}>
                   <Link to={"/Subscriber"}> Subscribers</Link>
                 </Nav.Item>
               </Nav.Menu>
@@ -182,19 +175,19 @@ const SidebarFun = () => {
                 icon={<FaShoppingCart />}
               />
               <Nav.Menu eventKey="18" title="Reports" icon={<BiSolidReport />}>
-                <Nav.Item eventKey="18-1">
-                  <Link to={"/Orderreport"}>-Order Report</Link>
+                <Nav.Item eventKey="18-1" onClick={onHide}>
+                  <Link to={"/Orderreport"} >-Order Report</Link>
                 </Nav.Item>
-                <Nav.Item eventKey="18-2">
+                <Nav.Item eventKey="18-2" onClick={onHide}>
                   <Link to={"/Productsale"}>-Products Sales</Link>
                 </Nav.Item>
-                <Nav.Item eventKey="18-3">
+                <Nav.Item eventKey="18-3" onClick={onHide}>
                   <Link to={"/Categorywise"}>-Category Wise Sales</Link>
                 </Nav.Item>
-                <Nav.Item eventKey="18-4">
+                <Nav.Item eventKey="18-4" onClick={onHide}>
                   <Link to={"/Salesamountreport"}>-Sales Amount Report</Link>
                 </Nav.Item>
-                <Nav.Item eventKey="18-4">
+                <Nav.Item eventKey="18-4" onClick={onHide}>
                   <Link to={"/Deliverystatusreport"}>
                     -Delivery Status Report
                   </Link>
@@ -203,7 +196,7 @@ const SidebarFun = () => {
               <Nav.Menu
                 eventKey="19"
                 title="Queries"
-              //  icon={<BsAwardFill />}
+                //  icon={<BsAwardFill />}
               />
               <Nav.Menu eventKey="20" title="Appearance">
                 <Nav.Item eventKey="20-1"> -Home Page</Nav.Item>

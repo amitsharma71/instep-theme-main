@@ -55,10 +55,17 @@ const Alltypesubcategory = () => {
     }
     dispatch(allSubCategoryList());
 
-    dispatch(typesubcategoryget({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+    dispatch(
+      typesubcategoryget({
+        search: searchQuery,
+        page: currentPage,
+        perPage: postPerPage,
+      })
+    );
   }, [currentPage, searchQuery]);
 
   console.log(selectedCategoryId, "selectedCategoryId");
+
   const handleCategoryChange = (event) => {
     const selectedId = event.target.value;
     setSelectedCategoryId(selectedId);
@@ -82,7 +89,7 @@ const Alltypesubcategory = () => {
   );
 
   const onSubmittype = (value, form) => {
-    console.log(value, "dssdsdsS");
+    console.log(form, "dssdsdsS");
 
     let typesub = {
       category_id: selectedCategoryId,
@@ -92,8 +99,9 @@ const Alltypesubcategory = () => {
     dispatch(typesubcategorypost(typesub)).then((res) => {
       if (res.payload.data.sucess) {
         dispatch(typesubcategoryget());
-        toast.success("Successfuly added")
-        form.reset()
+        toast.success("Successfuly added");
+        form.reset();
+        setselectedsubCategoryId("");
       }
     });
   };
@@ -105,7 +113,11 @@ const Alltypesubcategory = () => {
       (res) => {
         if (res?.payload?.data?.success) {
           dispatch(
-            typesubcategoryget({ search: searchQuery, page: currentPage, perPage: postPerPage })
+            typesubcategoryget({
+              search: searchQuery,
+              page: currentPage,
+              perPage: postPerPage,
+            })
           );
         }
         handleClose();
@@ -127,7 +139,13 @@ const Alltypesubcategory = () => {
     if (searchQuery) {
       dispatch(typesubcategoryget({ search: searchQuery }));
     } else {
-      dispatch(typesubcategoryget({ search: '', page: currentPage, perPage: postPerPage }));
+      dispatch(
+        typesubcategoryget({
+          search: "",
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
     }
   };
 
@@ -160,12 +178,13 @@ const Alltypesubcategory = () => {
                     <Field name="xyz">
                       {({ input, meta }) => (
                         <select
+                          {...input}
                           className="subcategory_drop margin_bottom"
                           onChange={(e) => {
                             input.onChange(e);
                             handleCategoryChange(e);
                           }}
-                        // value={selectedCategoryId}
+                          // value={selectedCategoryId}
                         >
                           <option value="">Select a category</option>
                           {getscat?.map((i) => (
@@ -222,11 +241,13 @@ const Alltypesubcategory = () => {
             <div className="form_control_or_btngroup">
               <div className="all_product_search ">
                 <FiSearch className="allproduct_searchicon " />
-                <input type="search" className=" mr-sm-2 adminsearch_bar" value={searchQuery}
+                <input
+                  type="search"
+                  className=" mr-sm-2 adminsearch_bar"
+                  value={searchQuery}
                   onKeyDown={onKeyDownHandler}
-                  onChange={(e) =>
-                    setSearchQuery(e?.target?.value)
-                  } />
+                  onChange={(e) => setSearchQuery(e?.target?.value)}
+                />
               </div>
               {/* <div className="btngroup">
                 <Button className="select_button " type="submit" onClick={handleSearch}>
@@ -234,46 +255,47 @@ const Alltypesubcategory = () => {
                 </Button>
               </div> */}
             </div>
-            <Table responsive="md">
-              <thead>
-                <tr>
-                  <th>S/L</th>
-                  <th> Subcategory Name</th>
-                  <th className="d-flex justify-content-end">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <div className="table_Spinner">
-                    <Spinner animation="border" variant="dark" />
-                  </div>
-                ) : (
-                  typesubcatgory &&
-                  typesubcatgory.length > 0 && (
-                    <>
-                      {typesubcatgory.map((e, index) => (
-                        <tr key={index}>
-                          <td>
-                            {(currentPage - 1) * postPerPage + (index + 1)}
-                          </td>
-                          <td>{e.typesubcategory}</td>
-                          <td>
-                            <div className="d-flex justify-content-end">
-                              <MdDelete
-                                className="deleteicn_forpro"
-                                onClick={() => {
-                                  handleShow(e?._id);
-                                }}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </>
-                  )
-                )}
-              </tbody>
-            </Table>
+            {isLoading ? (
+              <div className="table_Spinner">
+                <Spinner animation="border" variant="dark" />
+              </div>
+            ) : (
+              <>
+                <Table responsive="md">
+                  <thead>
+                    <tr>
+                      <th>S/L</th>
+                      <th> Subcategory Name</th>
+                      <th className="d-flex justify-content-end">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {typesubcatgory && typesubcatgory.length > 0 && (
+                      <>
+                        {typesubcatgory.map((e, index) => (
+                          <tr key={index}>
+                            <td>
+                              {(currentPage - 1) * postPerPage + (index + 1)}
+                            </td>
+                            <td>{e.typesubcategory}</td>
+                            <td>
+                              <div className="d-flex justify-content-end">
+                                <MdDelete
+                                  className="deleteicn_forpro"
+                                  onClick={() => {
+                                    handleShow(e?._id);
+                                  }}
+                                />
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </>
+                    )}
+                  </tbody>
+                </Table>
+              </>
+            )}
             <div className="d-flex justify-content-end">
               <Allpagination
                 currentPage={currentPage}

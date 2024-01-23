@@ -121,7 +121,7 @@ const Sliderpost = () => {
                     <Col lg={10}>
                       <div className="margin_bottom">
                         <img
-                          className="slide_img"
+                          className="slideradmin_View"
                           src={`http://localhost:5000/slider/${item?.images[0]}`}
                           alt="Second sslide"
                         />

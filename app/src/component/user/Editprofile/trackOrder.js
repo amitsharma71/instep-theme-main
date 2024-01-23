@@ -45,7 +45,7 @@ const TrackOrder = () => {
       <Table responsive="md" className="main">
         <thead>
           <tr>
-            <th>Sr. No.</th>
+            <th>Sr.No.</th>
             <th>Quantity</th>
             <th>Product</th>
             <th>Price </th>
@@ -57,37 +57,24 @@ const TrackOrder = () => {
           {orderdatasum?.map((e, i) => (
             <tr>
               <td>{(currentPage - 1) * postPerPage + (i + 1)}</td>
-//             <tr onClick={() => handleOrder(e)}>
-              <td>{i + 1}</td>
               <td>{e?.quantity}</td>
               <td>{e?.productID[0]?.title}</td>
               <td>{e?.amount}</td>
               <td>{e?.status}</td>
             </tr>
-            // <tr key={index}>
-            //   <td>{order.orderCode}</td>
-            //   <td>{order.placedOn}</td>
-            //   <td>{order.items}</td>
-            //   <td>{order.total}</td>
-            //   <td>{order.status}</td>
-            //   <td>
-            //     <button onClick={() => handleViewDetails(order.orderCode)}>
-            //       View Details
-            //     </button>
-            //   </td>
-            // </tr>
+
           ))}
-          <div className="d-flex justify-content-end">
-            <Allpagination
-              currentPage={currentPage}
-              postPerPage={postPerPage}
-              setPostPerPage={setPostPerPage}
-              setCurrentPage={setCurrentPage}
-              listCount={listCount}
-            />
-          </div>
         </tbody>
       </Table>
+      <div className="d-flex justify-content-end">
+        <Allpagination
+          currentPage={currentPage}
+          postPerPage={postPerPage}
+          setPostPerPage={setPostPerPage}
+          setCurrentPage={setCurrentPage}
+          listCount={listCount}
+        />
+      </div>
     </div>
   );
 };

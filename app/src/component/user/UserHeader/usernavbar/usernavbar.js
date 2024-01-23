@@ -336,7 +336,7 @@ const Usernavbar = () => {
                     </div>
                   </div>
                 </div>
-                <div className="">
+                <div className="accord_align">
                   <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton>
                       <Offcanvas.Title>INSTEPCART</Offcanvas.Title>

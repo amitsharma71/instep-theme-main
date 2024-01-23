@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-import { adminPostProduct } from "../action/adminPostProductAction";
-import { allAdminProductList } from "../action/getAllProductListing";
+import { allAdminProductList, editProductdetail } from "../action/getAllProductListing";
 
 const initialState = {
   isLoading: false,
   listdata: [],
+  singledata:[],
   error: "",
 };
 const GetAdminProductListData = createSlice({
@@ -23,6 +22,19 @@ const GetAdminProductListData = createSlice({
       state.error = "";
     });
     bulider.addCase(allAdminProductList.rejected, (state, action) => {
+      state.error = "";
+      state.isLoading = false;
+    });
+    bulider.addCase(editProductdetail.pending, (state, action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    bulider.addCase(editProductdetail.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.singledata = action?.payload;
+      state.error = "";
+    });
+    bulider.addCase(editProductdetail.rejected, (state, action) => {
       state.error = "";
       state.isLoading = false;
     });

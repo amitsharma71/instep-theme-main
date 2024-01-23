@@ -10,7 +10,10 @@ import { BsColumnsGap, BsPlusCircleFill, BsTags } from "react-icons/bs";
 import Card from "react-bootstrap/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Field } from "react-final-form";
-import { deliveryGetAction, deliveryaddress, } from "../../../Redux/action/deliveryAddress";
+import {
+  deliveryGetAction,
+  deliveryaddress,
+} from "../../../Redux/action/deliveryAddress";
 import RadioInput from "./radioButton";
 import { singleproduct } from "../../../Redux/action/getsingleProduct";
 import { CiLocationOn } from "react-icons/ci";
@@ -19,7 +22,7 @@ import { paymentOrder } from "../../../Redux/action/paymentOrderAction";
 import useRazorpay from "react-razorpay";
 import { Afterorder } from "../../../Redux/action/orderSummary";
 import { toast } from "react-toastify";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const Delieverydetail = () => {
   const [isFormVisible, setFormVisible] = useState(false);
@@ -33,7 +36,6 @@ const Delieverydetail = () => {
   const [alternateNumberValue, setAlternateNumberValue] = useState("");
   const data = useSelector((state) => state?.deliveraddress?.listdata);
 
-
   // const history = useHistory()
   const navigate = useNavigate();
   const userLogin = getUserId();
@@ -44,7 +46,7 @@ const Delieverydetail = () => {
   const { productid, _id } = useParams();
   const dispatch = useDispatch();
   const myCartL = useSelector((state) => state?.cartdetails.listdata);
-  console.log(myCartL, "dafdfdsfdas")
+  console.log(myCartL, "dafdfdsfdas");
 
   const addressdata = useSelector(
     (state) => state?.deliveryaddressget?.listdata?.data
@@ -118,11 +120,16 @@ const Delieverydetail = () => {
 
   const showDeliveryAddress = (eventKey) => {
     setEventKey(eventKey);
-  }
+  };
 
   const handleSubmit = (values) => {
-    if ((values?.mobilenumber && ((values?.mobilenumber)?.toString()?.length !== 10)) || (values?.AlternateNumber && ((values?.AlternateNumber)?.toString()?.length !== 10))) {
-      toast.error("Please check the mobile number")
+    if (
+      (values?.mobilenumber &&
+        values?.mobilenumber?.toString()?.length !== 10) ||
+      (values?.AlternateNumber &&
+        values?.AlternateNumber?.toString()?.length !== 10)
+    ) {
+      toast.error("Please check the mobile number");
     } else {
       values.userID = dataId;
 
@@ -200,7 +207,7 @@ const Delieverydetail = () => {
 
   const deliverClick = (address) => {
     if (!address) {
-      toast.error(" Please select the address")
+      toast.error(" Please select the address");
     } else {
       if (addressdata) {
         setactiveKey(2);
@@ -232,14 +239,30 @@ const Delieverydetail = () => {
     console.log("callertettt");
 
     const calculateLoadAmount = () => {
-      const baseAmount = ((dData.price) - ((dData?.price) * (dData?.discountpercentage) / (100))?.toFixed(0)) * 100 || (getTotalPrice() - getTotalDiscount()?.toFixed(0));
-      return { amount: baseAmount }; // Multiplying by 100 as Razorpay expects amount in paise
+      const baseAmount =
+        dData &&
+        (
+          dData.price -
+          (dData?.price * dData?.discountpercentage) / 100
+        )?.toFixed(0) * 100
+          ? (
+              dData.price -
+              (dData?.price * dData?.discountpercentage) / 100
+            )?.toFixed(0) * 100
+          : (getTotalPrice() - getTotalDiscount()?.toFixed(0)) * 100;
+
+      return { amount: baseAmount };
     };
 
     const load = calculateLoadAmount();
 
-
-    dispatch(paymentOrder({ ...load, currency: "INR", productIDs: myCartL?.map(item => item?._id) }))
+    dispatch(
+      paymentOrder({
+        ...load,
+        currency: "INR",
+        productIDs: myCartL?.map((item) => item?._id),
+      })
+    )
       .then((res) => {
         console.log(res, "paymentid");
         const paymentes = res.razorpay_payment_id;
@@ -250,11 +273,30 @@ const Delieverydetail = () => {
         console.error("Payment error:", error);
         // Handle payment error if needed
       });
-  }, [dispatch, order, dData, qty, getTotalPrice, getTotalDiscount, setOrderHit]);
+  }, [
+    dispatch,
+    order,
+    dData,
+    qty,
+    getTotalPrice,
+    getTotalDiscount,
+    myCartL,
+    setOrderHit,
+  ]);
 
   if (order && orderHit) {
-    const orderAmount = ((dData.price) - ((dData?.price) * (dData?.discountpercentage) / (100))?.toFixed(0)) * 100 ? ((dData.price) - ((dData?.price) * (dData?.discountpercentage) / (100))?.toFixed(0)) * 100 : (getTotalPrice() - getTotalDiscount()?.toFixed(0));
+    const orderAmount =
+      dData &&
+      (dData.price - (dData?.price * dData?.discountpercentage) / 100)?.toFixed(
+        0
+      ) * 100
+        ? (
+            dData.price -
+            (dData?.price * dData?.discountpercentage) / 100
+          )?.toFixed(0) * 100
+        : (getTotalPrice() - getTotalDiscount()?.toFixed(0)) * 100;
 
+    // console.log(orderAmount,qty,'orderAmount')
     if (orderAmount) {
       const options = {
         key: "rzp_test_Nfb5anftyihnMA",
@@ -262,9 +304,10 @@ const Delieverydetail = () => {
         currency: "INR",
         name: "Instep Cart",
         description: "Test Transaction",
-        image: "https://insteptechnologies.com/wp-content/uploads/2022/04/main-logo.png",
+        image:
+          "https://insteptechnologies.com/wp-content/uploads/2022/04/main-logo.png",
         order_id: order?.data?.id,
-        productIDs: myCartL.map(item => item._id),
+        productIDs: myCartL.map((item) => item._id),
         handler: function (res) {
           console.log("Payment-success:", res);
 
@@ -272,10 +315,11 @@ const Delieverydetail = () => {
           console.log(orderid, "orderidorderid");
           setRazorPaymentId(orderid);
 
-
           // Storing payment details in the paymentDetails variable
           const paymentDetails = {
-            paymentStatus: res.razorpay_payment_id ? "paid-payment" : "payment-failed",
+            paymentStatus: res.razorpay_payment_id
+              ? "paid-payment"
+              : "payment-failed",
             orderId: res.razorpay_order_id,
             amount: res.razorpay_payment_amount, // Converting back to rupees
             // ... add other details as needed
@@ -297,12 +341,13 @@ const Delieverydetail = () => {
           };
 
           // Dispatch an action to send order details after successful payment
-          dispatch(Afterorder(payloads))
-            .then(response => {
-              console.log(response, 'resssss')
-              navigate(`/orderconfirmation/${response?.payload?.data?.save?._id}`)
-              window.location.reload()
-            })
+          dispatch(Afterorder(payloads)).then((response) => {
+            console.log(response, "resssss");
+            navigate(
+              `/orderconfirmation/${response?.payload?.data?.save?._id}`
+            );
+            window.location.reload();
+          });
           // history.push("/orderconfirmation")
           // navigate("/orderconfirmation")
         },
@@ -332,7 +377,7 @@ const Delieverydetail = () => {
     localStorage.removeItem("token");
     navigate("/signin");
     window.location.reload();
-  }
+  };
 
   useEffect(() => {
     if (addressdata && addressdata?.length === 1) {
@@ -352,7 +397,7 @@ const Delieverydetail = () => {
             disable
             activeKey={activeKey}
             onSelect={(e) => setactiveKey(e)}
-          // defaultActiveKey={useMemo(()=>eventKeyHandle(),[addressdata])}
+            // defaultActiveKey={useMemo(()=>eventKeyHandle(),[addressdata])}
           >
             {/* <Accordion defaultActiveKey={1}> */}
             <Row>
@@ -371,7 +416,12 @@ const Delieverydetail = () => {
                           </div>
                           <div className="individual_info">
                             <p className="fw-bold">{userLogin?.username}</p>
-                            <p className="fw-bold">{myCartL?.length > 0 && myCartL[0]?.userdata?.length > 0 && myCartL[0]?.userdata[0]?.number?.length > 0 && myCartL[0]?.userdata[0]?.number[0]}</p>
+                            <p className="fw-bold">
+                              {myCartL?.length > 0 &&
+                                myCartL[0]?.userdata?.length > 0 &&
+                                myCartL[0]?.userdata[0]?.number?.length > 0 &&
+                                myCartL[0]?.userdata[0]?.number[0]}
+                            </p>
                           </div>
                         </div>
                         {/* <div>
@@ -388,7 +438,10 @@ const Delieverydetail = () => {
                     <Accordion.Body>
                       <Row>
                         <Col lg={6}>
-                          <div className="individual_info login_contalign" onClick={() => handleMoveToSignIn()}>
+                          <div
+                            className="individual_info login_contalign"
+                            onClick={() => handleMoveToSignIn()}
+                          >
                             {/* <Link className="loginandsignout" to="/signin"> */}
                             Logout & Sign in to another account
                             {/* </Link> */}
@@ -431,9 +484,9 @@ const Delieverydetail = () => {
                       <Accordion.Item
                         activeKey={addressEventKey}
                         eventKey={1}
-                      // onClick={() => {
-                      //   setEventKey(2);
-                      // }}
+                        // onClick={() => {
+                        //   setEventKey(2);
+                        // }}
                       >
                         <Accordion.Header>
                           <div className="loginmain_align">
@@ -481,15 +534,14 @@ const Delieverydetail = () => {
                                 </>
                               );
                             })}
-                          {addressdata &&
-                            (
-                              <button
-                                className="readbuttommore mt-2 margin_bottom"
-                                onClick={() => deliverClick(address)}
-                              >
-                                Delivery Here
-                              </button>
-                            )}
+                          {addressdata && (
+                            <button
+                              className="readbuttommore mt-2 margin_bottom"
+                              onClick={() => deliverClick(address)}
+                            >
+                              Delivery Here
+                            </button>
+                          )}
 
                           <form onSubmit={handleSubmitradio}></form>
                           <Row>
@@ -738,9 +790,10 @@ const Delieverydetail = () => {
                                         value="use my current location"
                                         className="addresslocation cancel_button"
                                         onClick={() => {
-                                          setFormVisible(false)
+                                          setFormVisible(false);
                                         }}
-                                      >Cancel
+                                      >
+                                        Cancel
                                       </button>
                                     </form>
                                   )}
@@ -783,7 +836,7 @@ const Delieverydetail = () => {
                           </div>
                         </Accordion.Header>
                         <Accordion.Body>
-                          {(_id && _id !== 'id') ? (
+                          {_id && _id !== "id" ? (
                             <>
                               <Row>
                                 <Col lg={4}>
@@ -845,7 +898,10 @@ const Delieverydetail = () => {
                                               {dData?.category?.[0]?.category}
                                             </td>
                                             <td>
-                                              {dData?.subcategory?.[0]?.subcategory}
+                                              {
+                                                dData?.subcategory?.[0]
+                                                  ?.subcategory
+                                              }
                                             </td>
                                             <li>{dData.title}</li>
                                           </ul>
@@ -874,10 +930,11 @@ const Delieverydetail = () => {
                                                 e?.productDetails[0]?.image
                                                   ? e?.productDetails[0]?.image
                                                   : e?.productDetails[0]?.thumbnail?.split(
-                                                    ":"
-                                                  ).length > 1
-                                                    ? e?.productDetails[0]?.thumbnail
-                                                    : `http://localhost:5000/uploads/${e?.productDetails[0]?.thumbnail}`
+                                                      ":"
+                                                    ).length > 1
+                                                  ? e?.productDetails[0]
+                                                      ?.thumbnail
+                                                  : `http://localhost:5000/uploads/${e?.productDetails[0]?.thumbnail}`
                                               }
                                               alt=""
                                             />
@@ -888,7 +945,12 @@ const Delieverydetail = () => {
                                             <Card className="shoppingcard_bor ">
                                               <Card.Body>
                                                 <Card.Title>
-                                                  <h4 className="description_title">{e?.productDetails[0]?.title}</h4>
+                                                  <h4 className="description_title">
+                                                    {
+                                                      e?.productDetails[0]
+                                                        ?.title
+                                                    }
+                                                  </h4>
                                                 </Card.Title>
                                                 {/* <div className="buynowquanity">
                                                 <button
@@ -911,13 +973,22 @@ const Delieverydetail = () => {
                                                   </h5>
                                                 </Card.Subtitle>
                                                 <Card.Subtitle className="mb-2">
-                                                  <h4 className="py-2 mb-0" >₹ {(e?.productDetails[0]?.price) * (e?.quantity)}</h4>
+                                                  <h4 className="py-2 mb-0">
+                                                    ₹{" "}
+                                                    {e?.productDetails[0]
+                                                      ?.price * e?.quantity}
+                                                  </h4>
                                                 </Card.Subtitle>
                                                 <Card.Text>
                                                   <div className="d-flex flex-column ">
-                                                    <h6 className="discription_text">Description:</h6>
+                                                    <h6 className="discription_text">
+                                                      Description:
+                                                    </h6>
                                                     <p className="mainpro_rightdescrip margin_bottom">
-                                                      {e?.productDetails[0]?.description}
+                                                      {
+                                                        e?.productDetails[0]
+                                                          ?.description
+                                                      }
                                                     </p>
                                                   </div>
                                                 </Card.Text>
@@ -941,9 +1012,8 @@ const Delieverydetail = () => {
                                           </div>
                                         </Col>
                                       </>
-                                    )
+                                    );
                                   })}
-
                               </Row>
                             </>
                           )}
@@ -987,7 +1057,7 @@ const Delieverydetail = () => {
                 </Row>
               </Col>
               <Col lg={3}>
-                {(_id && _id !== 'id') ? (
+                {_id && _id !== "id" ? (
                   <>
                     <div className="rightpricedetail margin_bottom">
                       <div className="addcartpricede_tail margin_bottom ">
@@ -1000,7 +1070,7 @@ const Delieverydetail = () => {
                       <div className="d-flex justify-content-between margin_bottom">
                         <p className="totalamountright_">Discount</p>
                         <span className="discountpercentage_">
-                          {(dData?.discountpercentage)}%
+                          {dData?.discountpercentage}%
                         </span>
                       </div>
                       <div className="d-flex justify-content-between margin_bottom addcart_delivery">
@@ -1009,53 +1079,65 @@ const Delieverydetail = () => {
                       </div>
                       <div className="d-flex justify-content-between margin_bottom addcart_delivery">
                         <h5>Total Amount</h5>
-                        <p>₹{(dData.price) - ((dData?.price) * (dData?.discountpercentage) / (100))?.toFixed(0)}</p>
+                        <p>
+                          ₹
+                          {dData.price -
+                            (
+                              (dData?.price * dData?.discountpercentage) /
+                              100
+                            )?.toFixed(0)}
+                        </p>
                       </div>
                       <h6 className="discountpercentage_">
-                        Your Will save ₹{(dData?.price) - ((dData?.price) - ((dData?.price) * (dData?.discountpercentage) / (100))?.toFixed(0))} on this
+                        Your Will save ₹
+                        {dData?.price -
+                          (dData?.price -
+                            (
+                              (dData?.price * dData?.discountpercentage) /
+                              100
+                            )?.toFixed(0))}{" "}
+                        on this order
+                      </h6>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="rightpricedetail margin_bottom">
+                      <div className="addcartpricede_tail margin_bottom ">
+                        <h5>PRICE DETAIL</h5>
+                      </div>
+                      <div className="d-flex justify-content-between  margin_bottom">
+                        <p className="totalamountright_">Price</p>
+                        <p>₹{getTotalPrice()}</p>
+                      </div>
+                      <div className="d-flex justify-content-between margin_bottom">
+                        <p className="totalamountright_">Discount</p>
+                        <span className="discountpercentage_">
+                          {getDiscountPercentage()?.toFixed(0)}%
+                        </span>
+                      </div>
+                      <div className="d-flex justify-content-between margin_bottom addcart_delivery">
+                        <p className="totalamountright_">Delivery Charges</p>
+                        <p>-----------</p>
+                      </div>
+                      <div className="d-flex justify-content-between margin_bottom addcart_delivery">
+                        <h5>Total Amount</h5>
+                        <p>
+                          ₹{getTotalPrice() - getTotalDiscount()?.toFixed(0)}
+                        </p>
+                      </div>
+                      <h6 className="discountpercentage_">
+                        Your Will save ₹{getTotalDiscount()?.toFixed(0)} on this
                         order
                       </h6>
                     </div>
-                  </>)
-                  :
-                  (
-                    <>
-                      <div className="rightpricedetail margin_bottom">
-                        <div className="addcartpricede_tail margin_bottom ">
-                          <h5>PRICE DETAIL</h5>
-                        </div>
-                        <div className="d-flex justify-content-between  margin_bottom">
-                          <p className="totalamountright_">Price</p>
-                          <p>₹{getTotalPrice()}</p>
-                        </div>
-                        <div className="d-flex justify-content-between margin_bottom">
-                          <p className="totalamountright_">Discount</p>
-                          <span className="discountpercentage_">
-                            {getDiscountPercentage()?.toFixed(0)}%
-                          </span>
-                        </div>
-                        <div className="d-flex justify-content-between margin_bottom addcart_delivery">
-                          <p className="totalamountright_">Delivery Charges</p>
-                          <p>-----------</p>
-                        </div>
-                        <div className="d-flex justify-content-between margin_bottom addcart_delivery">
-                          <h5>Total Amount</h5>
-                          <p>₹{getTotalPrice() - getTotalDiscount()?.toFixed(0)}</p>
-                        </div>
-                        <h6 className="discountpercentage_">
-                          Your Will save ₹{getTotalDiscount()?.toFixed(0)} on this
-                          order
-                        </h6>
-                      </div>
-
-                    </>
-                  )}
-
+                  </>
+                )}
               </Col>
             </Row>
           </Accordion>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
 };

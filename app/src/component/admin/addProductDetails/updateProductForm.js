@@ -2,63 +2,66 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
 import { Form, Field } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
-import { allAdminProductList } from "../../../Redux/action/getAllProductListing";
+import {
+  allAdminProductList,
+  editProductdetail,
+} from "../../../Redux/action/getAllProductListing";
 import { updateProduct } from "../../../Redux/action/updateProductAction";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Col, Row } from "react-bootstrap";
 import { BsPlusCircleDotted } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
+import { allSubCategoryList } from "../../../Redux/action/getSubcategoryAction";
 
 function MydModalWithGrid(props) {
   const dispatch = useDispatch();
 
-  const [imageState, setImageState] = useState();
+  const [selectedImagesforpost, setselectedImagesforpost] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
 
-  const single = useSelector(
-    (state) => state?.updateProductData?.listdata?.data
-  );
-
-  const list = useSelector(
-    (state) => state?.GetAdminProductAllListData?.listdata
-  );
-  console.log(list, "listof");
-
-  console.log(single?._id, "vaikskw");
+  const single = useSelector((state) => state?.updateProductData?.listdata);
   console.log(single, "rraa");
 
-  const handleSubmit = (values) => {
-    console.log(values, "goapl");
+  const list = useSelector((state) => {
+    if (state?.GetAdminProductAllListData?.singledata?.products?.length > 0) {
+      return state?.GetAdminProductAllListData?.singledata?.products[0];
+    }
+  });
+  console.log(list, "listof");
 
-    toast.success("Update Successfully !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    dispatch(updateProduct(values)).then((res) => {
+  console.log(list?._id, "vaikskw");
+
+  const handleSubmit = (values) => {
+    const formData = new FormData();
+    formData.append("userData", JSON.stringify(values));
+    dispatch(updateProduct(formData)).then((res) => {
       console.log(res?.meta?.requestStatus);
       if (res?.meta?.requestStatus === "fulfilled") {
-        dispatch(allAdminProductList());
+        dispatch(editProductdetail());
+        toast.success("Update Successfully !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        props.onClose(false);
+      } else {
+        toast.error("Something went wrong");
       }
     });
   };
+
   const initialValues = {
-    id: list?._id,
+    brand: list?.brand[0]?.brand,
     description: list?.description,
-    category: list?.category,
-    title: list?.title,
-    price: list?.price,
-    images: list?.images,
-    brand: list?.brand,
-    rating: list?.rating,
-    subcategory: list?.subcategory,
-    thumbnail: list?.thumbnail,
-    stock: list?.stock,
     discountpercentage: list?.discountpercentage,
+    id: list?._id,
+    price: list?.price,
+    rating: list?.rating,
+    stock: list?.stock,
+    subcategory: list?.subcategory[0]?.subcategory,
   };
   console.log(initialValues, "initialValues");
-
   return (
     <>
       <Modal
@@ -111,6 +114,7 @@ function MydModalWithGrid(props) {
                         type="text"
                         placeholder="subcategory"
                         required
+                        disabled
                       />
                     </div>
                     <div className="update_product">
@@ -124,6 +128,7 @@ function MydModalWithGrid(props) {
                         type="text"
                         placeholder="Brand Name"
                         required
+                        disabled
                       />
                     </div>
                     <div className="update_product">
@@ -238,34 +243,36 @@ function MydModalWithGrid(props) {
                             {/* // key={index} */}
                             {/* className=" productupload_item col-md-3" */}
                             {/* > */}
-                            {single?.images && (
+                            {list?.images?.length > 0 && (
                               <>
                                 <div className="position-relative">
                                   <Row>
-                                    {single?.images?.map((item, index) => {
-                                      if (item) {
-                                        return (
-                                          <Col lg={6} md={6} sm={12} xs={6}>
-                                            <li
+                                    {list?.images?.map((item, index) => {
+                                      // if (item) {
+                                      return (
+                                        <Col lg={6} md={6} sm={12} xs={6}>
+                                          <div className="d-flex justify-content-end">
+                                            <MdCancel className="editimagedelte" />
+                                          </div>
+                                          <li
+                                            key={index}
+                                            className=" productupload_item col-md-3"
+                                          >
+                                            <img
                                               key={index}
-                                              className=" productupload_item col-md-3"
-                                            >
-                                              <img
-                                                key={index}
-                                                className="edit_product-img mb-2"
-                                                src={
-                                                  item?.split("https").length >
-                                                  1
-                                                    ? item
-                                                    : `http://localhost:5000/uploads/${item}`
-                                                }
-                                                // onMouseEnter={() => setImageState(item)}
-                                                alt=""
-                                              />
-                                            </li>
-                                          </Col>
-                                        );
-                                      }
+                                              className="edit_product-img mb-2"
+                                              src={
+                                                item?.split("https").length > 1
+                                                  ? item
+                                                  : `http://localhost:5000/uploads/${item}`
+                                              }
+                                              // onMouseEnter={() => setImageState(item)}
+                                              alt=""
+                                            />
+                                          </li>
+                                        </Col>
+                                      );
+                                      // }
                                     })}
                                   </Row>
                                 </div>
@@ -338,7 +345,7 @@ function MydModalWithGrid(props) {
                             {
                               <img
                                 className="edit_product-img"
-                                src={`http://localhost:5000/uploads/${single?.thumbnail}`}
+                                src={`http://localhost:5000/uploads/${list?.thumbnail}`}
                                 // alt={`Image ${index}`}
                               />
                             }
