@@ -36,7 +36,26 @@ const postproduct = expressAsyncHandler(async (req, res) => {
     // const finalPrice = priceAfterDiscount + taxAmount;
     // console.log(finalPrice, "testetstetsstetts");
 
-    const productadd = new Userproducts({
+    // const productadd = new Userproducts({
+    //   category: userData.category_id,
+    //   description: userData.description,
+    //   title: userData.title,
+    //   price: userData.price,
+    //   images: imagesFilenames,
+    //   brand: userData.brand_id,
+    //   rating: userData.rating,
+    //   subcategory: userData.subcategory_id,
+    //   thumbnail: thumbnailFilename,
+    //   stock: userData.stock,
+    //   discountpercentage: userData.discountpercentage,
+    //   tax: userData.tax,
+    //   totalprice: priceAfterDiscount,
+    // });
+
+    // await productadd.save();
+
+
+    const productadd = await Userproducts.create({
       category: userData.category_id,
       description: userData.description,
       title: userData.title,
@@ -45,14 +64,13 @@ const postproduct = expressAsyncHandler(async (req, res) => {
       brand: userData.brand_id,
       rating: userData.rating,
       subcategory: userData.subcategory_id,
+      type_subcategory_id: userData.type_subcategory_id,
       thumbnail: thumbnailFilename,
       stock: userData.stock,
       discountpercentage: userData.discountpercentage,
       tax: userData.tax,
       totalprice: priceAfterDiscount,
-    });
-
-    await productadd.save();
+    })
 
     // Send a JSON response indicating success
     res
