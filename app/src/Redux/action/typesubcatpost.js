@@ -23,20 +23,25 @@ export const typesubcategoryget = createAsyncThunk(
   }
 );
 
+// export const findbrandfilter = createAsyncThunk(
+//   "findbrand",
+//   async (payload) => {
+//     return axiosInstance.post("/filtertypebrand", payload);
+//   }
+// );
+
 export const findbrandfilter = createAsyncThunk(
   "findbrand",
   async (payload) => {
-    return axiosInstance.post("/filtertypebrand", payload);
+    const data1 = await axiosInstance.post(`/filtertypebrand`, payload);
+    return data1.data;
   }
 );
 
-
-// 
+//
 export const removeFromTypeSubcategory = createAsyncThunk(
   "removeFromTypeSubcategory",
-  async (payload) =>{
-    return axiosInstance.post('/deletetypesubcategory', payload)
+  async (payload) => {
+    return axiosInstance.post("/deletetypesubcategory", payload);
   }
-)
-
-
+);

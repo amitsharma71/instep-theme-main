@@ -420,7 +420,7 @@ const Home = () => {
                             <SwiperSlide className="shopping_card" key={index}>
                               <Link
                                 className="card_deco"
-                                to={`/category/${categoryid}subcat/${subcategoryid}`}
+                                to={`/category/${categoryid}/${subcategoryid}`}
                                 onClick={() => productClicks(subcategoryid)}
                               >
                                 <Card className="shoppingcard_bor">
@@ -516,12 +516,13 @@ const Home = () => {
                       if (e?.category?.[0]?.category === "Books &More") {
                         const subcategoryid = e?.subcategory[0]?._id;
                         console.log(subcategoryid, "amitsh");
-                        const catid = e?.category[0]?._id;
+                        const categoryid = e?.category[0]?._id;
+                        console.log(categoryid, "categoryidss");
                         return (
                           <SwiperSlide className="shopping_card" key={e?.id}>
                             <Link
                               className="card_deco"
-                              to={`/  /${catid}subcat/${subcategoryid}`}
+                              to={`/category/${categoryid}/${subcategoryid}`}
                               onClick={() => productClicks(subcategoryid)}
                             >
                               <Card className="shoppingcard_bor">

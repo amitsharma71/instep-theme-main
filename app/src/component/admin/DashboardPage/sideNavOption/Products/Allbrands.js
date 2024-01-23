@@ -13,7 +13,7 @@ import Allpagination from "../../../Pagination/pagination";
 import { MdDelete } from "react-icons/md";
 import Delete from "../../../deleteModel/delete";
 import { typesubcategoryget } from "../../../../../Redux/action/typesubcatpost";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineSearch } from "react-icons/ai";
 
@@ -65,16 +65,22 @@ const Allsubcategory = () => {
     };
 
     dispatch(addbrands(asd)).then((res) => {
-      console.log(res, "fdsfdf")
-      toast.success("successful Submited")
-      form.reset()
-    })
+      console.log(res, "fdsfdf");
+      toast.success("successful Submited");
+      form.reset();
+    });
   };
   useEffect(() => {
     dispatch(allCategoryList());
     dispatch(allSubCategoryList());
     dispatch(typesubcategoryget());
-    dispatch(allBrandsList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+    dispatch(
+      allBrandsList({
+        search: searchQuery,
+        page: currentPage,
+        perPage: postPerPage,
+      })
+    );
   }, [currentPage, searchQuery]);
 
   var selectedId;
@@ -108,7 +114,13 @@ const Allsubcategory = () => {
 
   const handleDelete = (id) => {
     dispatch(removeFromBrand({ _id: id })).then((res) => {
-      dispatch(allBrandsList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+      dispatch(
+        allBrandsList({
+          search: searchQuery,
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
       if (res?.data?.success) {
       }
       handleClose();
@@ -128,7 +140,9 @@ const Allsubcategory = () => {
     if (searchQuery) {
       dispatch(allBrandsList({ search: searchQuery }));
     } else {
-      dispatch(allBrandsList({ search: '', page: currentPage, perPage: postPerPage }));
+      dispatch(
+        allBrandsList({ search: "", page: currentPage, perPage: postPerPage })
+      );
     }
   };
 
@@ -220,11 +234,13 @@ const Allsubcategory = () => {
             <div className="form_control_or_btngroup">
               <div className="all_product_search ">
                 <FiSearch className="allproduct_searchicon " />
-                <input type="search" className=" mr-sm-2 adminsearch_bar" value={searchQuery}
+                <input
+                  type="search"
+                  className=" mr-sm-2 adminsearch_bar"
+                  value={searchQuery}
                   onKeyDown={onKeyDownHandler}
-                  onChange={(e) =>
-                    setSearchQuery(e?.target?.value)
-                  } />
+                  onChange={(e) => setSearchQuery(e?.target?.value)}
+                />
               </div>
               {/* <div className="btngroup">
                 <Button className="select_button " type="submit" onClick={handleSearch}>
@@ -274,20 +290,18 @@ const Allsubcategory = () => {
               </tbody>
             </Table>
             {searchQuery && searchQuery.length !== 10 ? (
+              <div className="d-flex justify-content-end"></div>
+            ) : (
               <div className="d-flex justify-content-end">
+                <Allpagination
+                  currentPage={currentPage}
+                  postPerPage={postPerPage}
+                  setPostPerPage={setPostPerPage}
+                  setCurrentPage={setCurrentPage}
+                  listCount={listCount}
+                />
               </div>
-            ) :
-              (
-                <div className="d-flex justify-content-end">
-                  <Allpagination
-                    currentPage={currentPage}
-                    postPerPage={postPerPage}
-                    setPostPerPage={setPostPerPage}
-                    setCurrentPage={setCurrentPage}
-                    listCount={listCount}
-                  />
-                </div>
-              )}
+            )}
           </div>
         </Col>
       </Row>
