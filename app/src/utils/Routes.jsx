@@ -73,6 +73,7 @@ const protects = {
         { path: "/subcategory/:subcategory", element: <Subcategory /> },
         { path: "/search", element: <Searchproduct /> },
         { path: "/addtocart", element: <AddToCartProduct /> },
+        { path: "/category/:categoryName/:subcategoryName", element: <Homecategory /> },
         { path: "/category/:categoryName", element: <Homecategory /> },
         { path: "/profile", element: <Profile /> },
         { path: "/allproduct", element: <AllProductDetail /> },

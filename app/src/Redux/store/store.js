@@ -44,6 +44,7 @@ import GetallorderdetailReducer from "../reducer/getOrderDetail";
 import addWishlistDataReducer from "../reducer/wishlistaddReducer";
 import removeWishlistDataReducer from "../reducer/wishlistRemoveReducer";
 import getWishlistDataReducer from "../reducer/wishlistgetReducer";
+import HomesubcategoryReducer from "../reducer/subcatWise";
 
 export const store = configureStore({
   reducer: {
@@ -92,5 +93,6 @@ export const store = configureStore({
     addwishlistdata: addWishlistDataReducer,
     removewishlistdata: removeWishlistDataReducer,
     getwishlisdData: getWishlistDataReducer,
+    homesubcategory: HomesubcategoryReducer,
   },
 });

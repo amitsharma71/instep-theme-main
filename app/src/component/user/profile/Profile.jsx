@@ -365,7 +365,6 @@ export default function Profile() {
                     </div>
                   </div>
                 </Col>
-
                 <Col lg={3} md={6} sm={6} xs={6}>
                   <div className="userhistory_icons">
                     <p>New Orders</p>

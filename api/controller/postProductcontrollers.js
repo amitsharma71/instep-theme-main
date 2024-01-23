@@ -32,6 +32,7 @@ const postproduct = expressAsyncHandler(async (req, res) => {
     const priceAfterDiscount = userData.price - discount;
 
     // const taxAmount = (priceAfterDiscount * userData.tax) / 100;
+    // const finalPrice = priceAfterDiscount;
     // const finalPrice = priceAfterDiscount + taxAmount;
     // console.log(finalPrice, "testetstetsstetts");
 
@@ -164,7 +165,7 @@ const getproduct = expressAsyncHandler(async (req, res) => {
         {
           $lookup: {
             from: "subcategorytables",
-            localField: "subcategory",
+            localField: "subcategory", 
             foreignField: "_id",
             as: "subcategory",
           },

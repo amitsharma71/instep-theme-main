@@ -13,6 +13,14 @@ export const homecategory = createAsyncThunk(
   "homecategory",
   async (payload) => {
     const data1 = await axiosInstance.get(`/category/${payload}`);
-    return data1.data;
+    return data1?.data;
+  }
+);
+
+export const homesubcategory = createAsyncThunk(
+  "homesubcategory",
+  async (payload) => {
+    const data1 = await axiosInstance.get(`/subcategory/${payload}`);
+    return data1?.data;
   }
 );

@@ -45,16 +45,16 @@ const ProductForm = () => {
     }
 
     if (!image.name.match(/\.(jpg|jpeg|png)$/)) {
-      toast.error("Upload file in the form of jpg, jpeg or png")
-      setSelectedImages([])
+      toast.error("Upload file in the form of jpg, jpeg or png");
+      setSelectedImages([]);
       e.target.value = null;
-      return false
+      return false;
     }
 
     const maxSize = 50;
     if (image.size > maxSize * 1024) {
-      toast.error("The amximum file size allowed (50KB)")
-      setSelectedImages([])
+      toast.error("The amximum file size allowed (50KB)");
+      setSelectedImages([]);
       e.target.value = null;
       return false;
     }
@@ -90,15 +90,15 @@ const ProductForm = () => {
     }
 
     if (!image.name.match(/\.(jpg|jpeg|png)$/)) {
-      toast.error("Upload file in the form of jpg, jpeg or png")
-      setSelectedImages([])
+      toast.error("Upload file in the form of jpg, jpeg or png");
+      setSelectedImages([]);
       e.target.value = null;
       return false;
     }
     const maxSize = 50;
     if (image.size > maxSize * 1024) {
-      toast.error("The amximum file size allowed (50KB)")
-      setSelectedImages([])
+      toast.error("The amximum file size allowed (50KB)");
+      setSelectedImages([]);
       e.target.value = null;
       return false;
     }
@@ -137,6 +137,7 @@ const ProductForm = () => {
       brand_id: values?.brand,
       discountpercentage: values?.discountpercentage,
       stock: values?.stock,
+      tax: values?.tax,
       rating: values?.rating,
       image: selectedImagesforpost,
       typesubcategory_id: values[`type subcategory`],
@@ -161,7 +162,7 @@ const ProductForm = () => {
         setselectedImagesforpost("");
         setthumbnail("");
         setselectedthumbnalFile("");
-        resetFileInput("")
+        resetFileInput("");
         // handleImgeFile("")
       }
       console.log(res?.payload?.data?.product?._id, "Response");
@@ -527,26 +528,27 @@ const ProductForm = () => {
                             <div>
                               <h4>Selected Images:</h4>
                               <ul className="row">
-                                {selectedImages?.map((imageUrl, index) => (
-                                  <li
-                                    key={index}
-                                    className=" productupload_item col-md-3"
-                                  >
-                                    <img
-                                      className="productupload_image"
-                                      src={imageUrl}
-                                      alt={`Image ${index}`}
-                                    />
-                                    <p
-                                      className="addimagecncel_icon"
-                                      onClick={() => {
-                                        deleteimage(index);
-                                      }}
+                                {selectedImages &&
+                                  selectedImages?.map((imageUrl, index) => (
+                                    <li
+                                      key={index}
+                                      className=" productupload_item col-md-3"
                                     >
-                                      <MdCancel className="cancelicon_addproduct" />
-                                    </p>
-                                  </li>
-                                ))}
+                                      <img
+                                        className="productupload_image"
+                                        src={imageUrl}
+                                        alt={`Image ${index}`}
+                                      />
+                                      <p
+                                        className="addimagecncel_icon"
+                                        onClick={() => {
+                                          deleteimage(index);
+                                        }}
+                                      >
+                                        <MdCancel className="cancelicon_addproduct" />
+                                      </p>
+                                    </li>
+                                  ))}
                               </ul>
                             </div>
                           )}
@@ -609,7 +611,6 @@ const ProductForm = () => {
                                     event.preventDefault();
                                   }
                                 }}
-
                               />
                             </Col>
                             <Col lg={4} md={6} sm={6}>

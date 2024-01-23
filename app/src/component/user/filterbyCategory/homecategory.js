@@ -11,23 +11,43 @@ import { BsFillHeartFill } from "react-icons/bs";
 import Spinner from "../loader/spinner";
 
 const Homecategory = () => {
+  // const { subcategoryid } = props;
+  // console.log(subcategoryid, "propsid");
+
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.homecategory.listdata);
-  const { categoryName } = useParams();
+
+  const { categoryName, subcategoryName } = useParams();
+
+  console.log(categoryName, "ddasasasasas");
 
   const loading = useSelector((state) => state?.homecategory?.isLoading);
 
   const filterbyPrice = useSelector(
-    (state) => state?.filterationalltype?.listdata
+    (state) => state?.filterationalltype?.listdata?.data
   );
   console.log(filterbyPrice, "filterbyPrice");
 
+  // const filterbyPrice1 = useSelector(
+  //   (state) =>
+  //     state?.filterationalltype?.listdata?.data[0]?.category[0]?.category
+  // );
+
+  // console.log(filterbyPrice1, "filterbyPriceasasa");
+
+  const data = useSelector((state) => state?.homecategory?.listdata);
+  console.log(data, "dassssssss");
+
   useEffect(() => {
     dispatch(homecategory(categoryName));
-    dispatch(AllFilterationData());
+    dispatch(
+      AllFilterationData({
+        category: categoryName,
+        subcategoryId: subcategoryName,
+      })
+    );
   }, [categoryName]);
-  console.log(data, "goapl");
-  console.log(categoryName);
+
+  console.log(categoryName, "categoryNamemm");
 
   return (
     <>
@@ -141,6 +161,7 @@ const Homecategory = () => {
                                 >
                                   <div className="p-4">
                                     <h5> ₹{item?.price}</h5>
+
                                   </div>
                                 </Link>
                               </Col>

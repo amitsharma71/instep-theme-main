@@ -17,16 +17,23 @@ import { allCategoryList } from "../../../../Redux/action/getCategoryAction";
 import { adminGetSlider } from "../../../../Redux/action/getSliderAction";
 import Spinner from "../../loader/spinner";
 import Scrolltotopbutton from "../../ScoolToTop/scrolltotopbutton";
+import { AllFilterationData } from "../../../../Redux/action/allFilterationAction";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [subcatid, setSubcatid] = useState();
+
   const data = useSelector((state) => state?.getproductdata?.listdata);
+  console.log(data, "usedata");
 
   const loading = useSelector((state) => state?.getproductdata?.isLoading);
 
   const categorydata = useSelector((state) => state?.getproductdata?.listdata);
   console.log(categorydata, "categorydata");
+
+  // console.log(categorydata?.products[0]?.subcategory[0]?._id, "categorydataid");
 
   const allcatgorydata = useSelector(
     (state) => state?.getcategorylistdata?.listdata?.data
@@ -44,7 +51,15 @@ const Home = () => {
   }, []);
 
   const productClick = (_id) => {
-    console.log(_id, "hh/ddhhjjjjjjjjjjj");
+    console.log(_id, "ddhhjjjjjjjjjjj");
+
+    // dispatch(AllFilterationData({ _id }));
+  };
+
+  const productClicks = (subcategoryid) => {
+    console.log(subcategoryid, "ffffffffffg");
+    // `/category/${subcategoryid}`
+    // dispatch(AllFilterationData({ subcategoryId: subcategoryid }));
   };
 
   const handleClick = (_id) => {
@@ -175,7 +190,7 @@ const Home = () => {
                               <SwiperSlide className="" key={e?.id}>
                                 <Link
                                   className="carddecorationnone_cat"
-                                  to={`/category/${e._id}`}
+                                  to={`/category/${e._id}?sub?${e._id}`}
                                 >
                                   <Card className="cat_card_homep">
                                     <div className="hoveron_arrow">
@@ -328,6 +343,7 @@ const Home = () => {
                             </Link>
                           </SwiperSlide>
                         ))}
+
                   </Swiper>
                 </Col>
               </Row>

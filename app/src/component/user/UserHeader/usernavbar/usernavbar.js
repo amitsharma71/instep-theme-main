@@ -21,7 +21,6 @@ import { searchAction } from "../../../../Redux/action/searchProductAction";
 import { allCategoryList } from "../../../../Redux/action/getCategoryAction";
 import { cartinfo } from "../../../../Redux/action/usercartinfo";
 import { admingetheading } from "../../../../Redux/action/adminheader";
-import { apiBasePath } from "../../../../Redux/config/Config";
 
 const Usernavbar = () => {
   const navigate = useNavigate();
@@ -99,18 +98,21 @@ const Usernavbar = () => {
       handleSearch();
     }
   };
-  const handleSearch = () => {
+  const handleSearch = (item) => {
     dispatch(searchAction({ name: searchQuery }));
     navigate("/search");
     setSearchQuery("");
+    console.log(item, "itemitem");
   };
+  console.log(handleSearch, "handleSearchs");
   const myCartL = useSelector((state) => state?.cartdetails?.listdata);
   console.log(myCartL, "dddddddddddddddd");
+
   const navcategorydata = useSelector(
     (state) => state?.getcategorylistdata?.listdata?.data
   );
 
-  console.log(navcategorydata, "rahulllllll");
+  console.log(navcategorydata, "assssssssssasa");
 
   useEffect(() => {
     dispatch(allCategoryList());
@@ -169,9 +171,7 @@ const Usernavbar = () => {
                         placeholder="search"
                         value={searchQuery}
                         onKeyDown={onKeyDownHandler}
-                        onChange={(e) =>
-                          setSearchQuery(e?.target?.value)
-                        }
+                        onChange={(e) => setSearchQuery(e?.target?.value)}
                       />
                       <div>
                         <BiSearch

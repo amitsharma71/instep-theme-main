@@ -19,8 +19,6 @@ import Scrolltotopbutton from "../../ScoolToTop/scrolltotopbutton";
 
 const AllProductDetail = () => {
   const dispatch = useDispatch();
-  // const userData = getUserId();
-
   const userData = getUserId();
   console.log(userData, "userData");
 
@@ -129,7 +127,7 @@ const AllProductDetail = () => {
                 <div className="margin_bottom">
                   <Row>
                     {data &&
-                      data?.products?.map((e) => {
+                      data?.products?.map((e, i) => {
                         if (e.image) {
                         }
                         let isInwishlist =
@@ -205,7 +203,7 @@ const AllProductDetail = () => {
                                 <Card.Body>
                                   <div className="item_rating">
                                     <p className="homerating_cat">
-                                      {e?.category[0]?.category}
+                                      {e?.category[i]?.category}
                                     </p>
                                   </div>
                                   <Card.Title className="crad_text">
