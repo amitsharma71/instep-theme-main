@@ -50,7 +50,7 @@ const TrackOrder = () => {
       <Table responsive="md" className="main">
         <thead>
           <tr>
-            <th>Sr. No.</th>
+            <th>Sr.No.</th>
             <th>Quantity</th>
             <th>Product</th>
             <th>Price </th>
@@ -64,7 +64,6 @@ const TrackOrder = () => {
               return (
                 <tr>
                   <td>{(currentPage - 1) * postPerPage + (i + 1)}</td>
-                  {/* //<tr onClick={() => handleOrder(e)}> */}
                   <td>{i + 1}</td>
                   <td>{e?.quantity}</td>
                   <td>{e?.productID[0]?.title}</td>

@@ -24,7 +24,6 @@ const Allsubcategory = () => {
   const [loading, setLoading] = useState(false); // State to store the selected category
   const [searchQuery, setSearchQuery] = useState("");
 
-
   const listCount = useSelector(
     (state) => state?.getsubsategorylistdata?.listdata?.totalDocs
   );
@@ -66,8 +65,9 @@ const Allsubcategory = () => {
     };
 
     dispatch(addsubcategory(asd));
-    toast.success("Successfuly added")
+    toast.success("Successfuly added");
     form.reset();
+    setSelectedCategoryId("");
   };
 
   useEffect(() => {
@@ -77,7 +77,11 @@ const Allsubcategory = () => {
   useEffect(() => {
     setLoading(true);
     dispatch(
-      allSubCategoryList({ search: searchQuery, page: currentPage, perPage: postPerPage })
+      allSubCategoryList({
+        search: searchQuery,
+        page: currentPage,
+        perPage: postPerPage,
+      })
     ).then((res) => {
       // console.log(res,)
       setLoading(false);
@@ -100,7 +104,11 @@ const Allsubcategory = () => {
     dispatch(removeFromSubcategory({ subcategoryid: id })).then((res) => {
       if (res?.payload?.success) {
         dispatch(
-          allSubCategoryList({ search: searchQuery, page: currentPage, perPage: postPerPage })
+          allSubCategoryList({
+            search: searchQuery,
+            page: currentPage,
+            perPage: postPerPage,
+          })
         );
       }
       handleClose();
@@ -115,10 +123,15 @@ const Allsubcategory = () => {
 
   const handleSearch = () => {
     if (searchQuery) {
-
       dispatch(allSubCategoryList({ search: searchQuery }));
     } else {
-      dispatch(allSubCategoryList({ search: '', page: currentPage, perPage: postPerPage }));
+      dispatch(
+        allSubCategoryList({
+          search: "",
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
     }
   };
 
@@ -189,11 +202,13 @@ const Allsubcategory = () => {
             <div className="form_control_or_btngroup">
               <div className="all_product_search ">
                 <FiSearch className="allproduct_searchicon " />
-                <input type="search" className=" mr-sm-2 adminsearch_bar" value={searchQuery}
+                <input
+                  type="search"
+                  className=" mr-sm-2 adminsearch_bar"
+                  value={searchQuery}
                   onKeyDown={onKeyDownHandler}
-                  onChange={(e) =>
-                    setSearchQuery(e?.target?.value)
-                  } />
+                  onChange={(e) => setSearchQuery(e?.target?.value)}
+                />
               </div>
               {/* <div className="btngroup">
                 <Button className="select_button " type="submit" onClick={handleSearch}>
@@ -201,49 +216,50 @@ const Allsubcategory = () => {
                 </Button>
               </div> */}
             </div>
-            <Table responsive="md" className="position-relative">
-              <thead>
-                <tr>
-                  <th>S/L</th>
-                  <th> Subcategory Name</th>
-                  <th className="d-flex justify-content-end">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <div className="table_Spinner">
-                    <Spinner animation="border" variant="dark" />
-                  </div>
-                ) : (
-                  getsubcat &&
-                  getsubcat?.map((e, index) => {
-                    return (
-                      <>
-                        <tr>
-                          <td>
-                            {(currentPage - 1) * postPerPage + (index + 1)}
-                          </td>
-                          <td>{e.subcategory}</td>
-                          <td>
-                            <div className="d-flex justify-content-end">
-                              <MdDelete
-                                className="deleteicn_forpro"
-                                onClick={() => {
-                                  handleShow(e?._id);
-                                }}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })
-                )}
-              </tbody>
-            </Table>
-            {searchQuery && searchQuery?.length !== 10 ? (
-              <div className="d-flex justify-content-end">
+            {isLoading ? (
+              <div className="table_Spinner">
+                <Spinner animation="border" variant="dark" />
               </div>
+            ) : (
+              <>
+                <Table responsive="md" className="position-relative">
+                  <thead>
+                    <tr>
+                      <th>S/L</th>
+                      <th> Subcategory Name</th>
+                      <th className="d-flex justify-content-end">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {getsubcat &&
+                      getsubcat?.map((e, index) => {
+                        return (
+                          <>
+                            <tr>
+                              <td>
+                                {(currentPage - 1) * postPerPage + (index + 1)}
+                              </td>
+                              <td>{e.subcategory}</td>
+                              <td>
+                                <div className="d-flex justify-content-end">
+                                  <MdDelete
+                                    className="deleteicn_forpro"
+                                    onClick={() => {
+                                      handleShow(e?._id);
+                                    }}
+                                  />
+                                </div>
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
+                  </tbody>
+                </Table>
+              </>
+            )}
+            {searchQuery && searchQuery?.length !== 10 ? (
+              <div className="d-flex justify-content-end"></div>
             ) : (
               <div className="d-flex justify-content-end">
                 <Allpagination

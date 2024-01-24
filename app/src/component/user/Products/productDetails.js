@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -80,17 +80,17 @@ const ProductDetails = () => {
                     <ReactImageMagnify
                       {...{
                         smallImage: {
+                          isFluidWidth: true,
+                          height: "400",
                           alt: "Wristwatch by Ted Baker London",
                           src: imageState
                             ? imageState?.split("http").length > 1
                               ? imageState
                               : `http://localhost:5000/uploads/${imageState}`
                             : productDetail?.images?.length > 0 &&
-                            (productDetail?.images[0].split("http").length > 1
-                              ? productDetail?.images[0]
-                              : `http://localhost:5000/uploads/${productDetail?.images[0]}`),
-                          // width: 400,
-                          // height: 400,
+                              (productDetail?.images[0].split("http").length > 1
+                                ? productDetail?.images[0]
+                                : `http://localhost:5000/uploads/${productDetail?.images[0]}`),
                         },
                         largeImage: {
                           src: imageState
@@ -98,10 +98,10 @@ const ProductDetails = () => {
                               ? imageState
                               : `http://localhost:5000/uploads/${imageState}`
                             : productDetail?.images?.length > 0 &&
-                            (productDetail?.images[0].split("http").length > 1
-                              ? productDetail?.images[0]
-                              : `http://localhost:5000/uploads/${productDetail?.images[0]}`),
-                          width: 1800,
+                              (productDetail?.images[0].split("http").length > 1
+                                ? productDetail?.images[0]
+                                : `http://localhost:5000/uploads/${productDetail?.images[0]}`),
+                          width: 1200,
                           height: 1800,
                         },
 
@@ -109,8 +109,8 @@ const ProductDetails = () => {
                           zIndex: 999,
                         },
                         enlargedImageContainerDimensions: {
-                          width: 890,
-                          height: 550,
+                          width: 750,
+                          height: 450,
                         },
                       }}
                     />
@@ -155,15 +155,8 @@ const ProductDetails = () => {
                             </div>
                           </Button>
                         </div>
-                        { }
+                        {}
                         <div className="twobuttondiv">
-                          {/* <Link to={"/deliverydetail"}>
-                        <Button className="bynow_button">
-                          <BsFillLightningFill className="buy_Addicon" /> BUY
-                          NOW
-                        </Button>
-                      </Link> */}
-                          {/* <Link to={`/deliverydetail/${_id}`}> */}
                           <Button
                             className="bynow_button"
                             data-bs-target="#collapseOne"
@@ -172,7 +165,6 @@ const ProductDetails = () => {
                             <BsFillLightningFill className="buy_Addicon" /> BUY
                             NOW
                           </Button>
-                          {/* </Link> */}
                         </div>
                       </div>
                     </Card.Text>
@@ -189,7 +181,11 @@ const ProductDetails = () => {
                       <h1>₹ {productDetail?.totalprice}</h1>
                     </Card.Subtitle>
                     <Card.Subtitle className="mb-2 text-muted underline_position">
-                      <h5> ₹{productDetail?.price}  <span>{productDetail?.discountpercentage}%Off</span></h5>
+                      <h5>
+                        {" "}
+                        ₹{productDetail?.price}{" "}
+                        <span>{productDetail?.discountpercentage}%Off</span>
+                      </h5>
                       <div className="underline_discount"></div>
                     </Card.Subtitle>
                     <Card.Subtitle className="mb-2 discriptionoffers_product text-muted">

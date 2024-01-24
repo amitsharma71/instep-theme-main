@@ -104,7 +104,7 @@ const Aboutus = () => {
         <div className="paddingdiv_popuarcat margin_bottom">
           <h2 className="margin_bottom">Top Categories</h2>
           <Row>
-            <Col lg={12} md={12} sm={6}>
+            <Col lg={12} md={12} sm={12}>
               <div className="mostpopularbrandborder">
                 <Row>
                   {topbrands.map((item, index) => {

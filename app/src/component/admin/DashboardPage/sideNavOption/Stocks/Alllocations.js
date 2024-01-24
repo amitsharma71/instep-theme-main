@@ -65,7 +65,7 @@ function Alllocation(params) {
     dispatch(allAdminProductList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
     // dispatch(searchAction({ name: searchQuery }));
 
-  }, [currentPage]);
+  }, [currentPage, searchQuery]);
   const handleProduct = () => {
     navigate("/product");
   };
@@ -150,104 +150,107 @@ function Alllocation(params) {
                   }
                 />
               </div>
-              <div className="btngroup">
+              {/* <div className="btngroup">
                 <Button className="select_button " type="submit" onClick={handleSearch}>
                   <AiOutlineSearch /> search
                 </Button>
-              </div>
+              </div> */}
             </div>
-            <Table responsive="lg" className="position-relative">
-              <thead>
-                <tr>
-                  <th>S/L</th>
-                  <th>Product Name</th>
-                  <th>Brand</th>
-                  <th>Categories</th>
-                  <th>Price</th>
-                  <th>Stock</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <div className="table_Spinner productspinner">
-                    <Spinner animation="border" variant="dark" />
-                  </div>
-                ) : (
-                  data &&
-                  data?.products?.map((product, index) => {
-                    console.log(product, "asdasdasdasd");
-                    return (
-                      <>
-                        <tr key={index}>
-                          <td>
-                            {(currentPage - 1) * postPerPage + (index + 1)}
-                          </td>
-                          <td>
+            {isLoading ? (
+              <div className="table_Spinner productspinner">
+                <Spinner animation="border" variant="dark" />
+              </div>
+            ) : (
+              <>
+                <Table responsive="lg" className="position-relative">
+                  <thead>
+                    <tr>
+                      <th>S/L</th>
+                      <th>Product Name</th>
+                      <th>Brand</th>
+                      <th>Categories</th>
+                      <th>Price</th>
+                      <th>Stock</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-                            {product.title.substring(
-                              0,
-                              readMoreState === product?._id
-                                ? product?.title?.length
-                                : 50
-                            )}
-                            {product?.title?.length > 50 && (
-                              <p
-                                onClick={() => {
-                                  if (readMoreState === product?._id) {
-                                    setReadMoreState(null);
-                                  } else {
-                                    setReadMoreState(product?._id);
-                                  }
-                                }}
-                              >
-                                read
-                                {readMoreState === product?._id
-                                  ? "Less"
-                                  : "More"}
-                              </p>
-                            )}
-                          </td>
-                          <td>{product?.brand[0]?.brand}</td>
-                          <td>{product?.category[0]?.category}</td>
-                          <td>{product?.price}</td>
-                          <td>{product?.stock}</td>
-                          <td>
-                            <Dropdown>
-                              <Dropdown.Toggle
-                                variant=""
-                                id="dropdown-basic"
-                              // className="focusotoggle"
-                              >
-                                <BiDotsVerticalRounded />
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu>
-                                <Dropdown.Item href="#/action-1">
-                                  <button
-                                    className="editdeleter_button"
-                                    onClick={() => editClick(product._id)}
+                    {data &&
+                      data?.products?.map((product, index) => {
+                        console.log(product, "asdasdasdasd");
+                        return (
+                          <>
+                            <tr key={index}>
+                              <td>
+                                {(currentPage - 1) * postPerPage + (index + 1)}
+                              </td>
+                              <td>
+
+                                {product.title.substring(
+                                  0,
+                                  readMoreState === product?._id
+                                    ? product?.title?.length
+                                    : 50
+                                )}
+                                {product?.title?.length > 50 && (
+                                  <p
+                                    onClick={() => {
+                                      if (readMoreState === product?._id) {
+                                        setReadMoreState(null);
+                                      } else {
+                                        setReadMoreState(product?._id);
+                                      }
+                                    }}
                                   >
-                                    <LuEdit3 /> Edit
-                                  </button>
-                                </Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">
-                                  <button
-                                    className="editdeleter_button"
-                                    onClick={() => deleteClick(product._id)}
+                                    read
+                                    {readMoreState === product?._id
+                                      ? "Less"
+                                      : "More"}
+                                  </p>
+                                )}
+                              </td>
+                              <td>{product?.brand[0]?.brand}</td>
+                              <td>{product?.category[0]?.category}</td>
+                              <td>{product?.price}</td>
+                              <td>{product?.stock}</td>
+                              <td>
+                                <Dropdown>
+                                  <Dropdown.Toggle
+                                    variant=""
+                                    id="dropdown-basic"
+                                  // className="focusotoggle"
                                   >
-                                    <AiOutlineDelete /> delete
-                                  </button>
-                                </Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })
-                )}
-              </tbody>
-            </Table>
+                                    <BiDotsVerticalRounded />
+                                  </Dropdown.Toggle>
+                                  <Dropdown.Menu>
+                                    <Dropdown.Item href="#/action-1">
+                                      <button
+                                        className="editdeleter_button"
+                                        onClick={() => editClick(product._id)}
+                                      >
+                                        <LuEdit3 /> Edit
+                                      </button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">
+                                      <button
+                                        className="editdeleter_button"
+                                        onClick={() => deleteClick(product._id)}
+                                      >
+                                        <AiOutlineDelete /> delete
+                                      </button>
+                                    </Dropdown.Item>
+                                  </Dropdown.Menu>
+                                </Dropdown>
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
+                  </tbody>
+                </Table>
+              </>
+            )}
             {searchQuery && searchQuery?.length !== 10 ? (
               <div className="d-flex justify-content-end">
               </div>

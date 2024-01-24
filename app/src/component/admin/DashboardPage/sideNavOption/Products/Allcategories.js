@@ -276,47 +276,49 @@ const Allcategories = () => {
                 </Button>
               </div> */}
             </div>
-            <Table responsive="md">
-              <thead>
-                <tr>
-                  <th>S/L</th>
-                  <th> Category Name</th>
-                  <th>Image</th>
-                  <th className="d-flex justify-content-end">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <div className="table_Spinner">
-                    <Spinner animation="border" variant="dark" />
-                  </div>
-                ) : (
-                  data &&
-                  data?.map((e, index) => {
-                    console.log(e, "fiorjei");
-                    return (
-                      <tr>
-                        <td>{(currentPage - 1) * postPerPage + (index + 1)}</td>
-                        <td>{e.category}</td>
-                        <td>
-                          <img className="tableget_image" src={`http://localhost:5000/categoryimg/${e?.images}`} crossOrigin="anonymous" />
-                        </td>
-                        <td>
-                          <div className="d-flex justify-content-end">
-                            <MdDelete
-                              className="deleteicn_forpro"
-                              onClick={() => {
-                                handleShow(e?._id);
-                              }}
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </Table>
+            {isLoading ? (
+              <div className="table_Spinner">
+                <Spinner animation="border" variant="dark" />
+              </div>
+            ) : (
+              <>
+                <Table responsive="md">
+                  <thead>
+                    <tr>
+                      <th>S/L</th>
+                      <th> Category Name</th>
+                      <th>Image</th>
+                      <th className="d-flex justify-content-end">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data &&
+                      data?.map((e, index) => {
+                        console.log(e, "fiorjei");
+                        return (
+                          <tr>
+                            <td>{(currentPage - 1) * postPerPage + (index + 1)}</td>
+                            <td>{e.category}</td>
+                            <td>
+                              <img className="tableget_image" src={`http://localhost:5000/categoryimg/${e?.images}`} crossOrigin="anonymous" />
+                            </td>
+                            <td>
+                              <div className="d-flex justify-content-end">
+                                <MdDelete
+                                  className="deleteicn_forpro"
+                                  onClick={() => {
+                                    handleShow(e?._id);
+                                  }}
+                                />
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </Table>
+              </>
+            )}
             {searchQuery && searchQuery?.length !== 10 ? (
               <div className="d-flex justify-content-end">
               </div>

@@ -121,7 +121,7 @@ function Mainheader() {
                           <span className="navbar-toggler-icon"></span>
                         </Button>
                       </div>
-                      <SidebarFun />
+                      <SidebarFun onHide={handleClose} show={show} />
                     </Offcanvas.Body>
                   </Offcanvas>
                 </div>

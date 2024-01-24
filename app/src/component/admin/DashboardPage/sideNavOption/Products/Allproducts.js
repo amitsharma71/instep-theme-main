@@ -21,10 +21,14 @@ import { toast, ToastContainer } from "react-toastify";
 import MydModalWithGrid from "../../../addProductDetails/updateProductForm";
 import ConfirmationModal from "../../../addProductDetails/confirmModel";
 import { updateProduct } from "../../../../../Redux/action/updateProductAction";
-import { allAdminProductList } from "../../../../../Redux/action/getAllProductListing";
+import {
+  allAdminProductList,
+  editProductdetail,
+} from "../../../../../Redux/action/getAllProductListing";
 import { deleteProduct } from "../../../../../Redux/action/deleteProductAction";
 import Allpagination from "../../../Pagination/pagination";
 import { searchAction } from "../../../../../Redux/action/searchProductAction";
+import { allSubCategoryList } from "../../../../../Redux/action/getSubcategoryAction";
 
 function Allproducts(params) {
   const navigate = useNavigate();
@@ -44,15 +48,7 @@ function Allproducts(params) {
     (state) => state?.GetAdminProductAllListData?.listdata?.count
   );
 
-  console.log(searchQuery, "fwkenfljn");
-
-  const handleSearch = () => {
-    if (searchQuery) {
-      dispatch(allAdminProductList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
-    } else {
-      dispatch(allAdminProductList({ search: '', page: currentPage, perPage: postPerPage }));
-    }
-  };
+  console.log(data, "fwkenfljn");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostPerPage] = useState(10);
@@ -62,10 +58,15 @@ function Allproducts(params) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(allAdminProductList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+    dispatch(
+      allAdminProductList({
+        search: searchQuery,
+        page: currentPage,
+        perPage: postPerPage,
+      })
+    );
     // dispatch(searchAction({ name: searchQuery }));
-
-  }, [currentPage,searchQuery]);
+  }, [currentPage, searchQuery]);
   const handleProduct = () => {
     navigate("/product");
   };
@@ -102,19 +103,47 @@ function Allproducts(params) {
     formData.append("userData", JSON.stringify(payload));
     console.log(JSON.parse(formData.getAll("userData")), "datass");
 
-    // If you have other values to append from the 'values' object, you can do so like this:
-    // formData.append('key', values.key);
-
-    dispatch(updateProduct(formData));
+    dispatch(
+      editProductdetail({
+        search: "",
+        page: currentPage,
+        perPage: postPerPage,
+        id: _id,
+      })
+    );
     setShow(true);
     console.log("wwww");
   };
   const handleClose = () => setShow(false);
 
+  const handleSearch = () => {
+    if (searchQuery) {
+      dispatch(
+        allAdminProductList({
+          search: searchQuery,
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
+    } else {
+      dispatch(
+        allAdminProductList({
+          search: "",
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
+    }
+  };
+
   const onKeyDownHandler = (e) => {
     if (e.keyCode === 13) {
       handleSearch();
     }
+  };
+
+  const onClose = (data) => {
+    setShow(data);
   };
   return (
     <>
@@ -145,9 +174,8 @@ function Allproducts(params) {
                   className=" mr-sm-2 adminsearch_bar"
                   value={searchQuery}
                   onKeyDown={onKeyDownHandler}
-                  onChange={(e) =>
-                    setSearchQuery(e?.target?.value)
-                  }
+                  // onClick={handleSearch}
+                  onChange={(e) => setSearchQuery(e?.target?.value)}
                 />
               </div>
               {/* <div className="btngroup">
@@ -156,99 +184,100 @@ function Allproducts(params) {
                 </Button>
               </div> */}
             </div>
-            <Table responsive="lg" className="position-relative">
-              <thead>
-                <tr>
-                  <th>S/L</th>
-                  <th>Product Name</th>
-                  <th>Brand</th>
-                  <th>Categories</th>
-                  <th>Price</th>
-                  {/* <th>Published</th> */}
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <div className="table_Spinner productspinner">
-                    <Spinner animation="border" variant="dark" />
-                  </div>
-                ) : (
-                  data &&
-                  data?.products?.map((product, index) => {
-                    console.log(product, "asdasdasdasd");
-                    return (
-                      <>
-                        <tr key={index}>
-                          <td>
-                            {(currentPage - 1) * postPerPage + (index + 1)}
-                          </td>
-                          <td>
-                            {product.title.substring(
-                              0,
-                              readMoreState === product?._id
-                                ? product?.title?.length
-                                : 50
-                            )}
-                            {product?.title?.length > 50 && (
-                              <p
-                                onClick={() => {
-                                  if (readMoreState === product?._id) {
-                                    setReadMoreState(null);
-                                  } else {
-                                    setReadMoreState(product?._id);
-                                  }
-                                }}
-                              >
-                                read
-                                {readMoreState === product?._id
-                                  ? "Less"
-                                  : "More"}
-                              </p>
-                            )}
-                          </td>
-                          <td>{product?.brand[0]?.brand}</td>
-                          <td>{product?.category[0]?.category}</td>
-                          <td>{product.price}</td>
-                          <td>
-                            <Dropdown>
-                              <Dropdown.Toggle
-                                variant=""
-                                id="dropdown-basic"
-                                // className="focusotoggle"
-                              >
-                                <BiDotsVerticalRounded />
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu>
-                                <Dropdown.Item href="#/action-1">
-                                  <button
-                                    className="editdeleter_button"
-                                    onClick={() => editClick(product._id)}
-                                  >
-                                    <LuEdit3 /> Edit
-                                  </button>
-                                </Dropdown.Item>
-                                <Dropdown.Item href="#/action-2">
-                                  <button
-                                    className="editdeleter_button"
-                                    onClick={() => deleteClick(product._id)}
-                                  >
-                                    <AiOutlineDelete /> delete
-                                  </button>
-                                </Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })
-                )}
-              </tbody>
-            </Table>
-            {searchQuery && searchQuery?.length !== 10 ? (
-              <div className="d-flex justify-content-end">
+            {isLoading ? (
+              <div className="table_Spinner productspinner">
+                <Spinner animation="border" variant="dark" />
               </div>
+            ) : (
+              <>
+                <Table responsive="lg" className="position-relative">
+                  <thead>
+                    <tr>
+                      <th>S/L</th>
+                      <th>Product Name</th>
+                      <th>Brand</th>
+                      <th>Categories</th>
+                      <th>Price</th>
+                      {/* <th>Published</th> */}
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data &&
+                      data?.products?.map((product, index) => {
+                        console.log(product, "asdasdasdasd");
+                        return (
+                          <>
+                            <tr key={index}>
+                              <td>
+                                {(currentPage - 1) * postPerPage + (index + 1)}
+                              </td>
+                              <td>
+                                {product.title.substring(
+                                  0,
+                                  readMoreState === product?._id
+                                    ? product?.title?.length
+                                    : 50
+                                )}
+                                {product?.title?.length > 50 && (
+                                  <p
+                                    onClick={() => {
+                                      if (readMoreState === product?._id) {
+                                        setReadMoreState(null);
+                                      } else {
+                                        setReadMoreState(product?._id);
+                                      }
+                                    }}
+                                  >
+                                    read
+                                    {readMoreState === product?._id
+                                      ? "Less"
+                                      : "More"}
+                                  </p>
+                                )}
+                              </td>
+                              <td>{product?.brand[0]?.brand}</td>
+                              <td>{product?.category[0]?.category}</td>
+                              <td>{product.price}</td>
+                              <td>
+                                <Dropdown>
+                                  <Dropdown.Toggle
+                                    variant=""
+                                    id="dropdown-basic"
+                                    // className="focusotoggle"
+                                  >
+                                    <BiDotsVerticalRounded />
+                                  </Dropdown.Toggle>
+                                  <Dropdown.Menu>
+                                    <Dropdown.Item href="#/action-1">
+                                      <button
+                                        className="editdeleter_button"
+                                        onClick={() => editClick(product._id)}
+                                      >
+                                        <LuEdit3 /> Edit
+                                      </button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">
+                                      <button
+                                        className="editdeleter_button"
+                                        onClick={() => deleteClick(product._id)}
+                                      >
+                                        <AiOutlineDelete /> delete
+                                      </button>
+                                    </Dropdown.Item>
+                                  </Dropdown.Menu>
+                                </Dropdown>
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
+                  </tbody>
+                </Table>
+              </>
+            )}
+            {searchQuery && searchQuery?.length !== 10 ? (
+              <div className="d-flex justify-content-end"></div>
             ) : (
               <div className="d-flex justify-content-end">
                 <Allpagination
@@ -262,7 +291,12 @@ function Allproducts(params) {
             )}
           </Col>
         </Row>
-        <MydModalWithGrid show={show} handleClose={handleClose} productId={editClick} />
+        <MydModalWithGrid
+          show={show}
+          handleClose={handleClose}
+          productId={editClick}
+          onClose={onClose}
+        />
         <ConfirmationModal
           show={showModal}
           onHide={() => setShowModal(false)}

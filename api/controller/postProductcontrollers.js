@@ -36,7 +36,26 @@ const postproduct = expressAsyncHandler(async (req, res) => {
     // const finalPrice = priceAfterDiscount + taxAmount;
     // console.log(finalPrice, "testetstetsstetts");
 
-    const productadd = new Userproducts({
+    // const productadd = new Userproducts({
+    //   category: userData.category_id,
+    //   description: userData.description,
+    //   title: userData.title,
+    //   price: userData.price,
+    //   images: imagesFilenames,
+    //   brand: userData.brand_id,
+    //   rating: userData.rating,
+    //   subcategory: userData.subcategory_id,
+    //   thumbnail: thumbnailFilename,
+    //   stock: userData.stock,
+    //   discountpercentage: userData.discountpercentage,
+    //   tax: userData.tax,
+    //   totalprice: priceAfterDiscount,
+    // });
+
+    // await productadd.save();
+
+
+    const productadd = await Userproducts.create({
       category: userData.category_id,
       description: userData.description,
       title: userData.title,
@@ -45,14 +64,13 @@ const postproduct = expressAsyncHandler(async (req, res) => {
       brand: userData.brand_id,
       rating: userData.rating,
       subcategory: userData.subcategory_id,
+      type_subcategory_id: userData.type_subcategory_id,
       thumbnail: thumbnailFilename,
       stock: userData.stock,
       discountpercentage: userData.discountpercentage,
       tax: userData.tax,
       totalprice: priceAfterDiscount,
-    });
-
-    await productadd.save();
+    })
 
     // Send a JSON response indicating success
     res
@@ -70,7 +88,6 @@ const getproduct = expressAsyncHandler(async (req, res) => {
     const page = parseInt(req.body.page); // Default to page 1
     const perPage = parseInt(req.body.perPage); // Default to 10 items per page
 
-    console.log(req.body.search, "search")
     const skip = (page - 1) * perPage;
 
     if (page && perPage) {
@@ -81,11 +98,11 @@ const getproduct = expressAsyncHandler(async (req, res) => {
       ];
 
       const productsQuery = [
-        {
-          $match: {
-            title: { $regex: req.body.search, $options: 'i' } // Case-insensitive search
-          }
-        },
+        // {
+        //   $match: {
+        //     title: { $regex: req.body.search, $options: 'i' } // Case-insensitive search
+        //   }
+        // },
         {
           $lookup: {
             from: "categorytables",
@@ -117,6 +134,25 @@ const getproduct = expressAsyncHandler(async (req, res) => {
           $limit: perPage, // Limit the number of items per page
         },
       ];
+      if (req.body.search) {
+        console.log(req.body.id,"jsahdcjacacsabc")
+        productsQuery.push({
+          $match: {
+            title: { $regex: req.body.search, $options: 'i' } // Case-insensitive search
+          }
+        },)
+      }
+
+
+      if (req.body.id) {
+        console.log(req.body.id,"tatysvcjacmavc d  ua n")
+        productsQuery.push({
+          $match: {
+            _id: new mongoose.Types.ObjectId(req.body.id)
+          },
+        },)
+      }
+      console.log(productsQuery, "productsQueryaaaaaa")
 
       const [countResult, productsResult] = await Promise.all([
         Userproducts.aggregate(countQuery),

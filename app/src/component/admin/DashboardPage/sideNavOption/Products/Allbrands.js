@@ -68,6 +68,10 @@ const Allsubcategory = () => {
       console.log(res, "fdsfdf");
       toast.success("successful Submited");
       form.reset();
+      
+      setSelectedCategoryId("");
+      setSelectedSubcategoryId("");
+      SetTypeSubCategory("");
     });
   };
   useEffect(() => {
@@ -169,43 +173,58 @@ const Allsubcategory = () => {
             render={({ handleSubmit, form, submitting, pristine }) => (
               <form onSubmit={handleSubmit}>
                 <div>
-                  <select
-                    className="subcategory_drop margin_bottom"
-                    onChange={handleCategoryChangeCat}
-                    value={selectedCategoryId}
-                  >
-                    <option value="">Select Category</option>
-                    {getcategorylist &&
-                      getcategorylist?.map((e) => (
-                        <option key={e?._id} value={e?._id}>
-                          {e?.category}
-                        </option>
-                      ))}
-                  </select>
-                  <select
-                    className="subcategory_drop margin_bottom"
-                    onChange={handleCategoryChange2}
-                    value={selectedSubcategoryId}
-                  >
-                    <option value="">Select a Subcategory</option>
-                    {getsubcat?.map((i) => (
-                      <option key={i?._id} value={i?._id}>
-                        {i?.subcategory}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    className="subcategory_drop margin_bottom"
-                    onChange={handleCategoryChange3}
-                    value={typeSubCategory}
-                  >
-                    <option value="">Select a typesubcategory</option>
-                    {typesubcatgory?.map((i) => (
-                      <option key={i?._id} value={i?._id}>
-                        {i?.typesubcategory}
-                      </option>
-                    ))}
-                  </select>
+                  <Field name="xyz">
+                    {({ input, meta }) => (
+                      <select
+                        {...input}
+                        className="subcategory_drop margin_bottom"
+                        onChange={handleCategoryChangeCat}
+                        value={selectedCategoryId}
+                      >
+                        <option value="">Select Category</option>
+                        {getcategorylist &&
+                          getcategorylist?.map((e) => (
+                            <option key={e?._id} value={e?._id}>
+                              {e?.category}
+                            </option>
+                          ))}
+                      </select>
+                    )}
+                  </Field>
+                  <Field name="ydf">
+                    {({ input, meta }) => (
+                      <select
+                        {...input}
+                        className="subcategory_drop margin_bottom"
+                        onChange={handleCategoryChange2}
+                        value={selectedSubcategoryId}
+                      >
+                        <option value="">Select a Subcategory</option>
+                        {getsubcat?.map((i) => (
+                          <option key={i?._id} value={i?._id}>
+                            {i?.subcategory}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </Field>
+                  <Field name="gds">
+                    {({ input, meta }) => (
+                      <select
+                        {...input}
+                        className="subcategory_drop margin_bottom"
+                        onChange={handleCategoryChange3}
+                        value={typeSubCategory}
+                      >
+                        <option value="">Select a typesubcategory</option>
+                        {typesubcatgory?.map((i) => (
+                          <option key={i?._id} value={i?._id}>
+                            {i?.typesubcategory}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </Field>
                   <div className="mb-2">
                     <Field
                       className="subcategory_drop"
@@ -248,47 +267,48 @@ const Allsubcategory = () => {
                 </Button>
               </div> */}
             </div>
-            <Table responsive="md">
-              <thead>
-                <tr>
-                  <th>S/L</th>
-                  <th> Brand Name</th>
-                  <th className="d-flex justify-content-end">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <div className="table_Spinner">
-                    <Spinner animation="border" variant="dark" />
-                  </div>
-                ) : (
-                  getbrandlist &&
-                  getbrandlist?.map((e, index) => {
-                    console.log(e, "brnds");
-                    return (
-                      <>
-                        <tr>
-                          <td>
-                            {(currentPage - 1) * postPerPage + (index + 1)}
-                          </td>
-                          <td>{e.brand}</td>
-                          <td>
-                            <div className="d-flex justify-content-end">
-                              <MdDelete
-                                className="deleteicn_forpro"
-                                onClick={() => {
-                                  handleShow(e?._id);
-                                }}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })
-                )}
-              </tbody>
-            </Table>
+            {isLoading ? (
+              <div className="table_Spinner">
+                <Spinner animation="border" variant="dark" />
+              </div>
+            ) : (
+              <Table responsive="md">
+                <thead>
+                  <tr>
+                    <th>S/L</th>
+                    <th> Brand Name</th>
+                    <th className="d-flex justify-content-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {getbrandlist &&
+                    getbrandlist?.map((e, index) => {
+                      console.log(e, "brnds");
+                      return (
+                        <>
+                          <tr>
+                            <td>
+                              {(currentPage - 1) * postPerPage + (index + 1)}
+                            </td>
+                            <td>{e.brand}</td>
+                            <td>
+                              <div className="d-flex justify-content-end">
+                                <MdDelete
+                                  className="deleteicn_forpro"
+                                  onClick={() => {
+                                    handleShow(e?._id);
+                                  }}
+                                />
+                              </div>
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            )}
+
             {searchQuery && searchQuery.length !== 10 ? (
               <div className="d-flex justify-content-end"></div>
             ) : (
