@@ -158,6 +158,7 @@ const Usernavbar = () => {
                             )}
                             <img
                               src={`http://localhost:5000/logo/${header?.logo}`}
+
                               alt=""
                               style={{ width: "92px" }}
                             />
@@ -256,7 +257,7 @@ const Usernavbar = () => {
                                   className=" carddecorationnone_cat color"
                                   to="/profile"
                                 >
-                                  <MdOutlineAccountCircle className="usericons" />{" "}
+                                  <MdOutlineAccountCircle className="usericons" />
                                   {userData.username}
                                 </Link>
                               </li>

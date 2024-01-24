@@ -68,6 +68,7 @@ const Allsubcategory = () => {
       console.log(res, "fdsfdf");
       toast.success("successful Submited");
       form.reset();
+      
       setSelectedCategoryId("");
       setSelectedSubcategoryId("");
       SetTypeSubCategory("");
