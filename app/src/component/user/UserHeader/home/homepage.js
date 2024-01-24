@@ -311,39 +311,50 @@ const Home = () => {
                             item?.category?.[0]?.category === "Electronics"
                         )
                         .slice(0, 6)
-                        .map((item, index) => (
-                          <SwiperSlide className="shopping_card" key={index}>
-                            <Link
-                              className="card_deco"
-                              to={`/productdetail/${item._id}`}
-                              onClick={() => productClick(item?._id)}
-                            >
-                              <Card className="shoppingcard_bor">
-                                <div className="img_div">
-                                  <Card.Img
-                                    variant="top"
-                                    src={
-                                      item?.image
-                                        ? item?.image
-                                        : item?.thumbnail?.split(":").length > 1
-                                        ? item?.thumbnail
-                                        : `http://localhost:5000/uploads/${item.thumbnail}`
-                                    }
-                                  />
-                                </div>
-                                <Card.Body>
-                                  <Card.Title className="crad_text">
-                                    {item?.title}
-                                  </Card.Title>
-                                  <Card.Text className="crad_text">
-                                    <h6> ₹ {item?.price}</h6>
-                                  </Card.Text>
-                                </Card.Body>
-                              </Card>
-                            </Link>
-                          </SwiperSlide>
-                        ))}
-
+                        .map((item, index) => {
+                          const subcategoryid = item?.subcategory[0]?._id;
+                          console.log(subcategoryid, "amitsh");
+                          const categoryid = item?.category[0]?._id;
+                          console.log(categoryid, "categoryidss");
+                          return (
+                            <>
+                              <SwiperSlide
+                                className="shopping_card"
+                                key={index}
+                              >
+                                <Link
+                                  className="card_deco"
+                                  to={`/category/${categoryid}/${subcategoryid}`}
+                                  onClick={() => productClicks(subcategoryid)}
+                                >
+                                  <Card className="shoppingcard_bor">
+                                    <div className="img_div">
+                                      <Card.Img
+                                        variant="top"
+                                        src={
+                                          item?.image
+                                            ? item?.image
+                                            : item?.thumbnail?.split(":")
+                                                .length > 1
+                                            ? item?.thumbnail
+                                            : `http://localhost:5000/uploads/${item.thumbnail}`
+                                        }
+                                      />
+                                    </div>
+                                    <Card.Body>
+                                      <Card.Title className="crad_text">
+                                        {item?.title}
+                                      </Card.Title>
+                                      <Card.Text className="crad_text">
+                                        <h6> ₹ {item?.price}</h6>
+                                      </Card.Text>
+                                    </Card.Body>
+                                  </Card>
+                                </Link>
+                              </SwiperSlide>
+                            </>
+                          );
+                        })}
                   </Swiper>
                 </Col>
               </Row>
@@ -404,38 +415,38 @@ const Home = () => {
                       },
                     }}
                   >
-//                     {categorydata &&
-//                       categorydata?.products?.map((e, index) => {
-//                         if (e?.category?.[0]?.category === "Home &Furniture") {
-//                           const subcategoryid = e?.subcategory[0]?._id;
-//                           console.log(subcategoryid, "amitsh");
-//                           const categoryid = e?.category[0]?._id;
-//                           console.log(categoryid, "categoryidss");
-//                           return (
-//                             <SwiperSlide className="shopping_card" key={index}>
-//                               <Link
-//                                 className="card_deco"
-//                                 to={`/category/${categoryid}/${subcategoryid}`}
-//                                 onClick={() => productClicks(subcategoryid)}
-//                               >
-//                                 <Card className="shoppingcard_bor">
-//                                   <div className="img_div">
-//                                     <Card.Img
-//                                       variant="top"
-//                                       src={
-//                                         e?.image
-//                                           ? e?.image
-//                                           : e?.thumbnail?.split(":").length > 1
-//                                           ? e?.thumbnail
-//                                           : `http://localhost:5000/uploads/${e.thumbnail}`
-//                                       }
-//                                     />
-//                                   </div>
-//                                   <Card.Body>
-//                                     <Card.Title className="crad_text">
-//                                       {e?.title}
-//                                     </Card.Title>
-                    {data?.products
+                    {categorydata &&
+                      categorydata?.products?.map((e, index) => {
+                        if (e?.category?.[0]?.category === "Home &Furniture") {
+                          const subcategoryid = e?.subcategory[0]?._id;
+                          console.log(subcategoryid, "amitsh");
+                          const categoryid = e?.category[0]?._id;
+                          console.log(categoryid, "categoryidss");
+                          return (
+                            <SwiperSlide className="shopping_card" key={index}>
+                              <Link
+                                className="card_deco"
+                                to={`/category/${categoryid}/${subcategoryid}`}
+                                onClick={() => productClicks(subcategoryid)}
+                              >
+                                <Card className="shoppingcard_bor">
+                                  <div className="img_div">
+                                    <Card.Img
+                                      variant="top"
+                                      src={
+                                        e?.image
+                                          ? e?.image
+                                          : e?.thumbnail?.split(":").length > 1
+                                          ? e?.thumbnail
+                                          : `http://localhost:5000/uploads/${e.thumbnail}`
+                                      }
+                                    />
+                                  </div>
+                                  <Card.Body>
+                                    <Card.Title className="crad_text">
+                                      {e?.title}
+                                    </Card.Title>
+                                    {/* {data?.products
                       ?.filter(
                         (item) =>
                           item?.category?.[0]?.category === "Home &Furniture"
@@ -464,15 +475,17 @@ const Home = () => {
                               <Card.Body>
                                 <Card.Title className="crad_text">
                                   {e?.title}
-                                </Card.Title>
-                                <Card.Text className="crad_text">
-                                  <h6> ₹ {e?.price}</h6>
-                                </Card.Text>
-                              </Card.Body>
-                            </Card>
-                          </Link>
-                        </SwiperSlide>
-                      ))}
+                                </Card.Title> */}
+                                    <Card.Text className="crad_text">
+                                      <h6> ₹ {e?.price}</h6>
+                                    </Card.Text>
+                                  </Card.Body>
+                                </Card>
+                              </Link>
+                            </SwiperSlide>
+                          );
+                        }
+                      })}
                   </Swiper>
                 </Col>
               </Row>
@@ -533,47 +546,47 @@ const Home = () => {
                       },
                     }}
                   >
-//                     {data?.products?.map((e, index) => {
-//                       console.log(data?.products?._id, "asasasasas");
-//                       if (e?.category?.[0]?.category === "Books &More") {
-//                         const subcategoryid = e?.subcategory[0]?._id;
-//                         console.log(subcategoryid, "amitsh");
-//                         const categoryid = e?.category[0]?._id;
-//                         console.log(categoryid, "categoryidss");
-//                         return (
-//                           <SwiperSlide className="shopping_card" key={e?.id}>
-//                             <Link
-//                               className="card_deco"
-//                               to={`/category/${categoryid}/${subcategoryid}`}
-//                               onClick={() => productClicks(subcategoryid)}
-//                             >
-//                               <Card className="shoppingcard_bor">
-//                                 <div className="img_div">
-//                                   <Card.Img
-//                                     variant="top"
-//                                     src={
-//                                       e?.image
-//                                         ? e?.image
-//                                         : e?.thumbnail?.split(":").length > 1
-//                                         ? e?.thumbnail
-//                                         : `http://localhost:5000/uploads/${e.thumbnail}`
-//                                     }
-//                                   />
-//                                 </div>
-//                                 <Card.Body>
-//                                   <Card.Title className="crad_text">
-//                                     {e?.title}
-//                                   </Card.Title>
-//                                   <Card.Text className="crad_text">
-//                                     <h6> ₹ {e?.price}</h6>
-//                                   </Card.Text>
-//                                 </Card.Body>
-//                               </Card>
-//                             </Link>
-//                           </SwiperSlide>
-//                         );
-//                       }
-//                     })}
+                    {/* {data?.products?.map((e, index) => {
+                      console.log(data?.products?._id, "asasasasas");
+                      if (e?.category?.[0]?.category === "Books &More") {
+                        const subcategoryid = e?.subcategory[0]?._id;
+                        console.log(subcategoryid, "amitsh");
+                        const categoryid = e?.category[0]?._id;
+                        console.log(categoryid, "categoryidss");
+                        return (
+                          <SwiperSlide className="shopping_card" key={e?.id}>
+                            <Link
+                              className="card_deco"
+                              to={`/category/${categoryid}/${subcategoryid}`}
+                              onClick={() => productClicks(subcategoryid)}
+                            >
+                              <Card className="shoppingcard_bor">
+                                <div className="img_div">
+                                  <Card.Img
+                                    variant="top"
+                                    src={
+                                      e?.image
+                                        ? e?.image
+                                        : e?.thumbnail?.split(":").length > 1
+                                        ? e?.thumbnail
+                                        : `http://localhost:5000/uploads/${e.thumbnail}`
+                                    }
+                                  />
+                                </div>
+                                <Card.Body>
+                                  <Card.Title className="crad_text">
+                                    {e?.title}
+                                  </Card.Title>
+                                  <Card.Text className="crad_text">
+                                    <h6> ₹ {e?.price}</h6>
+                                  </Card.Text>
+                                </Card.Body>
+                              </Card>
+                            </Link>
+                          </SwiperSlide>
+                        );
+                      }
+                    })} */}
                     {data?.products
                       ?.filter(
                         (item) =>
