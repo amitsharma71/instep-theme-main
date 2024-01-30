@@ -54,7 +54,6 @@ const postproduct = expressAsyncHandler(async (req, res) => {
 
     // await productadd.save();
 
-
     const productadd = await Userproducts.create({
       category: userData.category_id,
       description: userData.description,
@@ -70,7 +69,7 @@ const postproduct = expressAsyncHandler(async (req, res) => {
       discountpercentage: userData.discountpercentage,
       tax: userData.tax,
       totalprice: priceAfterDiscount,
-    })
+    });
 
     // Send a JSON response indicating success
     res
@@ -136,24 +135,23 @@ const getproduct = expressAsyncHandler(async (req, res) => {
         },
       ];
       if (req.body.search) {
-        console.log(req.body.id,"jsahdcjacacsabc")
+        console.log(req.body.id, "jsahdcjacacsabc");
         productsQuery.push({
           $match: {
-            title: { $regex: req.body.search, $options: 'i' } // Case-insensitive search
-          }
-        },)
+            title: { $regex: req.body.search, $options: "i" }, // Case-insensitive search
+          },
+        });
       }
-
 
       if (req.body.id) {
-        console.log(req.body.id,"tatysvcjacmavc d  ua n")
+        console.log(req.body.id, "tatysvcjacmavc d  ua n");
         productsQuery.push({
           $match: {
-            _id: new mongoose.Types.ObjectId(req.body.id)
+            _id: new mongoose.Types.ObjectId(req.body.id),
           },
-        },)
+        });
       }
-      console.log(productsQuery, "productsQueryaaaaaa")
+      console.log(productsQuery, "productsQueryaaaaaa");
 
       const [countResult, productsResult] = await Promise.all([
         Userproducts.aggregate(countQuery),
@@ -185,7 +183,7 @@ const getproduct = expressAsyncHandler(async (req, res) => {
         {
           $lookup: {
             from: "subcategorytables",
-            localField: "subcategory", 
+            localField: "subcategory",
             foreignField: "_id",
             as: "subcategory",
           },
@@ -198,7 +196,6 @@ const getproduct = expressAsyncHandler(async (req, res) => {
             as: "brand",
           },
         },
-
       ]
 
       if (req.body.search) {
@@ -231,7 +228,7 @@ const getproduct = expressAsyncHandler(async (req, res) => {
 
 const updateproduct = expressAsyncHandler(async (req, res) => {
   try {
-    console.log("aaaaaa", req.body)
+    console.log("aaaaaa", req.body);
     const userData = JSON.parse(req.body.userData);
     const product = userData.id;
     const dataproduct = await Userproducts.find({ _id: product }).exec();
@@ -294,6 +291,7 @@ const updateproduct = expressAsyncHandler(async (req, res) => {
     updateFields.rating = userData?.rating;
     updateFields.stock = userData?.stock;
     updateFields.discountPercentage = userData?.discountPercentage;
+    updateFields.type_subcategory_id = userData?.typesubcategoryId;
 
     const findbyid = await Userproducts.findByIdAndUpdate(
       { _id: product },
@@ -621,6 +619,7 @@ const filterAll = expressAsyncHandler(async (req, res) => {
   try {
     const categoryId = req.query.categoryId;
     const subcategoryId = req.query.subcategoryId;
+    const typesubcategory_id = req.query.typesubcategory_id;
     const brandId = req.query.brandId;
     const minPrice = parseFloat(req.query.minPrice);
     const maxPrice = parseFloat(req.query.maxPrice);
@@ -636,6 +635,14 @@ const filterAll = expressAsyncHandler(async (req, res) => {
 
     if (subcategoryId && mongoose.Types.ObjectId.isValid(subcategoryId)) {
       filter.subcategory = new mongoose.Types.ObjectId(subcategoryId);
+    }
+    if (
+      typesubcategory_id &&
+      mongoose.Types.ObjectId.isValid(typesubcategory_id)
+    ) {
+      filter.type_subcategory_id = new mongoose.Types.ObjectId(
+        typesubcategory_id
+      );
     }
 
     if (brandId && mongoose.Types.ObjectId.isValid(brandId)) {
@@ -659,6 +666,8 @@ const filterAll = expressAsyncHandler(async (req, res) => {
     if (Object.keys(filter).length === 0) {
       return res.status(400).json({ message: "No filter criteria provided" });
     }
+
+    console.log(filter, "filter");
 
     const products = await Userproducts.aggregate([
       { $match: filter },
@@ -847,14 +856,14 @@ const orderSummary = expressAsyncHandler(async (req, res) => {
     } = req.body;
 
     if (!userid || !productID) {
-      return res
-        .status(400)
-        .send({ message: "User ID and Product ID are required", success: false });
+      return res.status(400).send({
+        message: "User ID and Product ID are required",
+        success: false,
+      });
     }
 
     // Find the product by ID to update stock
     const findbyid = await Userproducts.findById(productID);
-
 
     if (!findbyid) {
       return res
@@ -870,7 +879,7 @@ const orderSummary = expressAsyncHandler(async (req, res) => {
         .status(400)
         .send({ message: "Insufficient stock", success: false });
     }
-    const datastock = newStock == 0 ? "out of stock" : newStock
+    const datastock = newStock == 0 ? "out of stock" : newStock;
 
     // Update the stock
     findbyid.stock = datastock;
@@ -903,12 +912,10 @@ const updateOrderStatus = expressAsyncHandler(async (req, res) => {
 
     // Validate orderId, productID, and newStatus
     if (!orderId || !productID || !newStatus) {
-      return res
-        .status(400)
-        .send({
-          message: "Order ID, product ID, and new status are required",
-          success: false,
-        });
+      return res.status(400).send({
+        message: "Order ID, product ID, and new status are required",
+        success: false,
+      });
     }
 
     // Find the order by orderId
@@ -966,12 +973,14 @@ const getorderSummary = expressAsyncHandler(async (req, res) => {
       {
         $sort: {
           createdAt: -1,
-        }
+        },
       },
       { $limit: size },
     ]);
 
-    const Count = await SchemaOrder.find().countDocuments({ userid: new mongoose.Types.ObjectId(req.body.userid) })
+    const Count = await SchemaOrder.find().countDocuments({
+      userid: new mongoose.Types.ObjectId(req.body.userid),
+    });
 
     res.status(200).send({ ordersWithProducts, Count, success: true });
   } catch (error) {

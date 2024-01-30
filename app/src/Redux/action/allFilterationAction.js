@@ -16,9 +16,54 @@ export const axiosInstance = axios.create({
 export const AllFilterationData = createAsyncThunk(
   "filterationAlldata",
   async (payload) => {
+    const { subcategoryId, typesubcategory_id, otherId, brandId } = payload;
     return axiosInstance.post(
-      `/filteralldata?subcategoryId=${payload?.subcategoryId}`,
-      payload
+      `/filteralldata?subcategoryId=${subcategoryId}&typesubcategory_id=${typesubcategory_id}&brandId=${brandId}`
+      // `/filteralldata?${subcategoryId ? "subcategoryId=" + subcategoryId : ""}${
+      //   typesubcategory_id ? "typesubcategory_id=" + typesubcategory_id : ""
+      // }`,
+      // payload
     );
   }
 );
+
+// export const AllFilterationDatatype = createAsyncThunk(
+//   "filterationAlldata",
+//   async (payload) => {
+//     // const { subcategoryId, typesubcategory_id } = payload;
+//     return axiosInstance.post(
+//       `/filteralldata?subcategoryId=${
+//         payload?.typesubcategory_id && payload?.subcategoryId
+//       }`,
+//       payload
+//     );
+//   }
+// );
+
+// export const AllFilterationData = createAsyncThunk(
+//   "filterationAlldata",
+//   async (payload) => {
+//     try {
+//       const { subcategoryId, type_subcategory_id, otherId } = payload;
+
+//       const response = await axiosInstance.post(
+//         `/filteralldata?subcategoryId=${subcategoryId}&type_subcategory_id=${type_subcategory_id}&otherId=${otherId}`
+//       );
+//       return response.data;
+//     } catch (error) {
+//       // Handle errors here, you might want to dispatch another action or log the error
+//       throw error;
+//     }
+//   }
+// );
+
+// before code
+//  export const AllFilterationData = createAsyncThunk(
+//   "filterationAlldata",
+//   async (payload) => {
+//     return axiosInstance.post(
+//       `/filteralldata?subcategoryId=${payload?.subcategoryId}`,
+//       payload
+//     );
+//   }
+// );
