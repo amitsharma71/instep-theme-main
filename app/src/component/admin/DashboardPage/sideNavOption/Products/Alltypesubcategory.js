@@ -29,7 +29,7 @@ const Alltypesubcategory = () => {
   );
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage, setPostPerPage] = useState(5);
+  const [postPerPage, setPostPerPage] = useState(10);
   const getscat = useSelector(
     (state) => state?.getcategorylistdata?.listdata?.data
   );
@@ -57,12 +57,12 @@ const Alltypesubcategory = () => {
 
     dispatch(
       typesubcategoryget({
-        search: searchQuery,
+        search: "",
         page: currentPage,
         perPage: postPerPage,
       })
     );
-  }, [currentPage, searchQuery]);
+  }, [currentPage]);
 
   console.log(selectedCategoryId, "selectedCategoryId");
 
@@ -114,7 +114,7 @@ const Alltypesubcategory = () => {
         if (res?.payload?.data?.success) {
           dispatch(
             typesubcategoryget({
-              search: searchQuery,
+              search: "",
               page: currentPage,
               perPage: postPerPage,
             })
@@ -135,9 +135,10 @@ const Alltypesubcategory = () => {
     setShow(true);
   };
 
-  const handleSearch = () => {
-    if (searchQuery) {
-      dispatch(typesubcategoryget({ search: searchQuery }));
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value) {
+      dispatch(typesubcategoryget({ search: e.target.value }));
     } else {
       dispatch(
         typesubcategoryget({
@@ -245,8 +246,8 @@ const Alltypesubcategory = () => {
                   type="search"
                   className=" mr-sm-2 adminsearch_bar"
                   value={searchQuery}
-                  onKeyDown={onKeyDownHandler}
-                  onChange={(e) => setSearchQuery(e?.target?.value)}
+                  // onKeyDown={onKeyDownHandler}
+                  onChange={(e) => handleSearch(e)}
                 />
               </div>
               {/* <div className="btngroup">
@@ -261,17 +262,17 @@ const Alltypesubcategory = () => {
               </div>
             ) : (
               <>
-                <Table responsive="md">
-                  <thead>
-                    <tr>
-                      <th>S/L</th>
-                      <th> Subcategory Name</th>
-                      <th className="d-flex justify-content-end">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {typesubcatgory && typesubcatgory.length > 0 && (
-                      <>
+                {typesubcatgory && typesubcatgory.length > 0 ? (
+                  <>
+                    <Table responsive="md">
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th> Subcategory Name</th>
+                          <th className="d-flex justify-content-end">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
                         {typesubcatgory.map((e, index) => (
                           <tr key={index}>
                             <td>
@@ -290,21 +291,40 @@ const Alltypesubcategory = () => {
                             </td>
                           </tr>
                         ))}
-                      </>
-                    )}
-                  </tbody>
-                </Table>
+                      </tbody>
+                    </Table>
+                  </>
+                ) : (
+                  <>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th> Subcategory Name</th>
+                          <th className="d-flex justify-content-end">Action</th>
+                        </tr>
+                      </thead>
+                    </Table>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <div className="">Result not found</div>
+                    </div>
+                  </>
+                )}
               </>
             )}
-            <div className="d-flex justify-content-end">
-              <Allpagination
-                currentPage={currentPage}
-                postPerPage={postPerPage}
-                setPostPerPage={setPostPerPage}
-                setCurrentPage={setCurrentPage}
-                listCount={listCount}
-              />
-            </div>
+            {searchQuery && searchQuery?.length !== 10 ? (
+              <div className="d-flex justify-content-end"></div>
+            ) : (
+              <div className="d-flex justify-content-end">
+                <Allpagination
+                  currentPage={currentPage}
+                  postPerPage={postPerPage}
+                  setPostPerPage={setPostPerPage}
+                  setCurrentPage={setCurrentPage}
+                  listCount={listCount}
+                />
+              </div>
+            )}
           </div>
         </Col>
       </Row>

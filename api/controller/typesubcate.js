@@ -67,7 +67,7 @@ const get_typesubcategory = async (req, res) => {
             .status(200)
             .send({ success: true, data: dataoftypesub, totalDocs: totalDocs });
         } else {
-          res.status(400).send({
+          res.status(200).send({
             success: false,
             msg: "Please provide a valid page and perPage",
             totalDocs: totalDocs,
@@ -80,7 +80,7 @@ const get_typesubcategory = async (req, res) => {
             .status(200)
             .send({ success: true, data: dataoftypesub, totalDocs: totalDocs });
         } else {
-          res.status(400).send({
+          res.status(200).send({
             success: false,
             msg: "Some error occurred",
             totalDocs: totalDocs,

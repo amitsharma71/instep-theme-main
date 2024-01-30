@@ -66,17 +66,12 @@ const getcategorydata = async (req, res) => {
     const perPage = parseInt(req.body.perPage); // Default to 10 items per page
     const skip = (page - 1) * perPage;
 
-
     const totalDocs = await modelcategory.countDocuments(); // Count total documents
 
     if (perPage && page) {
-      const query = modelcategory.find(
-        {
-          $or: [
-            { category: { $regex: req.body.search, $options: "i" } },
-          ],
-        }
-      );
+      const query = modelcategory.find({
+        $or: [{ category: { $regex: req.body.search, $options: "i" } }],
+      });
       const getdata = await query.skip(skip).limit(perPage).exec();
 
       if (getdata.length > 0) {
@@ -85,7 +80,16 @@ const getcategorydata = async (req, res) => {
         res.send({ result: "No categories found", totalDocs: totalDocs });
       }
     } else {
-      const query = modelcategory.find();
+      let query;
+
+      if (req.body.search) {
+        query = modelcategory.find({
+          $or: [{ category: { $regex: req.body.search, $options: "i" } }],
+        });
+      } else {
+        query = modelcategory.find();
+      }
+
       const getdata = await query.exec();
 
       if (getdata.length > 0) {
@@ -202,9 +206,6 @@ const categoryfull = async (req, res) => {
     });
   }
 };
-
-
-
 
 module.exports = {
   adddCategory,

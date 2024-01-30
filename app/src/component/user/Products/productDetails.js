@@ -81,7 +81,6 @@ const ProductDetails = () => {
                       {...{
                         smallImage: {
                           isFluidWidth: true,
-                          height: "400",
                           alt: "Wristwatch by Ted Baker London",
                           src: imageState
                             ? imageState?.split("http").length > 1
@@ -138,16 +137,21 @@ const ProductDetails = () => {
                       </div>
                     </>
                   )}
+                  {console.log(productDetail?.stock, "Asdassssssssssssssssss")}
                   <Card.Body>
                     <Card.Text>
                       <div className="mainimg_button">
                         <div className="twobuttondiv">
-                          {" "}
                           <Button
                             className="addtocart_button"
                             onClick={() => {
                               cartClick();
                             }}
+                            disabled={
+                              productDetail?.stock === "NaN" ||
+                              productDetail?.stock === "out of stock"
+                            }
+                            // disabled
                           >
                             <div>
                               <PiShoppingCartFill className="buy_Addicon" />
@@ -155,12 +159,15 @@ const ProductDetails = () => {
                             </div>
                           </Button>
                         </div>
-                        {}
                         <div className="twobuttondiv">
                           <Button
                             className="bynow_button"
                             data-bs-target="#collapseOne"
                             onClick={() => buyClick()}
+                            disabled={
+                              productDetail?.stock === "NaN" ||
+                              productDetail?.stock === "out of stock"
+                            }
                           >
                             <BsFillLightningFill className="buy_Addicon" /> BUY
                             NOW
@@ -187,6 +194,15 @@ const ProductDetails = () => {
                         <span>{productDetail?.discountpercentage}%Off</span>
                       </h5>
                       <div className="underline_discount"></div>
+                    </Card.Subtitle>
+                    <Card.Subtitle>
+                      {productDetail?.stock > 0 ? (
+                        <p></p>
+                      ) : (
+                        <h2 className="text-danger margin_bottom">
+                          Out of stock
+                        </h2>
+                      )}
                     </Card.Subtitle>
                     <Card.Subtitle className="mb-2 discriptionoffers_product text-muted">
                       <h6> Available offers</h6>

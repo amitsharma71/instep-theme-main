@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,6 +16,7 @@ import { typesubcategoryget } from "../../../../../Redux/action/typesubcatpost";
 import { ToastContainer, toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineSearch } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
 
 const Allsubcategory = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Allsubcategory = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [typeSubCategory, SetTypeSubCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [edit, setEdit] = useState();
 
   const getAllTypeSub = useSelector(
     (State) => State?.typesubcategory?.listdata.data
@@ -68,7 +70,7 @@ const Allsubcategory = () => {
       console.log(res, "fdsfdf");
       toast.success("successful Submited");
       form.reset();
-      
+
       setSelectedCategoryId("");
       setSelectedSubcategoryId("");
       SetTypeSubCategory("");
@@ -80,12 +82,12 @@ const Allsubcategory = () => {
     dispatch(typesubcategoryget());
     dispatch(
       allBrandsList({
-        search: searchQuery,
+        search: "",
         page: currentPage,
         perPage: postPerPage,
       })
     );
-  }, [currentPage, searchQuery]);
+  }, [currentPage]);
 
   var selectedId;
   const handleCategoryChangeCat = (e) => {
@@ -120,7 +122,7 @@ const Allsubcategory = () => {
     dispatch(removeFromBrand({ _id: id })).then((res) => {
       dispatch(
         allBrandsList({
-          search: searchQuery,
+          search: "",
           page: currentPage,
           perPage: postPerPage,
         })
@@ -140,9 +142,10 @@ const Allsubcategory = () => {
     setShow(true);
   };
 
-  const handleSearch = () => {
-    if (searchQuery) {
-      dispatch(allBrandsList({ search: searchQuery }));
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value) {
+      dispatch(allBrandsList({ search: e.target.value }));
     } else {
       dispatch(
         allBrandsList({ search: "", page: currentPage, perPage: postPerPage })
@@ -150,10 +153,29 @@ const Allsubcategory = () => {
     }
   };
 
-  const onKeyDownHandler = (e) => {
-    if (e.keyCode === 13) {
-      handleSearch();
+  const handleEdit = (id) => {
+    console.log(id, "dfdsfds");
+    setEdit(id);
+  };
+
+  const initialValues = () => {
+    let initialValues = {};
+    if (edit) {
+      initialValues = {
+        brand: edit?.brand,
+        category: edit?.category_id,
+        subcategory: edit?.subcategory_id,
+        typesubcategory: edit?.type_subcategory_id,
+      };
+    } else {
+      initialValues = {
+        brand: "",
+        category: "",
+        subcategory: "",
+        typesubcategory: "",
+      };
     }
+    return initialValues;
   };
   return (
     <>
@@ -170,10 +192,11 @@ const Allsubcategory = () => {
         <Col lg={8}>
           <Form
             onSubmit={onSubmit}
+            // initialValues={useMemo(() => initialValues(), [edit])}
             render={({ handleSubmit, form, submitting, pristine }) => (
               <form onSubmit={handleSubmit}>
                 <div>
-                  <Field name="xyz">
+                  <Field name="category">
                     {({ input, meta }) => (
                       <select
                         {...input}
@@ -191,7 +214,7 @@ const Allsubcategory = () => {
                       </select>
                     )}
                   </Field>
-                  <Field name="ydf">
+                  <Field name="subcategory">
                     {({ input, meta }) => (
                       <select
                         {...input}
@@ -208,7 +231,7 @@ const Allsubcategory = () => {
                       </select>
                     )}
                   </Field>
-                  <Field name="gds">
+                  <Field name="typesubcategory">
                     {({ input, meta }) => (
                       <select
                         {...input}
@@ -257,8 +280,8 @@ const Allsubcategory = () => {
                   type="search"
                   className=" mr-sm-2 adminsearch_bar"
                   value={searchQuery}
-                  onKeyDown={onKeyDownHandler}
-                  onChange={(e) => setSearchQuery(e?.target?.value)}
+                  // onKeyDown={onKeyDownHandler}
+                  onChange={(e) => handleSearch(e)}
                 />
               </div>
               {/* <div className="btngroup">
@@ -272,41 +295,69 @@ const Allsubcategory = () => {
                 <Spinner animation="border" variant="dark" />
               </div>
             ) : (
-              <Table responsive="md">
-                <thead>
-                  <tr>
-                    <th>S/L</th>
-                    <th> Brand Name</th>
-                    <th className="d-flex justify-content-end">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {getbrandlist &&
-                    getbrandlist?.map((e, index) => {
-                      console.log(e, "brnds");
-                      return (
-                        <>
-                          <tr>
-                            <td>
-                              {(currentPage - 1) * postPerPage + (index + 1)}
-                            </td>
-                            <td>{e.brand}</td>
-                            <td>
-                              <div className="d-flex justify-content-end">
-                                <MdDelete
-                                  className="deleteicn_forpro"
-                                  onClick={() => {
-                                    handleShow(e?._id);
-                                  }}
-                                />
-                              </div>
-                            </td>
-                          </tr>
-                        </>
-                      );
-                    })}
-                </tbody>
-              </Table>
+              <>
+                {getbrandlist && getbrandlist.length > 0 ? (
+                  <>
+                    <Table responsive="md">
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th> Brand Name</th>
+                          <th className="d-flex justify-content-end">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {getbrandlist &&
+                          getbrandlist?.map((e, index) => {
+                            console.log(e, "brnds");
+                            return (
+                              <>
+                                <tr>
+                                  <td>
+                                    {(currentPage - 1) * postPerPage +
+                                      (index + 1)}
+                                  </td>
+                                  <td>{e.brand}</td>
+                                  <td>
+                                    <div className="d-flex justify-content-end">
+                                      {/* <CiEdit
+                                        className="editic_on"
+                                        onClick={() => {
+                                          handleEdit(e);
+                                        }}
+                                      /> */}
+                                      <MdDelete
+                                        className="deleteicn_forpro"
+                                        onClick={() => {
+                                          handleShow(e?._id);
+                                        }}
+                                      />
+                                    </div>
+                                  </td>
+                                </tr>
+                              </>
+                            );
+                          })}
+                      </tbody>
+                    </Table>
+                  </>
+                ) : (
+                  <>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th> Brand Name</th>
+                          <th className="d-flex justify-content-end">Action</th>
+                        </tr>
+                      </thead>
+                    </Table>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <div className="">Result not found</div>
+                    </div>
+                  </>
+                )}
+              </>
             )}
 
             {searchQuery && searchQuery.length !== 10 ? (

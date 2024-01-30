@@ -208,7 +208,6 @@ export default function Profile() {
     <div className="container">
       <div className=" slider_col margin_bottom">
         <div className="recent_orders ">
-          {/* <div><button onClick={butClick}>click me</button></div> */}
           <Row>
             <Col lg={3} md={3} sm={4}>
               <div className="d-flex justify-content-center mainiconalign">
@@ -279,7 +278,7 @@ export default function Profile() {
             </Col>
             <Col lg={9} md={9} sm={8}>
               <Row>
-                <Col lg={9} md={8}>
+                <Col lg={12} md={12}>
                   <div className="d-flex justify-content-between margin_bottom colmobile">
                     <div className="d-flex align-items-center">
                       {edit !== "username" ? (
@@ -380,11 +379,11 @@ export default function Profile() {
         </div>
       </div>
       <Row>
-        <Col lg={3} md={3}>
-          <div className="recent_orders">
+        <Col lg={3} md={4}>
+          <div className="recent_orders ordersdival_in">
             <th>Manage My Account</th>
             <div
-              class="nav flex-column nav-pills me-3 "
+              class="nav flex-column nav-pills "
               id="v-pills-tab"
               role="tablist"
               aria-orientation="vertical"
@@ -447,7 +446,7 @@ export default function Profile() {
               >
                 <div className="d-flex justify-content-start align-items-center">
                   <AiTwotoneHeart className="profilemanangeicon" />
-                  WIshlist
+                  Wishlist
                 </div>
               </button>
               <button
@@ -471,7 +470,7 @@ export default function Profile() {
             </div>
           </div>
         </Col>
-        <Col lg={9} md={9}>
+        <Col lg={9} md={8}>
           <div className="recent_orders">
             <div class="tab-content" id="v-pills-tabContent">
               <div

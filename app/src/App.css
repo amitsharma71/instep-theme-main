@@ -416,6 +416,14 @@ div p {
   height: 20px;
   color: #f70000;
   cursor: pointer;
+  margin-left: 10px;
+}
+
+.editic_on {
+  width: 20px;
+  height: 20px;
+  color: #282c2a;
+  cursor: pointer;
 }
 
 .wishremoveicon {
@@ -3546,7 +3554,7 @@ input[type="range"]::-moz-range-progress {
 }
 
 .userhistory_icons {
-  padding: 10px 10px 10px 10px;
+  padding: 10px 8px 10px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4679,4 +4687,31 @@ input::file-selector-button {
     align-items: center;
     gap: 20px;
   }
+}
+
+.emptycart_align {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 332px;
+  max-height: 100%;
+}
+
+.emptycart_align p {
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.emptycart_align button {
+  background-color: #4eb529 !important;
+  border-color: #4eb529 !important;
+  border-radius: 3px;
+  padding: 10px 18px;
+}
+
+.emptycart_align button:hover {
+  background-color: #4eb529;
+  border-color: #4eb529;
 }

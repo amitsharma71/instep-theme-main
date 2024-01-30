@@ -65,7 +65,7 @@ const brandgetdata = async (req, res) => {
           .status(200)
           .send({ success: true, data: getdata, totalDocs: totalDocs });
       } else {
-        res.status(400).send({
+        res.status(200).send({
           success: false,
           msg: "No brands found for this page",
           totalDocs: totalDocs,
@@ -79,7 +79,7 @@ const brandgetdata = async (req, res) => {
           .status(200)
           .send({ success: true, data: getdata, totalDocs: totalDocs });
       } else {
-        res.status(400).send({
+        res.status(200).send({
           success: false,
           msg: "No brands found",
           totalDocs: totalDocs,
