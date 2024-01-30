@@ -203,7 +203,7 @@ const AllProductDetail = () => {
                                 <Card.Body>
                                   <div className="item_rating">
                                     <p className="homerating_cat">
-                                      {e?.category[i]?.category}
+                                      {e?.category[0]?.category}
                                     </p>
                                   </div>
                                   <Card.Title className="crad_text">
@@ -212,6 +212,16 @@ const AllProductDetail = () => {
                                   <Card.Text className="crad_text"></Card.Text>
                                   <Card.Text className="crad_text">
                                     <h5> ₹ {e?.price}</h5>
+                                  </Card.Text>
+
+                                  <Card.Text className="crad_text">
+                                    {e.stock > 0 ? (
+                                      <h6> </h6>
+                                    ) : (
+                                      <p className="text-danger">
+                                        Out of stock
+                                      </p>
+                                    )}
                                   </Card.Text>
                                 </Card.Body>
                               </Link>

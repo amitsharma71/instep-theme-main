@@ -23,6 +23,7 @@ import useRazorpay from "react-razorpay";
 import { Afterorder } from "../../../Redux/action/orderSummary";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { cartinfo } from "../../../Redux/action/usercartinfo";
 
 const Delieverydetail = () => {
   const [isFormVisible, setFormVisible] = useState(false);
@@ -43,7 +44,8 @@ const Delieverydetail = () => {
   const dataId = userLogin.id;
   console.log(dataId, "dataId");
 
-  const { productid, _id } = useParams();
+  const { _id } = useParams();
+
   const dispatch = useDispatch();
   const myCartL = useSelector((state) => state?.cartdetails.listdata);
   console.log(myCartL, "dafdfdsfdas");
@@ -87,10 +89,6 @@ const Delieverydetail = () => {
     let count = 0;
     if (myCartL && myCartL.length > 0) {
       count = myCartL?.reduce((accumulator, currentValue, index) => {
-        console.log(
-          currentValue?.productDetails[0]?.discountpercentage,
-          "fwkoejoiwejl"
-        );
         return (
           accumulator + currentValue?.productDetails[0]?.discountpercentage
         );
@@ -202,8 +200,12 @@ const Delieverydetail = () => {
   console.log(dData, "dDatadData");
 
   useEffect(() => {
-    dispatch(singleproduct({ _id }));
-  }, [_id]);
+    if (_id) {
+      dispatch(singleproduct({ _id }));
+    } else {
+      dispatch(cartinfo({ userLogin: userLogin.id }));
+    }
+  }, [_id, userLogin.id]);
 
   const deliverClick = (address) => {
     if (!address) {
@@ -249,7 +251,7 @@ const Delieverydetail = () => {
               dData.price -
               (dData?.price * dData?.discountpercentage) / 100
             )?.toFixed(0) * 100
-          : (getTotalPrice() - getTotalDiscount()?.toFixed(0)) * 100;
+          : (getTotalPrice() - getTotalDiscount())?.toFixed(0) * 100;
 
       return { amount: baseAmount };
     };
@@ -273,6 +275,94 @@ const Delieverydetail = () => {
         console.error("Payment error:", error);
         // Handle payment error if needed
       });
+
+    if (order && orderHit) {
+      const orderAmount =
+        dData &&
+        (
+          dData.price -
+          (dData?.price * dData?.discountpercentage) / 100
+        )?.toFixed(0) * 100
+          ? (
+              dData.price -
+              (dData?.price * dData?.discountpercentage) / 100
+            )?.toFixed(0) * 100
+          : (getTotalPrice() - getTotalDiscount())?.toFixed(0) * 100;
+
+      console.log(orderAmount, qty, "orderAmount");
+      if (orderAmount) {
+        const options = {
+          key: "rzp_test_Nfb5anftyihnMA",
+          amount: orderAmount, // Multiplying by 100 as Razorpay expects amount in paise
+          currency: "INR",
+          name: "Instep Cart",
+          description: "Test Transaction",
+          image:
+            "https://insteptechnologies.com/wp-content/uploads/2022/04/main-logo.png",
+          order_id: order?.data?.id,
+          productIDs: myCartL.map((item) => item._id),
+          handler: function (res) {
+            console.log("Payment-success:", res);
+
+            const orderid = res?.razorpay_payment_id;
+            console.log(orderid, "orderidorderid");
+            setRazorPaymentId(orderid);
+
+            // Storing payment details in the paymentDetails variable
+            const paymentDetails = {
+              paymentStatus: res.razorpay_payment_id
+                ? "paid-payment"
+                : "payment-failed",
+              orderId: res.razorpay_order_id,
+              amount: res.razorpay_payment_amount, // Converting back to rupees
+              // ... add other details as needed
+            };
+
+            console.log("Payment status:", paymentDetails.paymentStatus);
+            console.log("Order ID:", paymentDetails.orderId);
+            console.log("Amount:", paymentDetails.amount);
+
+            // Here you can dispatch an action or perform further processing with the payment details
+            const payloads = {
+              userid: dataId,
+              deliveryAddress: addressdata[0]?._id,
+              amount: dData?.price,
+              payment_id: res?.razorpay_payment_id, // Using the Razorpay order ID as payment reference
+              productID: dData?._id,
+              quantity: qty,
+              // ... other order-related details
+            };
+
+            // Dispatch an action to send order details after successful payment
+            dispatch(Afterorder(payloads)).then((response) => {
+              console.log(response, "resssss");
+              navigate(
+                `/orderconfirmation/${response?.payload?.data?.save?._id}`
+              );
+              window.location.reload();
+            });
+            // history.push("/orderconfirmation")
+            // navigate("/orderconfirmation")
+          },
+          prefill: {
+            name: "Amit",
+            email: "amit71instep@gmail.com",
+            contact: "7973114358",
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#4eb529",
+          },
+        };
+
+        const rzpay = new Razorpay(options);
+        rzpay.open();
+      }
+
+      setOrderHit(false);
+    }
   }, [
     dispatch,
     order,
@@ -283,93 +373,6 @@ const Delieverydetail = () => {
     myCartL,
     setOrderHit,
   ]);
-
-  if (order && orderHit) {
-    const orderAmount =
-      dData &&
-      (dData.price - (dData?.price * dData?.discountpercentage) / 100)?.toFixed(
-        0
-      ) * 100
-        ? (
-            dData.price -
-            (dData?.price * dData?.discountpercentage) / 100
-          )?.toFixed(0) * 100
-        : (getTotalPrice() - getTotalDiscount()?.toFixed(0)) * 100;
-
-    // console.log(orderAmount,qty,'orderAmount')
-    if (orderAmount) {
-      const options = {
-        key: "rzp_test_Nfb5anftyihnMA",
-        amount: orderAmount, // Multiplying by 100 as Razorpay expects amount in paise
-        currency: "INR",
-        name: "Instep Cart",
-        description: "Test Transaction",
-        image:
-          "https://insteptechnologies.com/wp-content/uploads/2022/04/main-logo.png",
-        order_id: order?.data?.id,
-        productIDs: myCartL.map((item) => item._id),
-        handler: function (res) {
-          console.log("Payment-success:", res);
-
-          const orderid = res?.razorpay_payment_id;
-          console.log(orderid, "orderidorderid");
-          setRazorPaymentId(orderid);
-
-          // Storing payment details in the paymentDetails variable
-          const paymentDetails = {
-            paymentStatus: res.razorpay_payment_id
-              ? "paid-payment"
-              : "payment-failed",
-            orderId: res.razorpay_order_id,
-            amount: res.razorpay_payment_amount, // Converting back to rupees
-            // ... add other details as needed
-          };
-
-          console.log("Payment status:", paymentDetails.paymentStatus);
-          console.log("Order ID:", paymentDetails.orderId);
-          console.log("Amount:", paymentDetails.amount);
-
-          // Here you can dispatch an action or perform further processing with the payment details
-          const payloads = {
-            userid: dataId,
-            deliveryAddress: addressdata[0]?._id,
-            amount: dData?.price,
-            payment_id: res?.razorpay_payment_id, // Using the Razorpay order ID as payment reference
-            productID: dData?._id,
-            quantity: qty,
-            // ... other order-related details
-          };
-
-          // Dispatch an action to send order details after successful payment
-          dispatch(Afterorder(payloads)).then((response) => {
-            console.log(response, "resssss");
-            navigate(
-              `/orderconfirmation/${response?.payload?.data?.save?._id}`
-            );
-            window.location.reload();
-          });
-          // history.push("/orderconfirmation")
-          // navigate("/orderconfirmation")
-        },
-        prefill: {
-          name: "Amit",
-          email: "amit71instep@gmail.com",
-          contact: "7973114358",
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#4eb529",
-        },
-      };
-
-      const rzpay = new Razorpay(options);
-      rzpay.open();
-    }
-
-    setOrderHit(false);
-  }
 
   console.log("Paymentdetails:", paymentDetails);
 
@@ -397,9 +400,7 @@ const Delieverydetail = () => {
             disable
             activeKey={activeKey}
             onSelect={(e) => setactiveKey(e)}
-            // defaultActiveKey={useMemo(()=>eventKeyHandle(),[addressdata])}
           >
-            {/* <Accordion defaultActiveKey={1}> */}
             <Row>
               <Col lg={9}>
                 <div className=" margin_bottom">
@@ -424,15 +425,6 @@ const Delieverydetail = () => {
                             </p>
                           </div>
                         </div>
-                        {/* <div>
-                        <button
-                          className="infochange_button"
-                          value="change"
-                          onClick={() => setShowCol("login")}
-                        >
-                          CHANGE
-                        </button>
-                      </div> */}
                       </div>
                     </Accordion.Header>
                     <Accordion.Body>
@@ -442,9 +434,7 @@ const Delieverydetail = () => {
                             className="individual_info login_contalign"
                             onClick={() => handleMoveToSignIn()}
                           >
-                            {/* <Link className="loginandsignout" to="/signin"> */}
                             Logout & Sign in to another account
-                            {/* </Link> */}
                             <button
                               value="continue checkout"
                               className="logincont"
@@ -480,14 +470,7 @@ const Delieverydetail = () => {
                 <Row>
                   <Col lg={12}>
                     <div className="margin_bottom">
-                      {/* {showCol === "setEventKey(2)" && ( */}
-                      <Accordion.Item
-                        activeKey={addressEventKey}
-                        eventKey={1}
-                        // onClick={() => {
-                        //   setEventKey(2);
-                        // }}
-                      >
+                      <Accordion.Item activeKey={addressEventKey} eventKey={1}>
                         <Accordion.Header>
                           <div className="loginmain_align">
                             <div className="d-flex my-3">
@@ -521,7 +504,6 @@ const Delieverydetail = () => {
                                         <p>{e.name}</p>
                                         <div>{e.addresstype}</div>
                                         <p>{e.mobilenumber}</p>
-                                        {/* {e.AlternateNumber} */}
                                       </div>
                                       <div className="bottomdivaddress">
                                         <p>{e.address}</p>
@@ -584,7 +566,6 @@ const Delieverydetail = () => {
                                                 type="text"
                                                 placeholder="10-digit mobile number"
                                                 className="inputfiels_place"
-                                                // value={values.mobilenumber}
                                                 onChange={(event) => {
                                                   if (
                                                     !/[0-9]/.test(event.key)
@@ -843,7 +824,6 @@ const Delieverydetail = () => {
                                   <img
                                     className="subcatkitchen_image"
                                     variant="top"
-                                    // src={item?.image || item?.thumbnail}
                                     src={
                                       dData.thumbnail
                                         ? `http://localhost:5000/uploads/${dData.thumbnail}`
@@ -858,25 +838,9 @@ const Delieverydetail = () => {
                                       <Card.Title>
                                         <h4>{dData.title}</h4>
                                       </Card.Title>
-                                      {/* <div className="buynowquanity">
-                                        <button
-                                          disabled={qty === 1}
-                                          onClick={() => setQty(qty - 1)}
-                                        >
-                                          -
-                                        </button>
-                                        <span>{qty}</span>
-                                        <button
-                                          disabled={qty >= 10}
-                                          onClick={() => setQty(qty + 1)}
-                                        >
-                                          +
-                                        </button>
-                                      </div> */}
+
                                       <Card.Subtitle className="mb-2 text-muted">
-                                        <h5>
-                                          {/* Extra ₹ {dData.discountPercentage}..Off */}
-                                        </h5>
+                                        <h5></h5>
                                       </Card.Subtitle>
                                       <Card.Subtitle className="mb-2">
                                         <h1>₹ {dData.price}</h1>
@@ -904,6 +868,15 @@ const Delieverydetail = () => {
                                               }
                                             </td>
                                             <li>{dData.title}</li>
+                                            <td>
+                                              {dData.stock < 1 ? (
+                                                <p></p>
+                                              ) : (
+                                                <h2 className="text-danger ">
+                                                  Out of stock
+                                                </h2>
+                                              )}
+                                            </td>
                                           </ul>
                                         </div>
                                       </div>
@@ -924,8 +897,6 @@ const Delieverydetail = () => {
                                             <img
                                               className="ordersummaryima_Ge"
                                               variant="top"
-                                              // src={item?.image || item?.thumbnail}
-
                                               src={
                                                 e?.productDetails[0]?.image
                                                   ? e?.productDetails[0]?.image
@@ -952,25 +923,9 @@ const Delieverydetail = () => {
                                                     }
                                                   </h4>
                                                 </Card.Title>
-                                                {/* <div className="buynowquanity">
-                                                <button
-                                                  disabled={qty === 1}
-                                                  onClick={() => setQty(qty - 1)}
-                                                >
-                                                  -
-                                                </button>
-                                                <span>{qty}</span>
-                                                <button
-                                                  disabled={qty >= 10}
-                                                  onClick={() => setQty(qty + 1)}
-                                                >
-                                                  +
-                                                </button>
-                                              </div> */}
+
                                                 <Card.Subtitle className="mb-2 text-muted">
-                                                  <h5>
-                                                    {/* Extra ₹ {e?.productDetails[0]?.discountpercentage}..Off */}
-                                                  </h5>
+                                                  <h5></h5>
                                                 </Card.Subtitle>
                                                 <Card.Subtitle className="mb-2">
                                                   <h4 className="py-2 mb-0">
@@ -992,21 +947,6 @@ const Delieverydetail = () => {
                                                     </p>
                                                   </div>
                                                 </Card.Text>
-                                                {/* <div className="d-flex ">
-                                                  <h6>Highlights</h6>
-                                                  <div className="d-flex px-5">
-                                                    <ul className="specification">
-                                                      <td>{e?.brand?.[0]?.brand}</td>
-                                                      <td>
-                                                        {e?.category?.[0]?.category}
-                                                      </td>
-                                                      <td>
-                                                        {e?.subcategory?.[0]?.subcategory}
-                                                      </td>
-                                                      <li>{e.title}</li>
-                                                    </ul>
-                                                  </div>
-                                                </div> */}
                                               </Card.Body>
                                             </Card>
                                           </div>
@@ -1020,20 +960,6 @@ const Delieverydetail = () => {
                         </Accordion.Body>
                       </Accordion.Item>
                     </div>
-                    {/* <div className="borderforall_detail"> */}
-
-                    {/* </div> */}
-                    {/* <Row>
-                      <Col lg={12}>
-                        <div
-                          className="addnew_address"
-                          onClick={() => {
-                            setShowCol("delivery");
-                          }}
-                        >
-                          {/* <div>
-                            <BsPlusCircleFill className="logindetail_icon" />
-                          </div> */}
                     <div className="orderconfirmationmaindiv">
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="logindetail">4</div>
@@ -1047,6 +973,10 @@ const Delieverydetail = () => {
                           <Button
                             className="paymentContinue_button"
                             onClick={(e) => handlePayment()}
+                            disabled={
+                              dData?.stock === "NaN" ||
+                              dData?.stock === "out of stock"
+                            }
                           >
                             Continue
                           </Button>
@@ -1095,7 +1025,7 @@ const Delieverydetail = () => {
                             (
                               (dData?.price * dData?.discountpercentage) /
                               100
-                            )?.toFixed(0))}{" "}
+                            )?.toFixed(0))}
                         on this order
                       </h6>
                     </div>
@@ -1123,11 +1053,11 @@ const Delieverydetail = () => {
                       <div className="d-flex justify-content-between margin_bottom addcart_delivery">
                         <h5>Total Amount</h5>
                         <p>
-                          ₹{getTotalPrice() - getTotalDiscount()?.toFixed(0)}
+                          ₹{(getTotalPrice() - getTotalDiscount())?.toFixed(0)}
                         </p>
                       </div>
                       <h6 className="discountpercentage_">
-                        Your Will save ₹{getTotalDiscount()?.toFixed(0)} on this
+                        You Will save ₹{getTotalDiscount()?.toFixed(0)} on this
                         order
                       </h6>
                     </div>

@@ -80,11 +80,11 @@ const SidebarFun = (props) => {
                 </Nav.Item> */}
               </Nav.Menu>
               <Nav.Menu
-                eventKey="2"
+                eventKey="24"
                 title="User Navbar"
                 icon={<MdOutlineSpaceBar />}
               >
-                <Nav.Item eventKey="2-1" onClick={onHide}>
+                <Nav.Item eventKey="24-1" onClick={onHide}>
                   <Link to={"/headeradmin"}>- User Navbar</Link>
                 </Nav.Item>
               </Nav.Menu>
@@ -94,7 +94,7 @@ const SidebarFun = (props) => {
                 icon={<BsFilePostFill />}
               ></Nav.Menu>
               <Nav.Menu eventKey="4" title="Order" icon={<HiDocument />}>
-                <Nav.Item eventKey="2-1" onClick={onHide}>
+                <Nav.Item eventKey="4-1" onClick={onHide}>
                   <Link to={"/trackorder"}>- Orders</Link>
                 </Nav.Item>
               </Nav.Menu>

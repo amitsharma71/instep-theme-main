@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Form, Field, useForm } from "react-final-form";
-import {
-  adminPostheading,
-  admingetheading,
-  headingDelete,
-} from "../../../../../Redux/action/adminheader";
+import { Form, Field } from "react-final-form";
+import { adminPostheading, admingetheading, headingDelete} from "../../../../../Redux/action/adminheader";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getUserId } from "../../../../../utils/auth";
-import { AiOutlineMail } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { Button, Col, Dropdown, Modal, Navbar, Row, Spinner, Table } from "react-bootstrap";
+import { Button, Col, Modal, Row, Table } from "react-bootstrap";
 import { MdDelete } from "react-icons/md";
 
 function Headeradmin() {
   const dispatch = useDispatch();
+
   const [logoimage, setlogoimage] = useState([]);
+
   const [SelectedImages, setSelectedImages] = useState([]);
+
   const getadminid = getUserId();
-  console.log(getadminid, "getadminid");
+
   const onSubmit = (values, form) => {
-    console.log(values);
 
     const payload = {
       adminID: getadminid.id,
@@ -32,7 +28,6 @@ function Headeradmin() {
     };
 
     if (payload) {
-      console.log(payload, "jsjs");
 
       const formData = new FormData();
       formData.append("adminData", JSON.stringify(payload));
@@ -40,7 +35,6 @@ function Headeradmin() {
 
       if (formData) {
         dispatch(adminPostheading(formData)).then((res) => {
-          console.log(res, "Sdsds");
           if (res?.payload?.data?.success == true) {
             toast.success("Successfully !", {
               position: toast.POSITION.TOP_RIGHT,
@@ -60,15 +54,15 @@ function Headeradmin() {
     if (!values.heading) {
       error.heading = "Required";
     }
-    if (!values.heading1) {
-      error.heading1 = "Required";
-    }
+    // if (!values.heading1) {
+    //   error.heading1 = "Required";
+    // }
     if (!values.Email) {
       error.Email = "Required";
     }
-    if (!values.sitename) {
-      error.sitename = "Required";
-    }
+    // if (!values.sitename) {
+    //   error.sitename = "Required";
+    // }
     return error;
   };
 
@@ -115,17 +109,14 @@ function Headeradmin() {
     }
   };
 
-  console.log(SelectedImages, logoimage, "teststts");
 
   const headings = useSelector(
     (state) => state?.adminheading?.listdata?.data?.data
   );
 
-  console.log(headings, "header");
 
   const handleHeadingDelete = (_id) => {
     dispatch(headingDelete({ tableid: _id })).then((res) => {
-      console.log(res, "vvvvvvvvv")
       if (res?.payload?.data?.success) {
         handleClose(false)
       }

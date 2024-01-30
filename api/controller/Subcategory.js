@@ -6,9 +6,9 @@ const Userproducts = require("../models/ProductsSchema");
 
 const create_subcategory = async (req, res) => {
   try {
-    const check_sub = await SUBCATEGORY.find({
-      category_id: req.body.category_id,
-    });
+    // const check_sub = await SUBCATEGORY.find({
+    //   category_id: req.body.category_id,
+    // });
 
     req.body.subcategoryData.map(async (item) => {
       console.log(item, "first");

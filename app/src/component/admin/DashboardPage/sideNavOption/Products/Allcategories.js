@@ -60,7 +60,7 @@ const Allcategories = () => {
     dispatch(addcategory(formData)).then((res) => {
       console.log(res, "Response from dispatch");
       form.reset();
-      setSelectedImages("")
+      setSelectedImages("");
       resetFileInput();
     });
     toast.success("Successfully!", {
@@ -85,8 +85,14 @@ const Allcategories = () => {
   );
 
   useEffect(() => {
-    dispatch(allCategoryList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
-  }, [currentPage, searchQuery]);
+    dispatch(
+      allCategoryList({
+        search: "",
+        page: currentPage,
+        perPage: postPerPage,
+      })
+    );
+  }, [currentPage]);
 
   const handleImgeFile = (e) => {
     const files = e.target.files;
@@ -103,17 +109,16 @@ const Allcategories = () => {
     }
 
     if (!image.name.match(/\.(jpg|jpeg|png)$/)) {
-      toast.error("upload file in the form of jpg, jpeg or png")
-      setSelectedImages([])
+      toast.error("upload file in the form of jpg, jpeg or png");
+      setSelectedImages([]);
       e.target.value = null;
       return false;
-
     }
     // size
     const maxSizeKB = 50;
     if (image.size > maxSizeKB * 1024) {
       toast.error("the maximum file size allowed (50KB).");
-      setSelectedImages([])
+      setSelectedImages([]);
       e.target.value = null;
       return false;
     }
@@ -140,7 +145,7 @@ const Allcategories = () => {
         }
       };
       reader.readAsDataURL(files[i]);
-    };
+    }
   };
 
   const handleClose = () => setShow(false);
@@ -148,7 +153,13 @@ const Allcategories = () => {
   const handleDelete = (id) => {
     dispatch(removeFromCategory({ categoryid: id })).then((res) => {
       if (res?.payload?.data?.success) {
-        dispatch(allCategoryList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+        dispatch(
+          allCategoryList({
+            search: "",
+            page: currentPage,
+            perPage: postPerPage,
+          })
+        );
       }
       handleClose();
       toast.warning("Successfully Deleted !", {
@@ -164,18 +175,21 @@ const Allcategories = () => {
     setShow(true);
   };
 
-  const handleSearch = () => {
-    if (searchQuery) {
-      dispatch(allCategoryList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
-    }
-    else {
-      dispatch(allCategoryList({ search: "", page: currentPage, perPage: postPerPage }))
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    console.log(e.target.value, "fdhfaudhafu");
+    if (e.target.value) {
+      dispatch(allCategoryList({ search: e.target.value }));
+    } else {
+      dispatch(
+        allCategoryList({ search: "", page: currentPage, perPage: postPerPage })
+      );
     }
   };
 
   const onKeyDownHandler = (e) => {
     if (e.keyCode === 13) {
-      handleSearch();
+      // handleSearch();
     }
   };
   return (
@@ -264,11 +278,13 @@ const Allcategories = () => {
             <div className="form_control_or_btngroup">
               <div className="all_product_search ">
                 <FiSearch className="allproduct_searchicon " />
-                <input type="search" className=" mr-sm-2 adminsearch_bar" value={searchQuery}
-                  onKeyDown={onKeyDownHandler}
-                  onChange={(e) =>
-                    setSearchQuery(e?.target?.value)
-                  } />
+                <input
+                  type="search"
+                  className=" mr-sm-2 adminsearch_bar"
+                  value={searchQuery}
+                  // onKeyDown={onKeyDownHandler}
+                  onChange={(e) => handleSearch(e)}
+                />
               </div>
               {/* <div className="btngroup">
                 <Button className="select_button " type="submit" onClick={handleSearch}>
@@ -282,46 +298,72 @@ const Allcategories = () => {
               </div>
             ) : (
               <>
-                <Table responsive="md">
-                  <thead>
-                    <tr>
-                      <th>S/L</th>
-                      <th> Category Name</th>
-                      <th>Image</th>
-                      <th className="d-flex justify-content-end">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data &&
-                      data?.map((e, index) => {
-                        console.log(e, "fiorjei");
-                        return (
-                          <tr>
-                            <td>{(currentPage - 1) * postPerPage + (index + 1)}</td>
-                            <td>{e.category}</td>
-                            <td>
-                              <img className="tableget_image" src={`http://localhost:5000/categoryimg/${e?.images}`} crossOrigin="anonymous" />
-                            </td>
-                            <td>
-                              <div className="d-flex justify-content-end">
-                                <MdDelete
-                                  className="deleteicn_forpro"
-                                  onClick={() => {
-                                    handleShow(e?._id);
-                                  }}
-                                />
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </Table>
+                {data && data.length > 0 ? (
+                  <>
+                    <Table responsive="md">
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th> Category Name</th>
+                          <th>Image</th>
+                          <th className="d-flex justify-content-end">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data &&
+                          data?.map((e, index) => {
+                            console.log(e, "fiorjei");
+                            return (
+                              <tr>
+                                <td>
+                                  {(currentPage - 1) * postPerPage +
+                                    (index + 1)}
+                                </td>
+                                <td>{e.category}</td>
+                                <td>
+                                  <img
+                                    className="tableget_image"
+                                    src={`http://localhost:5000/categoryimg/${e?.images}`}
+                                    crossOrigin="anonymous"
+                                  />
+                                </td>
+                                <td>
+                                  <div className="d-flex justify-content-end">
+                                    <MdDelete
+                                      className="deleteicn_forpro"
+                                      onClick={() => {
+                                        handleShow(e?._id);
+                                      }}
+                                    />
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </Table>
+                  </>
+                ) : (
+                  <>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th> Category Name</th>
+                          <th>Image</th>
+                          <th className="d-flex justify-content-end">Action</th>
+                        </tr>
+                      </thead>
+                    </Table>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <div className="">Result not found</div>
+                    </div>
+                  </>
+                )}
               </>
             )}
             {searchQuery && searchQuery?.length !== 10 ? (
-              <div className="d-flex justify-content-end">
-              </div>
+              <div className="d-flex justify-content-end"></div>
             ) : (
               <div className="d-flex justify-content-end">
                 <Allpagination

@@ -91,6 +91,7 @@ const getproduct = expressAsyncHandler(async (req, res) => {
     const skip = (page - 1) * perPage;
 
     if (page && perPage) {
+      console.log("iffffffffff")
       const countQuery = [
         {
           $count: "totalCount",
@@ -171,7 +172,8 @@ const getproduct = expressAsyncHandler(async (req, res) => {
       }
     } else {
       console.log("elseeeeeeeeeeeeeeeee")
-      const products = await Userproducts.aggregate([
+
+      let aggre = [
         {
           $lookup: {
             from: "categorytables",
@@ -197,7 +199,16 @@ const getproduct = expressAsyncHandler(async (req, res) => {
           },
         },
 
-      ]);
+      ]
+
+      if (req.body.search) {
+        aggre.push({
+          $match: {
+            title: { $regex: req.body.search, $options: 'i' } // Case-insensitive search
+          }
+        },)
+      }
+      const products = await Userproducts.aggregate(aggre);
 
       // Log the products to inspect the results
       const count = products.length; // Get the count of products
@@ -208,7 +219,7 @@ const getproduct = expressAsyncHandler(async (req, res) => {
       if (count > 0) {
         res.status(200).json({ products, count });
       } else {
-        res.status(404).json({ result: "No products found" });
+        res.status(200).json({ result: "No products found" });
       }
     }
   } catch (error) {

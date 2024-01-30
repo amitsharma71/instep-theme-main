@@ -39,23 +39,24 @@ const Wishlistinform = () => {
     [""]
   );
 
-
   const handleRemoveWish = (productId) => {
-    console.log(productId.items, "productId")
-    dispatch(wishlistremove({
-      userId: userData?.id, itemId: productId.items
-    })).then((res) => {
+    console.log(productId, "productId");
+    // if (!deleteID) return;
+    dispatch(
+      wishlistremove({ userId: userData?.id, itemId: productId.items })
+    ).then((res) => {
       if (res) {
-        dispatch(wishlistget({ userId: userData?.id }))
-        handleClose(false)
+        // setDeleteID(null);
+        dispatch(wishlistget({ userId: userData?.id }));
+        handleClose(false);
       }
-    })
-  }
+    });
+  };
 
-  const [show, setShow] = useState(false);
-
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  const [show, setShow] = useState(null);
+  // const [deleteID, setDeleteID] = useState(null);
+  const handleShow = (id) => setShow(id);
+  const handleClose = () => setShow(null);
 
   return (
     <>
@@ -66,12 +67,11 @@ const Wishlistinform = () => {
               return (
                 <>
                   <div className="subcatkitechenmaindiv row margin_bottom">
-
                     <Col lg={2} md={4} sm={4}>
                       <div className="d-flex justify-content-end mt-2 mx-2">
                         <BsFillHeartFill
                           style={{ color: "#FF0000" }}
-                        // onClick={() => handleWishlistClick(item?._id)}
+                          // onClick={() => handleWishlistClick(item?._id)}
                         />
                       </div>
                       <Link
@@ -79,7 +79,6 @@ const Wishlistinform = () => {
                         reloadDocumen={true}
                         to={`/productdetail/${item?.products[0]?._id}`}
                       >
-
                         <div>
                           <img
                             className="wishimage"
@@ -89,9 +88,9 @@ const Wishlistinform = () => {
                               item.products[0]?.image
                                 ? item.products[0]?.image
                                 : item.products[0]?.thumbnail?.split(":")
-                                  ?.length > 1
-                                  ? item.products[0]?.thumbnail
-                                  : `http://localhost:5000/uploads/${item?.products[0]?.thumbnail}`
+                                    ?.length > 1
+                                ? item.products[0]?.thumbnail
+                                : `http://localhost:5000/uploads/${item?.products[0]?.thumbnail}`
                             }
                             alt=""
                           />
@@ -107,7 +106,7 @@ const Wishlistinform = () => {
                         <div className="p-4">
                           <div className="subcatitem_cont">
                             {" "}
-                            {item?.products[0]?.title}aaaaaaa
+                            {item?.products[0]?.title}
                           </div>
                           <div className="descripmob crad_text">
                             {" "}
@@ -128,42 +127,47 @@ const Wishlistinform = () => {
                       <div className="p-4 d-flex align-items-center justify-content-center">
                         <MdDelete
                           className="wishremoveicon"
-                          onClick={() => handleShow()}
+                          onClick={() => {
+                            handleShow(item?.products[0]?._id);
+                            // setDeleteID(item?.products[0]?._id);
+                          }}
                         />
                       </div>
                     </Col>
                   </div>
-                  <Modal
-                    className="removerfromcart_modal"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    show={show}
-                    onHide={handleClose}
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title>Delete Item</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      Are you sure you want to Delete this item
-                      ?
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        className="cancelbut_removecart"
-                        variant="secondary"
-                        onClick={handleClose}
-                      >
-                        CANCEL
-                      </Button>
-                      <Button
-                        className="removebut_cart"
-                        variant="primary"
-                        onClick={() => handleRemoveWish(item)}
-                      >
-                        Delete
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
+                  {show === item?.products[0]?._id && (
+                    <Modal
+                      className="removerfromcart_modal"
+                      aria-labelledby="contained-modal-title-vcenter"
+                      centered
+                      show={show ? true : false}
+                      onHide={handleClose}
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Delete Item</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        Are you sure you want to Delete this item ?
+                        {/* {item?.products[0]?.title} */}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button
+                          className="cancelbut_removecart"
+                          variant="secondary"
+                          onClick={handleClose}
+                        >
+                          CANCEL
+                        </Button>
+                        <Button
+                          className="removebut_cart"
+                          variant="primary"
+                          onClick={() => handleRemoveWish(item)}
+                        >
+                          Delete
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                  )}
                 </>
               );
             })}

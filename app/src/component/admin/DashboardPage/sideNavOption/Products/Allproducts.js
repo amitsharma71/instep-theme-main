@@ -1,11 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import {
-  AiOutlineDelete,
-  AiOutlinePlus,
-  AiOutlineSearch,
-} from "react-icons/ai";
+import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FiSearch } from "react-icons/fi";
@@ -16,26 +12,21 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
-// import ConfirmationModal from "../../../admin/confirmModel";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import MydModalWithGrid from "../../../addProductDetails/updateProductForm";
 import ConfirmationModal from "../../../addProductDetails/confirmModel";
-import { updateProduct } from "../../../../../Redux/action/updateProductAction";
 import {
   allAdminProductList,
   editProductdetail,
 } from "../../../../../Redux/action/getAllProductListing";
 import { deleteProduct } from "../../../../../Redux/action/deleteProductAction";
 import Allpagination from "../../../Pagination/pagination";
-import { searchAction } from "../../../../../Redux/action/searchProductAction";
-import { allSubCategoryList } from "../../../../../Redux/action/getSubcategoryAction";
 
 function Allproducts(params) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  // const [showlist, setShowList] = useState(false);
   const [show, setShow] = useState(false);
   const data = useSelector(
     (state) => state?.GetAdminProductAllListData?.listdata
@@ -60,13 +51,12 @@ function Allproducts(params) {
   useEffect(() => {
     dispatch(
       allAdminProductList({
-        search: searchQuery,
+        search: "",
         page: currentPage,
         perPage: postPerPage,
       })
     );
-    // dispatch(searchAction({ name: searchQuery }));
-  }, [currentPage, searchQuery]);
+  }, [currentPage]);
   const handleProduct = () => {
     navigate("/product");
   };
@@ -116,15 +106,10 @@ function Allproducts(params) {
   };
   const handleClose = () => setShow(false);
 
-  const handleSearch = () => {
-    if (searchQuery) {
-      dispatch(
-        allAdminProductList({
-          search: searchQuery,
-          page: currentPage,
-          perPage: postPerPage,
-        })
-      );
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value) {
+      dispatch(allAdminProductList({ search: e.target.value }));
     } else {
       dispatch(
         allAdminProductList({
@@ -133,12 +118,6 @@ function Allproducts(params) {
           perPage: postPerPage,
         })
       );
-    }
-  };
-
-  const onKeyDownHandler = (e) => {
-    if (e.keyCode === 13) {
-      handleSearch();
     }
   };
 
@@ -173,9 +152,7 @@ function Allproducts(params) {
                   placeholder="Search"
                   className=" mr-sm-2 adminsearch_bar"
                   value={searchQuery}
-                  onKeyDown={onKeyDownHandler}
-                  // onClick={handleSearch}
-                  onChange={(e) => setSearchQuery(e?.target?.value)}
+                  onChange={(e) => handleSearch(e)}
                 />
               </div>
               {/* <div className="btngroup">
@@ -185,98 +162,126 @@ function Allproducts(params) {
               </div> */}
             </div>
             {isLoading ? (
-              <div className="table_Spinner productspinner">
-                <Spinner animation="border" variant="dark" />
-              </div>
+              <>
+                <div className="table_Spinner productspinner">
+                  <Spinner animation="border" variant="dark" />
+                </div>
+              </>
             ) : (
               <>
-                <Table responsive="lg" className="position-relative">
-                  <thead>
-                    <tr>
-                      <th>S/L</th>
-                      <th>Product Name</th>
-                      <th>Brand</th>
-                      <th>Categories</th>
-                      <th>Price</th>
-                      {/* <th>Published</th> */}
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data &&
-                      data?.products?.map((product, index) => {
-                        console.log(product, "asdasdasdasd");
-                        return (
-                          <>
-                            <tr key={index}>
-                              <td>
-                                {(currentPage - 1) * postPerPage + (index + 1)}
-                              </td>
-                              <td>
-                                {product.title.substring(
-                                  0,
-                                  readMoreState === product?._id
-                                    ? product?.title?.length
-                                    : 50
-                                )}
-                                {product?.title?.length > 50 && (
-                                  <p
-                                    onClick={() => {
-                                      if (readMoreState === product?._id) {
-                                        setReadMoreState(null);
-                                      } else {
-                                        setReadMoreState(product?._id);
-                                      }
-                                    }}
-                                  >
-                                    read
-                                    {readMoreState === product?._id
-                                      ? "Less"
-                                      : "More"}
-                                  </p>
-                                )}
-                              </td>
-                              <td>{product?.brand[0]?.brand}</td>
-                              <td>{product?.category[0]?.category}</td>
-                              <td>{product.price}</td>
-                              <td>
-                                <Dropdown>
-                                  <Dropdown.Toggle
-                                    variant=""
-                                    id="dropdown-basic"
-                                    // className="focusotoggle"
-                                  >
-                                    <BiDotsVerticalRounded />
-                                  </Dropdown.Toggle>
-                                  <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1">
-                                      <button
-                                        className="editdeleter_button"
-                                        onClick={() => editClick(product._id)}
+                {data && data.products && data.products.length > 0 ? (
+                  <>
+                    <Table responsive="lg" className="position-relative">
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th>Product Name</th>
+                          <th>Brand</th>
+                          <th>Categories</th>
+                          <th>Price</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <>
+                          {data?.products?.map((product, index) => {
+                            console.log(product, "asdasdasdasd");
+                            return (
+                              <>
+                                <tr key={index}>
+                                  <td>
+                                    {(currentPage - 1) * postPerPage +
+                                      (index + 1)}
+                                  </td>
+                                  <td>
+                                    {product.title.substring(
+                                      0,
+                                      readMoreState === product?._id
+                                        ? product?.title?.length
+                                        : 50
+                                    )}
+                                    {product?.title?.length > 50 && (
+                                      <p
+                                        onClick={() => {
+                                          if (readMoreState === product?._id) {
+                                            setReadMoreState(null);
+                                          } else {
+                                            setReadMoreState(product?._id);
+                                          }
+                                        }}
                                       >
-                                        <LuEdit3 /> Edit
-                                      </button>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">
-                                      <button
-                                        className="editdeleter_button"
-                                        onClick={() => deleteClick(product._id)}
+                                        read
+                                        {readMoreState === product?._id
+                                          ? "Less"
+                                          : "More"}
+                                      </p>
+                                    )}
+                                  </td>
+                                  <td>{product?.brand[0]?.brand}</td>
+                                  <td>{product?.category[0]?.category}</td>
+                                  <td>{product.price}</td>
+                                  <td>
+                                    <Dropdown>
+                                      <Dropdown.Toggle
+                                        variant=""
+                                        id="dropdown-basic"
                                       >
-                                        <AiOutlineDelete /> delete
-                                      </button>
-                                    </Dropdown.Item>
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                              </td>
-                            </tr>
-                          </>
-                        );
-                      })}
-                  </tbody>
-                </Table>
+                                        <BiDotsVerticalRounded />
+                                      </Dropdown.Toggle>
+                                      <Dropdown.Menu>
+                                        <Dropdown.Item href="#/action-1">
+                                          <button
+                                            className="editdeleter_button"
+                                            onClick={() =>
+                                              editClick(product._id)
+                                            }
+                                          >
+                                            <LuEdit3 /> Edit
+                                          </button>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item href="#/action-2">
+                                          <button
+                                            className="editdeleter_button"
+                                            onClick={() =>
+                                              deleteClick(product._id)
+                                            }
+                                          >
+                                            <AiOutlineDelete /> delete
+                                          </button>
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                  </td>
+                                </tr>
+                              </>
+                            );
+                          })}
+                        </>
+                      </tbody>
+                    </Table>
+                  </>
+                ) : (
+                  <>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>S/L</th>
+                          <th>Product Name</th>
+                          <th>Brand</th>
+                          <th>Categories</th>
+                          <th>Price</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                    </Table>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <div className="">Result not found</div>
+                    </div>
+                  </>
+                )}
               </>
             )}
-            {searchQuery && searchQuery?.length !== 10 ? (
+            {searchQuery && searchQuery ? (
               <div className="d-flex justify-content-end"></div>
             ) : (
               <div className="d-flex justify-content-end">
@@ -302,7 +307,6 @@ function Allproducts(params) {
           onHide={() => setShowModal(false)}
           onConfirm={handleDeleteConfirmation}
         />
-        {/* <ToastContainer /> */}
       </div>
     </>
   );
