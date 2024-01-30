@@ -18,7 +18,7 @@ const Homecategory = () => {
 
   const { categoryName, subcategoryName } = useParams();
 
-  console.log(categoryName, "ddasasasasas");
+  console.log(subcategoryName, "ddasasasasas");
 
   const loading = useSelector((state) => state?.homecategory?.isLoading);
 
@@ -98,8 +98,8 @@ const Homecategory = () => {
                     </div>
                   </div>
                   <Row>
-                    {data &&
-                      data?.map((item) => {
+                    {filterbyPrice &&
+                      filterbyPrice?.map((item) => {
                         return (
                           <>
                             <div className="subcatkitechenmaindiv row margin_bottom">
@@ -161,7 +161,6 @@ const Homecategory = () => {
                                 >
                                   <div className="p-4">
                                     <h5> ₹{item?.price}</h5>
-
                                   </div>
                                 </Link>
                               </Col>

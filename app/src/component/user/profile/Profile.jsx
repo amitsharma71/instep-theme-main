@@ -220,9 +220,9 @@ export default function Profile() {
                     "goiwjep"
                   )}
                   {profilegetdata?.Profileimage &&
-                  imgFound(
-                    `http://localhost:5000/profile/${profilegetdata?.Profileimage}`
-                  ) ? (
+                    imgFound(
+                      `http://localhost:5000/profile/${profilegetdata?.Profileimage}`
+                    ) ? (
                     <>
                       <img
                         crossOrigin="anonymous"
@@ -298,7 +298,7 @@ export default function Profile() {
                           onKeyDown={onKeyDownHandler}
                           onChange={(e) => handelvaluse(e)}
                           value={userName}
-                          maxLength={8}
+                          maxLength={10}
                           style={{
                             border: "2px solid  #E3E3E3",
                             padding: "5px",

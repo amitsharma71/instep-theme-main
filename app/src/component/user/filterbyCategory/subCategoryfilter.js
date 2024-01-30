@@ -114,22 +114,22 @@ const SubCategoryfilter = () => {
   useEffect(() => {
     dispatch(selectSubCategoryFilter({ category_id: categoryName }));
   }, [""]);
-  // const handlesubcategory = (e) => {
-  //   console.log("handlesubchangecalled");
-  //   console.log(e, "fwoiehiuf");
-  //   const selectedSubcategory = e.target.value;
-  //   console.log(selectedSubcategory, "selectedSubcategoryaa");
-  //   dispatch(selectTypesubcategoryFilter({ subcategory_id: e.target.value }));
-  //   dispatch(AllFilterationData({ subcategoryId: e.target.value }));
-  // };
+  const handlesubcategory = (e) => {
+    console.log("handlesubchangecalled");
+    console.log(e, "fwoiehiuf");
+    const selectedSubcategory = e.target.value;
+    console.log(selectedSubcategory, "selectedSubcategoryaa");
+    dispatch(selectTypesubcategoryFilter({ subcategory_id: e.target.value }));
+    dispatch(AllFilterationData({ subcategoryId: e.target.value }));
+  };
   const brandChange = (e) => {
     console.log(e, "handletypesubchangecalledasasa");
     // const selectedBrand = e.target.value;
     const selectedBrand = categoryName;
     console.log(selectedBrand, "selectedBrandaa");
-    dispatch(findbrandfilter({ subcategory_id: e.target.value }));
+    dispatch(findbrandfilter({ typesubcategory_id: e.target.value }));
 
-    dispatch(AllFilterationData({ subcategoryId: e.target.value }));
+    dispatch(AllFilterationData({ typesubcategory_id: e.target.value }));
   };
 
   const handlebrandtype = (e) => {
@@ -145,7 +145,7 @@ const SubCategoryfilter = () => {
     console.log(e, "handletypesubchangecalled");
     const selectedBrand = e.target.value;
     console.log(selectedBrand, "selectedBrandaa");
-    dispatch(findbrandfilter({ typesubcategory_id: e.target.value }));
+    // dispatch(findbrandfilter({ typesubcategory_id: e.target.value }));
 
     dispatch(AllFilterationData({ brandId: e.target.value }));
   };
@@ -396,8 +396,8 @@ const SubCategoryfilter = () => {
                             onChange={(e) => {
                               input.onChange(e);
                               // handleChangesubcat(e);
-                              // handlesubcategory(e);
-                              brandChange(e);
+                              handlesubcategory(e);
+                              // brandChange(e);
                             }}
                           >
                             <option>Select Subcategory</option>
@@ -422,7 +422,7 @@ const SubCategoryfilter = () => {
                       </Field>
                     </div>
                   </div>
-                  {/* <div className="margin_bottom">
+                  <div className="margin_bottom">
                     <h5 className="margin_bottom">Type Subcategory</h5>
                     <div className="d-flex newpeo_div">
                       <Field name="type subcategory">
@@ -433,7 +433,7 @@ const SubCategoryfilter = () => {
                             component="select"
                             onChange={(e) => {
                               input.onChange(e);
-                              // brandChange(e);
+                              brandChange(e);
                             }}
                           >
                             <option>Select TypeSubcategory</option>
@@ -456,7 +456,7 @@ const SubCategoryfilter = () => {
                         )}
                       </Field>
                     </div>
-                  </div> */}
+                  </div>
                   <div className="Addnewpeoduct margin_bottom py-4">
                     <div className="margin_bottom">
                       <h5>Product Brand</h5>
@@ -470,7 +470,7 @@ const SubCategoryfilter = () => {
                               component="select"
                               onChange={(e) => {
                                 input.onChange(e);
-                                handlebrandtype(e);
+                                // handlebrandtype(e);
                                 bybrandchange(e);
                               }}
                             >

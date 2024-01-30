@@ -10,14 +10,14 @@ export const axiosInstance = axios.create({
 });
 
 export const selectCategoryFilter = createAsyncThunk(
-  "selectcategoryfilter",
+  "selectCategoryFilter",
   async (payload) => {
     const data1 = await axiosInstance.post(`/getcategory`, payload);
     return data1.data;
   }
 );
 export const selectSubcategoryFilter = createAsyncThunk(
-  "selectcategoryfilter",
+  "selectSubcategoryFilter",
   async (payload) => {
     payload.subcategory_id = payload.subcategory_Id;
     const data1 = await axiosInstance.post(`/getcategory`, payload);
@@ -25,7 +25,7 @@ export const selectSubcategoryFilter = createAsyncThunk(
   }
 );
 export const selectBrandFilter = createAsyncThunk(
-  "selectcategoryfilter",
+  "selectBrandFilter",
   async (payload) => {
     payload.type_subcategory_id = payload.type_subcategory_id;
     const data1 = await axiosInstance.post(`/filtertypebrand`, payload);

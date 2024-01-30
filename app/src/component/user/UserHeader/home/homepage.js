@@ -59,7 +59,7 @@ const Home = () => {
   const productClicks = (subcategoryid) => {
     console.log(subcategoryid, "ffffffffffg");
     // `/category/${subcategoryid}`
-    // dispatch(AllFilterationData({ subcategoryId: subcategoryid }));
+    dispatch(AllFilterationData({ subcategoryId: subcategoryid }));
   };
 
   const handleClick = (_id) => {

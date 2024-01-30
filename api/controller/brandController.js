@@ -7,6 +7,7 @@ const create_brand = async (req, res) => {
     const filter = {
       category_id: req.body.category_id,
       subcategory_id: req.body.subcategory_id,
+      typesubcategory_id: req.body.typesubcategory_id,
     };
 
     if (req.body.typesubcategory_id) {
@@ -52,9 +53,7 @@ const brandgetdata = async (req, res) => {
     const skip = (page - 1) * perPage;
 
     const query = brands.find({
-      $or: [
-        { brand: { $regex: req.body.search, $options: "i" } },
-      ],
+      $or: [{ brand: { $regex: req.body.search, $options: "i" } }],
     });
     const totalDocs = await brands.countDocuments(); // Count total documents
 
@@ -127,7 +126,7 @@ const filtertypesubbrand = async (req, res) => {
     console.log(req.body.typesubcategory_id, "ssssssssssss");
 
     const filter = await brandtable.find({
-      subcategory_id: req.body.typesubcategory_id,
+      typesubcategory_id: req.body.typesubcategory_id, 
     });
     console.log(filter, "filterfilterfilterfilter");
 
