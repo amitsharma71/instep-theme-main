@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { MdCancel } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
-import { selectCategoryFilter } from "../../../Redux/action/filterByCategory";
+import {
+  selectBrandFilter,
+  selectCategoryFilter,
+} from "../../../Redux/action/filterByCategory";
 import { selectSubCategoryFilter } from "../../../Redux/action/filterBySubcategory";
 import { selectTypesubcategoryFilter } from "../../../Redux/action/filterByTypeSubcategory";
 import { findbrandfilter } from "../../../Redux/action/typesubcatpost";
@@ -140,7 +143,7 @@ const ProductForm = () => {
       tax: values?.tax,
       rating: values?.rating,
       image: selectedImagesforpost,
-      typesubcategory_id: values[`type subcategory`],
+      type_subcategory_id: values?.typesubcategory,
     };
 
     // console.log("shar", payload);
@@ -201,7 +204,7 @@ const ProductForm = () => {
   const filterdata = useSelector(
     (state) => state?.selectcategoryfilterbyid?.listdata
   );
-  console.log(filterdata, "filter");
+  console.log(filterdata, "filterrrrr");
 
   const filterdatasubcat = useSelector(
     (state) => state?.findsubcategoryfilter?.listdata
@@ -213,10 +216,8 @@ const ProductForm = () => {
   );
   console.log(filterdatatypesubcat, "filterdatatypesubcat");
 
-  const filterbrand = useSelector(
-    (state) => state?.findbrandAdd?.listdata?.data
-  );
-  console.log(filterbrand, "filterbrand");
+  const filterbrand = useSelector((state) => state?.brandfilter?.listdata);
+  console.log(filterbrand, "filterbrandsass");
 
   const handleChangehandleChange = (e) => {
     console.log("Category selected", e.target.value);
@@ -259,7 +260,7 @@ const ProductForm = () => {
 
   // const brandChange = (event) => {
   //   dispatch(findbrandfilter({ brand: event.target.value }));
-
+  // };
   //   const selectedId = event.target.value;
   //   setBrandcategory(selectedId);
 
@@ -280,17 +281,17 @@ const ProductForm = () => {
       subcategoryid,
       brandcategory,
       typsubcatId,
-      "idds"
+      "iddsasasass"
     );
-    // if (subcategoryid) {
-    //   dispatch(selectBrandFilter({ type_subcategory_id: typsubcatId }));
-    // }
+    dispatch(selectCategoryFilter());
+    if (subcategoryid) {
+      dispatch(selectBrandFilter({ typesubcategory_id: typsubcatId }));
+    }
     // if (subcategoryid) {
     //   dispatch(selectTypesubcategoryFilter({ subcategory_id: subcategoryid }));
     // } else if (selectedCategoryId) {
     //   // dispatch(selectSubCategoryFilter({ category_id: selectedCategoryId }));
     // } else {
-    dispatch(selectCategoryFilter());
     // }
   }, [selectedCategoryId, subcategoryid, brandcategory, typsubcatId]);
 
@@ -303,7 +304,7 @@ const ProductForm = () => {
   );
 
   const handleChange = (e) => {
-    console.log("handlechangecalled");
+    console.log(e, "handlechangecalled");
     dispatch(selectSubCategoryFilter({ category_id: e.target.value }));
   };
 
@@ -314,9 +315,14 @@ const ProductForm = () => {
   };
 
   const brandChange = (e) => {
-    console.log("handletypesubchangecalled");
-    dispatch(findbrandfilter({ typesubcategory_id: e.target.value }));
+    // const selectedBrand = categoryName;
+    // console.log(selectedBrand, "selectedBrandaa");
+    // dispatch(findbrandfilter({ typesubcategory_id: e.target.value }));
+
+    // console.log(e, "zxzxzxzxzxzxzxz");
+    dispatch(selectBrandFilter({ type_subcategory_id: e.target.value }));
   };
+
   console.log(
     filterdata,
     filterdatasubcat,
@@ -393,7 +399,7 @@ const ProductForm = () => {
                                 input.onChange(e);
                                 // handleChangesubcat(e);
                                 handlesubcategory(e);
-                                brandChange(e);
+                                // brandChange(e);
                               }}
                             >
                               <option>Select Subcategory</option>
@@ -421,7 +427,7 @@ const ProductForm = () => {
                     <div className="margin_bottom">
                       <h5 className="margin_bottom">Type Subcategory</h5>
                       <div className="d-flex newpeo_div">
-                        <Field name="type subcategory">
+                        <Field name="typesubcategory">
                           {({ input, meta }) => (
                             <select
                               className="addnewproduct_changes right_Addnew"
@@ -429,7 +435,7 @@ const ProductForm = () => {
                               component="select"
                               onChange={(e) => {
                                 input.onChange(e);
-                                // brandChange(e);
+                                brandChange(e);
                               }}
                             >
                               <option>Select TypeSubcategory</option>

@@ -8,5 +8,4 @@ router.post("/getOnlybrand", brandController.brandgetdata);
 router.post("/Deletebrand", brandController.deletebrand);
 router.post("/filtertypebrand", brandController.filtertypesubbrand);
 
-
 module.exports = router;

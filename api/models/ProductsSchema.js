@@ -52,15 +52,15 @@ const ProductSchema = new mongoose.Schema({
   },
   totalprice: {
     type: String,
-    require: true
+    require: true,
   },
   tax: {
     type: String,
-    require: true
-  }
+    require: true,
+  },
 });
 
 ProductSchema.set("productsof", true);
 
-const Userproducts = mongoose.model("Userproducts", ProductSchema);
+const Userproducts = mongoose.model("userproducts", ProductSchema);
 module.exports = Userproducts;
