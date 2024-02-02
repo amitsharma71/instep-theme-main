@@ -80,7 +80,9 @@ const ProductDetails = () => {
                     <ReactImageMagnify
                       {...{
                         smallImage: {
-                          isFluidWidth: true,
+                          // isFluidWidth: true,
+                          width: 400,
+                          height: 400,
                           alt: "Wristwatch by Ted Baker London",
                           src: imageState
                             ? imageState?.split("http").length > 1
