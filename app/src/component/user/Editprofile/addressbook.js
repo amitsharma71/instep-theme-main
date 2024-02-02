@@ -6,7 +6,7 @@ import { Button, Col, Dropdown, Modal, Row } from 'react-bootstrap';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { Form, Field } from "react-final-form";
 import RadioInput from '../placeOrder/radioButton';
-import { LuEdit3 } from 'react-icons/lu';
+import { LuClipboardEdit, LuEdit3 } from 'react-icons/lu';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { ToastContainer, toast } from 'react-toastify';
@@ -417,7 +417,7 @@ const AddressBook = () => {
                                       setEditAddressIndex(index + 1)
                                     }}
                                   >
-                                    <LuEdit3 /> Edit
+                                    <LuClipboardEdit /> Edit
                                   </button>
                                 </Dropdown.Item>
                                 <Dropdown.Item href="#/action-2">

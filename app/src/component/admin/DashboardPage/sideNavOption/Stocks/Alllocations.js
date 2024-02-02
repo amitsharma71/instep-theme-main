@@ -11,7 +11,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { FiSearch } from "react-icons/fi";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { Spinner, Table } from "react-bootstrap";
-import { LuEdit3 } from "react-icons/lu";
+// import { LuEdit3 } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -25,6 +25,7 @@ import { allAdminProductList } from "../../../../../Redux/action/getAllProductLi
 import { deleteProduct } from "../../../../../Redux/action/deleteProductAction";
 import Allpagination from "../../../Pagination/pagination";
 import { searchAction } from "../../../../../Redux/action/searchProductAction";
+import { LuClipboardEdit } from "react-icons/lu";
 
 function Alllocation(params) {
   const navigate = useNavigate();
@@ -229,7 +230,7 @@ function Alllocation(params) {
                                         className="editdeleter_button"
                                         onClick={() => editClick(product._id)}
                                       >
-                                        <LuEdit3 /> Edit
+                                        <LuClipboardEdit /> Edit
                                       </button>
                                     </Dropdown.Item>
                                     <Dropdown.Item href="#/action-2">
