@@ -20,11 +20,11 @@ const TrackOrder = () => {
   const userData = getUserId();
   console.log(userData, "usr");
   const idata = userData.id;
-  console.log(idata, "daa");
-
+  
   const orderdatasum = useSelector(
     (state) => state?.getallorderdetail?.listdata?.data?.ordersWithProducts
-  );
+    );
+    console.log(orderdatasum, "daa");
   useEffect(() => {
     // dispatch(allAdminProductList())
     dispatch(
@@ -64,7 +64,6 @@ const TrackOrder = () => {
               return (
                 <tr>
                   <td>{(currentPage - 1) * postPerPage + (i + 1)}</td>
-                  <td>{i + 1}</td>
                   <td>{e?.quantity}</td>
                   <td>{e?.productID[0]?.title}</td>
                   <td>{e?.amount}</td>

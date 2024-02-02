@@ -20,11 +20,15 @@ function Searchproduct() {
         <>
           <div className="slider_col container-fluid ">
             <Row>
-              <Col lg={2} md={3} sm={4}>
-                <Subcaregoryfilter />
-                <SubCategoryfilter />
-              </Col>
-              <Col lg={10} md={9} sm={8}>
+              {item && item.length >= 1 && (
+                <Col lg={2} md={3} sm={4}>
+                  <div>
+                    <Subcaregoryfilter />
+                    <SubCategoryfilter />
+                  </div>
+                </Col>
+              )}
+              <Col lg={item && item.length >= 1 ? 10 : 12} md={9} sm={8}>
                 <Row>
                   {item.length > 0 ? (
                     item.map((item) => {
@@ -34,7 +38,7 @@ function Searchproduct() {
                             <div className="d-flex justify-content-end mt-2 mx-2">
                               <BsFillHeartFill
                                 style={{ color: "#808080" }}
-                              // onClick={showwishilist}
+                                // onClick={showwishilist}
                               />
                             </div>
                             <Link
@@ -42,7 +46,6 @@ function Searchproduct() {
                               to={`/productdetail/${item._id}`}
                             >
                               <Card className=" forcatcards_htwd">
-
                                 <div className="img_div">
                                   <Card.Img
                                     variant="top"
@@ -50,8 +53,8 @@ function Searchproduct() {
                                       item?.image
                                         ? item?.image
                                         : item?.thumbnail.split(":").length > 1
-                                          ? item?.thumbnail
-                                          : `http://localhost:5000/uploads/${item.thumbnail}`
+                                        ? item?.thumbnail
+                                        : `http://localhost:5000/uploads/${item.thumbnail}`
                                     }
                                   />
                                 </div>
@@ -75,14 +78,16 @@ function Searchproduct() {
                     })
                   ) : (
                     <>
-                      <div className="d-flex justify-content-center align-items-center">
-                        <MdScreenSearchDesktop className="notfound-icon" />
-                      </div>
-                      <div className="d-flex justify-content-center align-items-center">
-                        <h1> Sorry, no result found</h1>
-                      </div>
-                      <div className="d-flex justify-content-center align-items-center">
-                        <h3> Check the spellings or try something else</h3>
+                      <div style={{ height: "100vh" }}>
+                        <div className="d-flex justify-content-center align-items-center ">
+                          <MdScreenSearchDesktop className="notfound-icon" />
+                        </div>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <h1> Sorry, no result found</h1>
+                        </div>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <h3> Check the spellings or try something else</h3>
+                        </div>
                       </div>
                     </>
                   )}
@@ -92,7 +97,6 @@ function Searchproduct() {
           </div>
         </>
       )}
-
     </>
   );
 }

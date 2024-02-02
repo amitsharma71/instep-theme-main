@@ -17,7 +17,10 @@ import {
 import RadioInput from "./radioButton";
 import { singleproduct } from "../../../Redux/action/getsingleProduct";
 import { CiLocationOn } from "react-icons/ci";
-import { paymentOrder } from "../../../Redux/action/paymentOrderAction";
+import {
+  deleteCartAfterPayment,
+  paymentOrder,
+} from "../../../Redux/action/paymentOrderAction";
 // import { options } from "../../../../../api/router/razorpay";
 import useRazorpay from "react-razorpay";
 import { Afterorder } from "../../../Redux/action/orderSummary";
@@ -336,6 +339,17 @@ const Delieverydetail = () => {
             // Dispatch an action to send order details after successful payment
             dispatch(Afterorder(payloads)).then((response) => {
               console.log(response, "resssss");
+              if (response?.payload?.data?.success) {
+                dispatch(
+                  deleteCartAfterPayment({
+                    productIDs: myCartL?.map((item) => item?._id),
+                  })
+                );
+              } else if (response?.meta?.rejectedWithValue) {
+                toast.error("Payment is not successfull");
+              } else {
+                toast.error("payment is not completed");
+              }
               navigate(
                 `/orderconfirmation/${response?.payload?.data?.save?._id}`
               );
@@ -869,7 +883,7 @@ const Delieverydetail = () => {
                                             </td>
                                             <li>{dData.title}</li>
                                             <td>
-                                              {dData.stock < 1 ? (
+                                              {dData.stock > 0 ? (
                                                 <p></p>
                                               ) : (
                                                 <h2 className="text-danger ">
@@ -934,6 +948,16 @@ const Delieverydetail = () => {
                                                       ?.price * e?.quantity}
                                                   </h4>
                                                 </Card.Subtitle>
+                                                <Card.Subtitle>
+                                                  {e?.productDetails[0]?.stock >
+                                                  0 ? (
+                                                    <p></p>
+                                                  ) : (
+                                                    <h2 className="text-danger ">
+                                                      Out of stock
+                                                    </h2>
+                                                  )}
+                                                </Card.Subtitle>
                                                 <Card.Text>
                                                   <div className="d-flex flex-column ">
                                                     <h6 className="discription_text">
@@ -974,8 +998,11 @@ const Delieverydetail = () => {
                             className="paymentContinue_button"
                             onClick={(e) => handlePayment()}
                             disabled={
-                              dData?.stock === "NaN" ||
-                              dData?.stock === "out of stock"
+                              (dData?.stock ||
+                                myCartL?.productDetails?.stock) === "NaN" ||
+                              (dData?.stock ||
+                                myCartL?.productDetails?.stock) ===
+                                "out of stock"
                             }
                           >
                             Continue

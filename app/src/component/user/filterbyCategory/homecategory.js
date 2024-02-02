@@ -41,11 +41,11 @@ const Homecategory = () => {
     dispatch(homecategory(categoryName));
     dispatch(
       AllFilterationData({
-        category: categoryName,
+        // categoryId: categoryName,
         subcategoryId: subcategoryName,
       })
     );
-  }, [categoryName]);
+  }, [categoryName, subcategoryName]);
 
   console.log(categoryName, "categoryNamemm");
 
@@ -112,7 +112,7 @@ const Homecategory = () => {
                                 <Link
                                   className="carddecorationnone_cat text_edit"
                                   reloadDocumen={true}
-                                  to={`/productdetail/${item._id}`}
+                                  to={`/productdetail/${item?._id}`}
                                 >
                                   <div>
                                     <img

@@ -127,7 +127,7 @@ const SubCategoryfilter = () => {
     // const selectedBrand = e.target.value;
     const selectedBrand = categoryName;
     console.log(selectedBrand, "selectedBrandaa");
-    dispatch(findbrandfilter({ typesubcategory_id: e.target.value }));
+    dispatch(findbrandfilter({ type_subcategory_id: e.target.value }));
 
     dispatch(AllFilterationData({ typesubcategory_id: e.target.value }));
   };
@@ -146,7 +146,7 @@ const SubCategoryfilter = () => {
     const selectedBrand = e.target.value;
     console.log(selectedBrand, "selectedBrandaa");
     // dispatch(findbrandfilter({ typesubcategory_id: e.target.value }));
-
+    dispatch(selectBrandFilter({ type_subcategory_id: e.target.value }));
     dispatch(AllFilterationData({ brandId: e.target.value }));
   };
 

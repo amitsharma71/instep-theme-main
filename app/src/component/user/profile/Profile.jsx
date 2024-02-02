@@ -79,9 +79,9 @@ export default function Profile() {
 
   const orderdetail = useSelector(
     (state) =>
-      state?.getallorderdetail?.listdata?.data?.ordersWithProducts[0]?.amount
+      state?.getallorderdetail?.listdata?.data?.ordersWithProducts
   );
-  console.log(orderdetail, "orderdetailorderdetail");
+  console.log(orderdetail?.length, "orderdetailorderdetail");
 
   const userinfo = useSelector((state) => state?.cartdetails?.listdata);
   console.log(userinfo, "ordersss");
@@ -343,8 +343,6 @@ export default function Profile() {
                     </div>
                   </div>
                 </Col>
-                {/* <Col lg={3} md={4} className="rightcol_align"> */}
-                {/* </Col> */}
               </Row>
               <Row>
                 {/* <Col lg={3} md={6} sm={6} xs={6}>
@@ -366,10 +364,10 @@ export default function Profile() {
                 </Col>
                 <Col lg={3} md={6} sm={6} xs={6}>
                   <div className="userhistory_icons">
-                    <p>New Orders</p>
+                    <p>Orders</p>
                     <div className="history_detail">
                       <MdShoppingCartCheckout className="historyneworder_icon" />
-                      <h3>16</h3>
+                      <h3>{orderdetail?.length}</h3>
                     </div>
                   </div>
                 </Col>

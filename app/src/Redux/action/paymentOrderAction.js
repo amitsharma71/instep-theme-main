@@ -15,3 +15,10 @@ export const paymentOrder = createAsyncThunk(
     return axiosInstance.post("/order", payload);
   }
 );
+
+export const deleteCartAfterPayment = createAsyncThunk(
+  "deletecart",
+  async (payload) => {
+    return axiosInstance.post("/addCardDelete", payload);
+  }
+);

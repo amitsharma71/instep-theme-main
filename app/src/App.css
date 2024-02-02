@@ -3197,10 +3197,8 @@ input[type="range"]::-moz-range-progress {
   text-decoration: none !important;
 }
 
-@media (max-width: 1800px) {
-  .filter_leftbutton {
-    display: none;
-  }
+.filter_leftbutton {
+  display: none;
 }
 
 @media (max-width: 439px) {
@@ -4548,33 +4546,38 @@ input::file-selector-button {
 .quanityconfirmation {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: start;
   padding: 20px;
+  padding-left: 5px;
 }
 
 .quanityconfirmation div {
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: center;
   justify-content: start;
 }
 
+.quanityconfirmation div h4 {
+  margin-bottom: 0px !important;
+}
+
 .quanityconfirmation div p {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 500;
   margin-left: 10px;
 }
 
 .priceconfirmation {
-  font-size: 16px;
+  font-size: 25px;
   font-weight: 500;
   margin-left: 10px;
 }
 
 .price_confirmation {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 10px;
   justify-content: start;
   padding: 20px;
@@ -4585,6 +4588,9 @@ input::file-selector-button {
   font-size: 30px;
 }
 
+.price_confirmation h4 {
+  margin-bottom: 0px !important;
+}
 .product_Titleconfirm p {
   font-weight: 500;
   font-size: 18px;

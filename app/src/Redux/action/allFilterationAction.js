@@ -16,9 +16,9 @@ export const axiosInstance = axios.create({
 export const AllFilterationData = createAsyncThunk(
   "filterationAlldata",
   async (payload) => {
-    const { subcategoryId, typesubcategory_id, otherId, brandId } = payload;
+    const { categoryId, subcategoryId, typesubcategory_id, brandId } = payload;
     return axiosInstance.post(
-      `/filteralldata?subcategoryId=${subcategoryId}&typesubcategory_id=${typesubcategory_id}&brandId=${brandId}`
+      `/filteralldata?categoryId=${categoryId}&subcategoryId=${subcategoryId}&typesubcategory_id=${typesubcategory_id}&brandId=${brandId}`
       // `/filteralldata?${subcategoryId ? "subcategoryId=" + subcategoryId : ""}${
       //   typesubcategory_id ? "typesubcategory_id=" + typesubcategory_id : ""
       // }`,

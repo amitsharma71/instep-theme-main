@@ -587,45 +587,55 @@ const Home = () => {
                         );
                       }
                     })} */}
-                    {data?.products
-                      ?.filter(
-                        (item) =>
-                          item?.category?.[0]?.category === "Books &More"
-                      )
-                      ?.slice(0, 6)
-                      ?.map((e, index) => (
-                        <SwiperSlide className="shopping_card" key={e?.id}>
-                          <Link
-                            className="card_deco"
-                            to={`/productdetail/${e._id}`}
-                            onClick={() => productClick(e?._id)}
-                          >
-                            <Card className="shoppingcard_bor">
-                              <div className="img_div">
-                                <Card.Img
-                                  variant="top"
-                                  src={
-                                    e?.image
-                                      ? e?.image
-                                      : e?.thumbnail?.split(":").length > 1
-                                      ? e?.thumbnail
-                                      : `http://localhost:5000/uploads/${e.thumbnail}`
-                                  }
-                                />
-                              </div>
-                              <Card.Body>
-                                <Card.Title className="crad_text">
-                                  {e?.title}
-                                </Card.Title>
+                    {data &&
+                      data?.products
+                        ?.filter(
+                          (item) =>
+                            item?.category?.[0]?.category === "Books &More"
+                        )
+                        ?.slice(0, 6)
+                        ?.map((e, index) => {
+                          const subcategoryid = e?.subcategory[0]?._id;
+                          console.log(subcategoryid, "amitsh");
+                          const categoryid = e?.category[0]?._id;
+                          console.log(categoryid, "categoryidss");
+                          
+                          return (
+                            <>
+                          <SwiperSlide className="shopping_card" key={e?.id}>
+                            <Link
+                              className="card_deco"
+                              to={`/category/${categoryid}/${subcategoryid}`}
+                              onClick={() => productClicks(subcategoryid)}
+                            >
+                              <Card className="shoppingcard_bor">
+                                <div className="img_div">
+                                  <Card.Img
+                                    variant="top"
+                                    src={
+                                      e?.image
+                                        ? e?.image
+                                        : e?.thumbnail?.split(":").length > 1
+                                        ? e?.thumbnail
+                                        : `http://localhost:5000/uploads/${e.thumbnail}`
+                                    }
+                                  />
+                                </div>
+                                <Card.Body>
+                                  <Card.Title className="crad_text">
+                                    {e?.title}
+                                  </Card.Title>
 
-                                <Card.Text className="crad_text">
-                                  <h6> ₹ {e?.price}</h6>
-                                </Card.Text>
-                              </Card.Body>
-                            </Card>
-                          </Link>
-                        </SwiperSlide>
-                      ))}
+                                  <Card.Text className="crad_text">
+                                    <h6> ₹ {e?.price}</h6>
+                                  </Card.Text>
+                                </Card.Body>
+                              </Card>
+                            </Link>
+                          </SwiperSlide>
+                          </>
+                        );
+                    })}
                   </Swiper>
                 </Col>
               </Row>
