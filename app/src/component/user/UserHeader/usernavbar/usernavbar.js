@@ -21,6 +21,8 @@ import { searchAction } from "../../../../Redux/action/searchProductAction";
 import { allCategoryList } from "../../../../Redux/action/getCategoryAction";
 import { cartinfo } from "../../../../Redux/action/usercartinfo";
 import { admingetheading } from "../../../../Redux/action/adminheader";
+import { CiLight } from "react-icons/ci";
+import { AllFilterationData } from "../../../../Redux/action/allFilterationAction";
 
 const Usernavbar = () => {
   const navigate = useNavigate();
@@ -118,6 +120,12 @@ const Usernavbar = () => {
     dispatch(allCategoryList());
   }, []);
 
+  const productClicks = (categoryId) => {
+    console.log(categoryId, "ffffffffffg");
+    // `/category/${subcategoryid}`
+    dispatch(AllFilterationData({ categoryId: categoryId }));
+  };
+
   return (
     <>
       <div className="nav_header">
@@ -190,6 +198,8 @@ const Usernavbar = () => {
                               <Row>
                                 {navcategorydata &&
                                   navcategorydata?.map((item, index) => {
+                                    const categoryId = item?._id;
+                                    console.log(categoryId, "amitsssss" )
                                     return (
                                       <Col
                                         md={6}
@@ -197,7 +207,9 @@ const Usernavbar = () => {
                                       >
                                         <Link
                                           className="navcat_deco"
-                                          to={`/category/${item?._id}`}
+                                          // to={`/category/${item?._id}`}
+                                          to={`/category/${categoryId}`}
+                                          onClick={() => productClicks(categoryId)}
                                         >
                                           <li key={index}>{item?.category}</li>
                                         </Link>

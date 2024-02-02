@@ -113,7 +113,7 @@ function Allproducts(params) {
     } else {
       dispatch(
         allAdminProductList({
-          search: "",
+          // search: "", 
           page: currentPage,
           perPage: postPerPage,
         })

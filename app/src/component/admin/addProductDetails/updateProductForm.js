@@ -60,7 +60,7 @@ function MydModalWithGrid(props) {
     rating: list?.rating,
     stock: list?.stock,
     subcategory: list?.subcategory[0]?.subcategory,
-    subcategory: list?.typesubcategory?.typesubcategory,
+    typesubcategory: list?.type_subcategory_id,
   };
   console.log(initialValues, "initialValues");
   return (
@@ -134,7 +134,7 @@ function MydModalWithGrid(props) {
                     </div>
                     <div className="update_product">
                       <label htmlFor="typesubcategory">
-                        <h5>tYPE Subcategory</h5>
+                        <h5>Type Subcategory</h5>
                       </label>
                       <Field
                         className="descirption_box"

@@ -4,7 +4,6 @@ const expressAsyncHandler = require("express-async-handler");
 const Razorpay = require("razorpay");
 const Usercart = require("../models/CartSchema");
 
-
 const razorpayorders = expressAsyncHandler(async (req, res) => {
   // console.log("test", req.body);
   try {
@@ -26,27 +25,31 @@ const razorpayorders = expressAsyncHandler(async (req, res) => {
     if (!order)
       return res.status(400).send({ success: true, msg: "Some error occured" });
 
-    addCardDelete(req.body.productIDs)
+    // addCardDelete(req.body.productIDs)
     res.status(200).send({ success: true, order });
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-const addCardDelete = ((allId) => {
+const addCardDelete = async (req, res) => {
   try {
-    allId.map(async(item) => {
-      console.log(item, "item")
+    let allId = req.body.productIDs;
+    allId.map(async (item) => {
       await Usercart.findOneAndDelete({
         // userid: userId,
         _id: item,
       });
-    })
+    });
 
+    return {
+      success: true,
+      message: "Deleted Successfully",
+    };
   } catch (error) {
     res.status(500).send(error);
   }
-})
+};
 
 const captures = expressAsyncHandler(async (req, res) => {
   try {
@@ -84,4 +87,4 @@ const captures = expressAsyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { razorpayorders, captures };
+module.exports = { razorpayorders, captures, addCardDelete };

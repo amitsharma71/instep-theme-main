@@ -47,7 +47,7 @@ const ProductForm = () => {
       return false;
     }
 
-    if (!image.name.match(/\.(jpg|jpeg|png)$/)) {
+    if (!image.name.match(/\.(jpg|jpeg|png|svg|webp)$/)) {
       toast.error("Upload file in the form of jpg, jpeg or png");
       setSelectedImages([]);
       e.target.value = null;
@@ -92,7 +92,7 @@ const ProductForm = () => {
       return false;
     }
 
-    if (!image.name.match(/\.(jpg|jpeg|png)$/)) {
+    if (!image.name.match(/\.(jpg|jpeg|png|svg|webp)$/)) {
       toast.error("Upload file in the form of jpg, jpeg or png");
       setSelectedImages([]);
       e.target.value = null;
@@ -186,7 +186,10 @@ const ProductForm = () => {
       newFileInput.type = "file";
       newFileInput.name = "images";
       newFileInput.className = "form-control signup_form_input margin_bottom";
-      newFileInput.addEventListener("change", handleImgeFile);
+      newFileInput.addEventListener(
+        "change",
+        handleImgeFile && handlethumbnalfile
+      );
 
       fileInput.parentNode.replaceChild(newFileInput, fileInput);
     }
@@ -438,7 +441,7 @@ const ProductForm = () => {
                                 brandChange(e);
                               }}
                             >
-                              <option>Select TypeSubcategory</option>
+                              <option>Select TypeSubcategorya</option>
                               {filterdatatypesubcat &&
                                 filterdatatypesubcat?.map((e) => {
                                   console.log(e, "eeeeeeeee");
