@@ -1773,13 +1773,17 @@ h5 {
   border-color: #f7f7f7;
   height: 293px !important;
   width: 100%;
-  padding: 5px;
+  padding: 10px;
 }
 
 .shopping_card:hover {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px !important;
+  border: 1px solid #4eb529;
+  border-radius: 5px;
 }
-
+.onhovermen:hover {
+  border: 1px solid #4eb529;
+}
 .heading {
   font-size: 40px;
   font-weight: 700;
@@ -2047,6 +2051,9 @@ h5 {
   text-decoration: none !important;
 }
 
+.shopping_card {
+  padding: 5px;
+}
 .shopping_card img {
   height: 200px;
   object-fit: contain;
@@ -4542,7 +4549,9 @@ input::file-selector-button {
   height: 150px;
   object-fit: contain;
 }
-
+.magni_fieralign {
+  width: 100%;
+}
 .quanityconfirmation {
   display: flex;
   flex-direction: column;
