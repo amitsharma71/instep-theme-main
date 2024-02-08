@@ -18,6 +18,7 @@ import { adminGetSlider } from "../../../../Redux/action/getSliderAction";
 import Spinner from "../../loader/spinner";
 import Scrolltotopbutton from "../../ScoolToTop/scrolltotopbutton";
 import { AllFilterationData } from "../../../../Redux/action/allFilterationAction";
+import { allSubCategoryList } from "../../../../Redux/action/getSubcategoryAction";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -38,14 +39,41 @@ const Home = () => {
   const allcatgorydata = useSelector(
     (state) => state?.getcategorylistdata?.listdata?.data
   );
+
+  // all sub category List
+
+  const getsubcat = useSelector(
+    (state) => state?.getsubsategorylistdata?.listdata?.data
+  );
+
+  console.log(getsubcat, "getsubcatgetsubcatssdd");
+
   console.log(allcatgorydata, "jjjjjjjj");
   const dataslider = useSelector(
     (state) => state?.getsliderdata?.listdata?.data
   );
   console.log(dataslider, "sliderimgs");
 
+  const categorydataee = useSelector(
+    (state) => state?.filterationalltype?.listdata?.data
+  );
+  console.log(categorydataee, "categorydataasasadd");
+
+  const [getcatid, setGetcatid] = useState();
+
+  const subcatalldata = useSelector(
+    (state) => state?.getsubsategorylistdata?.listdata?.data
+  );
+  console.log(subcatalldata, "subcatalldata");
+
   useEffect(() => {
     dispatch(getProductAction());
+    dispatch(allCategoryList()).then((res) => {
+      if (res && res?.payload?.data && res?.payload?.data[0]?._id) {
+        const id = res?.payload?.data[0]?._id;
+        dispatch(allSubCategoryList({ category_id: id }));
+      }
+    });
     dispatch(allCategoryList());
     dispatch(adminGetSlider());
   }, []);
@@ -68,8 +96,10 @@ const Home = () => {
   };
 
   const handleExplore = (categoryId) => {
-    navigate(`/category/${categoryId}`);
+    // navigate(`/category/${categoryId}`);
     dispatch(AllFilterationData({ categoryId: categoryId }));
+
+    dispatch(allSubCategoryList({ category_id: categoryId }));
   };
 
   const banner = [
@@ -105,6 +135,121 @@ const Home = () => {
       ) : (
         <div className="container-fluid">
           <div className=" slider_col margin_bottom">
+            <div>
+              <Row>
+                <Col lg={12}>
+                  <div className="margin_bottom">
+                    <h2 className="ourtopcategories_home margin_bottom"></h2>
+                    <div className="category_borderdiv">
+                      <Swiper
+                        modules={[Navigation]}
+                        spaceBetween={10}
+                        className="ourcate_swiper"
+                        navigation
+                        pagination={{ clickable: true }}
+                        onSwiper={(swiper) => console.log(swiper)}
+                        onSlideChange={() => console.log("slide change")}
+                        breakpoints={{
+                          320: {
+                            slidesPerView: 2,
+                          },
+                          480: {
+                            slidesPerView: 3,
+                          },
+                          768: {
+                            slidesPerView: 4,
+                          },
+                          1024: {
+                            slidesPerView: 6,
+                          },
+                        }}
+                      >
+                        {allcatgorydata &&
+                          allcatgorydata?.map((data) => {
+                            console.log(data, "dataaaaaaaa");
+                            const Id = data?._id;
+                            return (
+                              <SwiperSlide className="" key={data?.id}>
+                                <Link
+                                  className="carddecorationnone_cat"
+                                  // to={`/category/${data._id}?sub?${data._id}`}
+                                  to={`/category/${Id}`}
+                                  onClick={() => handleExplore(Id)}
+                                >
+                                  <Card className="cat_card_homep hovered">
+                                    <div className="hoveron_arrow">
+                                      <div className="HoveredText">
+                                        <div className="d-flex gap-5">
+                                          {subcatalldata &&
+                                            subcatalldata?.map((item) => {
+                                              console.log(
+                                                item,
+                                                "dataaaaaaaa-itemmmm"
+                                              );
+                                              const ddd = Id;
+                                              console.log(ddd, "gfgffgfgff");
+                                              return (
+                                                Id == item?.category_id && (
+                                                  <>
+                                                    <ul>
+                                                      <li>
+                                                        {item?.subcategory}
+                                                      </li>
+                                                    </ul>
+                                                  </>
+                                                )
+                                              );
+                                            })}
+                                        </div>
+                                      </div>
+                                      <div className="top_catcard">
+                                        <div className="pos_catimage">
+                                          <img
+                                            className="topcatimage_home"
+                                            src={`http://localhost:5000/categoryimg/${data.images}`}
+                                            alt=""
+                                          />
+                                        </div>
+                                        <p>{data?.category}</p>
+                                      </div>
+                                      <div className="hoverarrow_direc">
+                                        <div className="right_bottomborder">
+                                          {/* <div className="nav_Filter nav_filterchanges">
+                                            <ul>
+                                              <Row>
+                                                <Col
+                                                  md={6}
+                                                  className="navfilter_colalign"
+                                                >
+                                                  <Link
+                                                    className="navcat_deco"
+                                                    // to={`/category/${item?._id}`}
+                                                    // to={`/category/${categoryId}`}
+                                                    // onClick={() => productClicks(categoryId)}
+                                                  >
+                                                    <li>{e?.category}</li>
+                                                  </Link>
+                                                </Col>
+                                              </Row>
+                                            </ul>
+                                          </div> */}
+                                          <div>
+                                            <FiArrowUpRight className="arrow-icon" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Card>
+                                </Link>
+                              </SwiperSlide>
+                            );
+                          })}
+                      </Swiper>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
             <div className="slider">
               <Row>
                 <Col lg={12}>
@@ -154,80 +299,6 @@ const Home = () => {
                 </Col>
               </Row>
             </div>
-            <div>
-              <Row>
-                <Col lg={12}>
-                  <div className="margin_bottom">
-                    <h2 className="ourtopcategories_home margin_bottom">
-                      Categories
-                    </h2>
-                    <div className="category_borderdiv">
-                      <Swiper
-                        modules={[Navigation]}
-                        spaceBetween={10}
-                        className="ourcate_swiper"
-                        navigation
-                        pagination={{ clickable: true }}
-                        onSwiper={(swiper) => console.log(swiper)}
-                        onSlideChange={() => console.log("slide change")}
-                        breakpoints={{
-                          320: {
-                            slidesPerView: 2,
-                          },
-                          480: {
-                            slidesPerView: 3,
-                          },
-                          768: {
-                            slidesPerView: 4,
-                          },
-                          1024: {
-                            slidesPerView: 6,
-                          },
-                        }}
-                      >
-                        {allcatgorydata &&
-                          allcatgorydata?.map((e) => {
-                            const categoryId = e?._id;
-                            console.log(categoryId, "hahahahhaahhah");
-                            return (
-                              <SwiperSlide className="" key={e?.id}>
-                                <Link
-                                  className="carddecorationnone_cat"
-                                  // to={`/category/${e._id}?sub?${e._id}`}
-                                  to={`/category/${categoryId}`}
-                                  onClick={() => handleExplore(categoryId)}
-                                >
-                                  <Card className="cat_card_homep">
-                                    <div className="hoveron_arrow">
-                                      <div className="top_catcard">
-                                        <div className="pos_catimage">
-                                          <img
-                                            className="topcatimage_home"
-                                            src={`http://localhost:5000/categoryimg/${e.images}`}
-                                            alt=""
-                                          />
-                                        </div>
-                                        <p>{e?.category}</p>
-                                      </div>
-                                      <div className="hoverarrow_direc">
-                                        <div className="right_bottomborder">
-                                          <div>
-                                            <FiArrowUpRight className="arrow-icon" />
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </Card>
-                                </Link>
-                              </SwiperSlide>
-                            );
-                          })}
-                      </Swiper>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </div>
             {/* <Row>
               <h2 className="ourtopcategories_home"> Trending Products</h2>
               {banner?.map((item, index) => {
@@ -272,6 +343,7 @@ const Home = () => {
                                 <Link
                                   className=""
                                   // to={`/category/${"65365a04a77fe5ede8b05bc8"}`}
+                                  to={`/category/${categoryId}`}
                                   onClick={() => handleExplore(categoryId)}
                                 >
                                   <button
@@ -380,33 +452,45 @@ const Home = () => {
               <Row>
                 <Col lg={2} className="fistcardof_elct">
                   <Card className=" ">
-                    <div className="fistcardof_elct">
-                      <div className="viewallcard_div">
-                        <Card.Text className="text-center">
-                          <h5> Home Appliances</h5>
-                        </Card.Text>
-                        <Link
-                          className="carddecorationnone_cat"
-                          to={`/category/${"65606c4000323f2435fc76c7"}`}
-                        >
-                          <button
-                            className="electrnicswiewall_button"
-                            type="submit"
-                          >
-                            VIEW ALL
-                          </button>
-                        </Link>
-                        <div className="viewimg_hide">
-                          <Card.Body>
-                            <img
-                              className="homedecor_image"
-                              src="https://ouch-cdn2.icons8.com/rQiKaijxXLYiyqOYF9br0qlt89qoLZjE7uM8zvq2L_w/rs:fit:456:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvOTAy/Lzg1MzQwOTM5LTkw/Y2MtNDQzNC04MTcx/LTZlMjExMDI0OGFj/Ni5zdmc.png"
-                              alt=""
-                            />
-                          </Card.Body>
-                        </div>
-                      </div>
-                    </div>
+                    {allcatgorydata?.map((e) => {
+                      if (e?.category === "Home &Furniture") {
+                        const categoryId = e?._id;
+                        console.log(categoryId, "fgdghfd");
+                        return (
+                          <>
+                            <div className="fistcardof_elct">
+                              <div className="viewallcard_div">
+                                <Card.Text className="text-center">
+                                  <h5> Home Appliances</h5>
+                                </Card.Text>
+                                <Link
+                                  className="carddecorationnone_cat"
+                                  to={`/category/${categoryId}`}
+                                  onClick={() => handleExplore(categoryId)}
+                                >
+                                  <button
+                                    className="electrnicswiewall_button"
+                                    type="submit"
+                                  >
+                                    VIEW ALL
+                                  </button>
+                                </Link>
+
+                                <div className="viewimg_hide">
+                                  <Card.Body>
+                                    <img
+                                      className="homedecor_image"
+                                      src="https://ouch-cdn2.icons8.com/rQiKaijxXLYiyqOYF9br0qlt89qoLZjE7uM8zvq2L_w/rs:fit:456:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvOTAy/Lzg1MzQwOTM5LTkw/Y2MtNDQzNC04MTcx/LTZlMjExMDI0OGFj/Ni5zdmc.png"
+                                      alt=""
+                                    />
+                                  </Card.Body>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      }
+                    })}
                   </Card>
                 </Col>
                 <Col lg={10}>
@@ -434,11 +518,13 @@ const Home = () => {
                   >
                     {categorydata &&
                       categorydata?.products?.map((e, index) => {
+                        console.log(e, "checking one");
                         if (e?.category?.[0]?.category === "Home &Furniture") {
                           const subcategoryid = e?.subcategory[0]?._id;
                           console.log(subcategoryid, "amitsh");
                           const categoryid = e?.category[0]?._id;
                           console.log(categoryid, "categoryidss");
+
                           return (
                             <SwiperSlide className="shopping_card" key={index}>
                               <Link
@@ -463,36 +549,7 @@ const Home = () => {
                                     <Card.Title className="crad_text">
                                       {e?.title}
                                     </Card.Title>
-                                    {/* {data?.products
-                      ?.filter(
-                        (item) =>
-                          item?.category?.[0]?.category === "Home &Furniture"
-                      )
-                      .slice(0, 6)
-                      ?.map((e) => (
-                        <SwiperSlide className="shopping_card" key={e?.id}>
-                          <Link
-                            className="card_deco"
-                            to={`/productdetail/${e._id}`}
-                            onClick={() => productClick(e?._id)}
-                          >
-                            <Card className="shoppingcard_bor">
-                              <div className="img_div">
-                                <Card.Img
-                                  variant="top"
-                                  src={
-                                    e?.image
-                                      ? e?.image
-                                      : e?.thumbnail?.split(":").length > 1
-                                      ? e?.thumbnail
-                                      : `http://localhost:5000/uploads/${e.thumbnail}`
-                                  }
-                                />
-                              </div>
-                              <Card.Body>
-                                <Card.Title className="crad_text">
-                                  {e?.title}
-                                </Card.Title> */}
+
                                     <Card.Text className="crad_text">
                                       <h6> ₹ {e?.price}</h6>
                                     </Card.Text>
@@ -511,33 +568,44 @@ const Home = () => {
               <Row>
                 <Col lg={2} className="fistcardof_elct">
                   <Card className=" ">
-                    <div className="fistcardof_elct">
-                      <div className="viewallcard_div">
-                        <Card.Text className="text-center">
-                          <h5>Books & More</h5>
-                        </Card.Text>
-                        <Link
-                          className="carddecorationnone_cat"
-                          to={`/category/${"654dbd68531edfc555016a99"}`}
-                        >
-                          <button
-                            className="electrnicswiewall_button"
-                            type="submit"
-                          >
-                            VIEW ALL
-                          </button>
-                        </Link>
-                        <div className="viewimg_hide">
-                          <Card.Body>
-                            <img
-                              className="homedecor_image"
-                              src="https://cdni.iconscout.com/illustration/premium/thumb/education-stationery-5806839-4841999.png "
-                              alt=""
-                            />
-                          </Card.Body>
-                        </div>
-                      </div>
-                    </div>
+                    {allcatgorydata?.map((e) => {
+                      if (e?.category === "Books &More") {
+                        const categoryId = e?._id;
+                        console.log(categoryId, "fgdghfd");
+                        return (
+                          <>
+                            <div className="fistcardof_elct">
+                              <div className="viewallcard_div">
+                                <Card.Text className="text-center">
+                                  <h5>Books & More</h5>
+                                </Card.Text>
+                                <Link
+                                  className="carddecorationnone_cat"
+                                  to={`/category/${categoryId}`}
+                                  onClick={() => handleExplore(categoryId)}
+                                >
+                                  <button
+                                    className="electrnicswiewall_button"
+                                    type="submit"
+                                  >
+                                    VIEW ALL
+                                  </button>
+                                </Link>
+                                <div className="viewimg_hide">
+                                  <Card.Body>
+                                    <img
+                                      className="homedecor_image"
+                                      src="https://cdni.iconscout.com/illustration/premium/thumb/education-stationery-5806839-4841999.png "
+                                      alt=""
+                                    />
+                                  </Card.Body>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      }
+                    })}
                   </Card>
                 </Col>
                 <Col lg={10}>
@@ -665,33 +733,57 @@ const Home = () => {
               <Row>
                 <Col lg={4} md={6}>
                   <div className="homefashion_border">
-                    {/* {data &&
-                      data?.products
-                        ?.filter(
-                          (item) =>
-                            item?.category?.[0]?.category === "Men"
-                        )
-                        ?.slice(0, 6)
-                        ?.map((e, index) => {
-                          console.log(e, "mendata")
-                          const subcategoryid = e?.subcategory[0]?._id;
-                          console.log(subcategoryid, "amitsh");
-                          const categoryid = e?.category[0]?._id;
-                          console.log(categoryid, "categoryidss");
+                    {allcatgorydata?.map((e) => {
+                      if (e?.category === "Men") {
+                        const categoryId = e?._id;
+                        console.log(categoryId, "fgdghfd");
+                        return (
+                          <>
+                            <Link
+                              className="text_decoration"
+                              to={`/category/${categoryId}`}
+                              onClick={() => handleExplore(categoryId)}
+                            >
+                              <div className="d-flex justify-content-between ">
+                                <h5>Men's Fashion</h5>
+                                <AiFillRightCircle className="topcategoies_icon" />
+                              </div>
+                            </Link>
+                            {/* <div className="fistcardof_elct">
+                              <div className="viewallcard_div">
+                                <Card.Text className="text-center">
+                                  <h5> Electronics</h5>
+                                </Card.Text>
 
-                          return (
-                            <> */}
-                    <Link
-                      className="text_decoration"
-                      // to={`/category/${men[0]?.category[0]?._id}`}
-                      // to={`/category/${categoryid}`}
-                      //   onClick={() => productClicks(categoryid)}
-                    >
-                      <div className="d-flex justify-content-between ">
-                        <h5>Men's Fashion</h5>
-                        {/* <AiFillRightCircle className="topcategoies_icon" /> */}
-                      </div>
-                    </Link>
+                                <Link
+                                  className=""
+                                  // to={`/category/${"65365a04a77fe5ede8b05bc8"}`}
+                                  to={`/category/${categoryId}`}
+                                  onClick={() => handleExplore(categoryId)}
+                                >
+                                  <button
+                                    className="electrnicswiewall_button"
+                                    type="button"
+                                  >
+                                    VIEW ALL
+                                  </button>
+                                </Link>
+                                <div className="viewimg_hide">
+                                  <Card.Body>
+                                    <img
+                                      className="homedecor_image"
+                                      src="https://img.freepik.com/free-vector/hand-drawn-phone-cartoon-illustration_23-2150588452.jpg?w=2000"
+                                      alt=""
+                                    />
+                                  </Card.Body>
+                                </div>
+                              </div>
+                            </div> */}
+                          </>
+                        );
+                      }
+                    })}
+
                     {/* </>
                           );
                         })} */}
@@ -737,15 +829,27 @@ const Home = () => {
                 </Col>
                 <Col lg={4} md={6}>
                   <div className="homefashion_border">
-                    <Link
-                      className="text_decoration"
-                      // to={`/category/${women[0]?.category[0]?._id}`}
-                    >
-                      <div className="d-flex justify-content-between ">
-                        <h5>Women's Fashion</h5>
-                        {/* <AiFillRightCircle className="topcategoies_icon" /> */}
-                      </div>
-                    </Link>
+                    {allcatgorydata?.map((e) => {
+                      if (e?.category === "women") {
+                        const categoryId = e?._id;
+                        console.log(categoryId, "fgdghfd");
+                        return (
+                          <>
+                            <Link
+                              className="text_decoration"
+                              to={`/category/${categoryId}`}
+                              onClick={() => handleExplore(categoryId)}
+                            >
+                              <div className="d-flex justify-content-between ">
+                                <h5>Women's Fashion</h5>
+                                <AiFillRightCircle className="topcategoies_icon" />
+                              </div>
+                            </Link>
+                          </>
+                        );
+                      }
+                    })}
+
                     <Row>
                       {women?.map((item, index) => {
                         console.log(item, "fwiueln");
@@ -795,8 +899,9 @@ const Home = () => {
                     return (
                       <>
                         <Col lg={4} md={12}>
-                          <div
+                          <Link
                             className="homefashion_border"
+                            to={`/category/${categoryId}`}
                             onClick={() => handleExplore(categoryId)}
                           >
                             <div className="sportscontent_align">
@@ -825,7 +930,7 @@ const Home = () => {
                                 alt=""
                               />
                             </div>
-                          </div>
+                          </Link>
                         </Col>
                       </>
                     );
