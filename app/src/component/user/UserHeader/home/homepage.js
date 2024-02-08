@@ -68,9 +68,10 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getProductAction());
-    dispatch(allCategoryList()).then((res) => {
-      if (res && res?.payload?.data && res?.payload?.data[0]?._id) {
-        const id = res?.payload?.data[0]?._id;
+    dispatch(allCategoryList()).then((res, i) => {
+      if (res && res?.payload?.data && res?.payload?.data[2]?._id) {
+        const id = res?.payload?.data;
+        console.log(id, "kakakakakaka")
         dispatch(allSubCategoryList({ category_id: id }));
       }
     });
@@ -186,10 +187,8 @@ const Home = () => {
                                                 item,
                                                 "dataaaaaaaa-itemmmm"
                                               );
-                                              const ddd = Id;
-                                              console.log(ddd, "gfgffgfgff");
                                               return (
-                                                Id == item?.category_id && (
+                                            item?.category_id  ===  Id  && (
                                                   <>
                                                     <ul>
                                                       <li>
