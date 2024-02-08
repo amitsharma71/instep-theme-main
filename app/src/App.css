@@ -1868,6 +1868,10 @@ h5 {
   padding: 30px 11px;
   border-radius: 10px;
 }
+.hovered {
+ color: #10b2f5;
+ height: 150px;
+}
 
 .cat_card_homep {
   height: 150px !important;
@@ -4729,4 +4733,33 @@ input::file-selector-button {
 .emptycart_align button:hover {
   background-color: #4eb529;
   border-color: #4eb529;
+}
+
+/* new css for category hover */
+
+.HoveredText{
+  padding: 20px;
+  background: #e9e8ef;
+  display: none;
+  position: absolute;
+  top: 102%;
+border-radius: 10px;
+}
+.HoveredText ul {
+  padding-left: 0;
+}
+.HoveredText ul li{
+  list-style: none;
+  font-size: 16px;  
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.cat_card_homep:hover .HoveredText{
+  display: block;
+}
+.cat_card_homep{
+  position: relative;
+}
+.category_borderdiv .swiper{
+  overflow: unset !important;
 }
