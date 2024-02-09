@@ -137,7 +137,7 @@ const AllProductDetail = () => {
 
                         console.log(isInwishlist, "fiuwehfr3wre");
                         return (
-                          <Col lg={3} md={4}>
+                          <Col lg={3} md={4} className="d-flex">
                             <Card className=" forcatcards_htwd ">
                               <div className="d-flex justify-content-end mt-2 mx-2">
                                 {/* <Wishlistmaincomponent data={e} /> */}
@@ -188,7 +188,7 @@ const AllProductDetail = () => {
                                 to={`/productdetail/${e._id}`}
                                 onClick={() => productClick(e?._id)}
                               >
-                                <div className="img_div">
+                                <div className="">
                                   <Card.Img
                                     variant="top"
                                     src={
