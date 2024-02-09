@@ -113,6 +113,12 @@ css * {
   .offcanvas_inner_body .col_hide {
     display: block !important;
   }
+  .subimg-ali-gn {
+    display: block !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 747px) {
@@ -1152,7 +1158,7 @@ svg.rs-sidenav-item-icon {
   background-color: #fff;
   color: #000;
   width: 100%;
-  top: 70%;
+  top: 31%;
   left: -0px;
   border-radius: 5px;
   display: flex;
@@ -1683,7 +1689,7 @@ h5 {
 }
 
 .slider_col {
-  padding: 56px 0px 0px 0px;
+  padding: 40px 0px 0px 0px;
 }
 
 .slide_img {
@@ -1778,16 +1784,32 @@ h5 {
 
 .shopping_card:hover {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px !important;
-  border: 1px solid #4eb529;
+  border: 0.5px solid #4eb529;
   border-radius: 5px;
 }
 .onhovermen:hover {
   border: 1px solid #4eb529;
 }
+.onhovermen {
+  border: 1px solid #fff;
+}
 .heading {
   font-size: 40px;
   font-weight: 700;
   margin-top: 20px;
+}
+
+/* .img_div {
+  perspective: 1000px;
+} */
+
+.img_div img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.img_div img:hover {
+  /* transform: rotateY(180deg); */
+  transform: scale(1.1);
 }
 
 .card-img {
@@ -2056,10 +2078,11 @@ h5 {
 }
 
 .shopping_card {
-  padding: 5px;
+  border: 1px solid #fff;
 }
 .shopping_card img {
   height: 200px;
+  width: 100%;
   object-fit: contain;
 }
 
@@ -2069,6 +2092,10 @@ h5 {
   margin-bottom: 10px;
   gap: 10px;
   text-decoration: none !important;
+}
+
+.shoppingcard_bor {
+  padding: 10px 20px 0px 20px;
 }
 
 .item_rating p {
@@ -2101,6 +2128,7 @@ h5 {
 
 .fistcardof_elct {
   padding-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .fistcardof_elct:hover {
@@ -2172,6 +2200,7 @@ h5 {
 .hometop_fashionbo_der {
   border: 1px solid #d2d2d2;
   border-radius: 3px;
+  padding: 10px;
 }
 
 .cloths_detail {
@@ -2762,6 +2791,7 @@ footer ul {
   justify-content: center;
   gap: 10px;
   object-fit: contain;
+  flex-direction: column;
 }
 
 .topmain_imageview img[type="smallImage"] {
@@ -3191,12 +3221,19 @@ input[type="range"]::-moz-range-progress {
   justify-content: center;
 }
 
-.forcatcards_htwd {
+.forcatcards_htwd.card {
   margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #fff !important;
+}
+
+.forcatcards_htwd.card:hover {
+  border: 1px solid #4eb529 !important;
 }
 
 .forcatcards_htwd img {
   height: 200px;
+  width: 100%;
   object-fit: contain;
 }
 
@@ -3780,14 +3817,16 @@ input[type="range"]::-moz-range-progress {
 
 .add {
   border-left: 1px solid #797878;
-  padding: 5px;
+  padding-left: 9px;
+  padding-top: 3px;
   border-radius: 100%;
   cursor: pointer;
 }
 
 .subtract {
   border-right: 1px solid #797878;
-  padding: 5px;
+  padding-right: 8px;
+  padding-top: 3px;
   border-radius: 100%;
   cursor: pointer;
 }
@@ -3823,10 +3862,12 @@ input[type="range"]::-moz-range-progress {
 
 .placeorder_butcart {
   border-radius: 2px;
-  padding: 10px 90px;
+  padding: 9px 90px;
   background-color: #4eb529;
   color: #fff;
   width: 100%;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .error {
@@ -3949,6 +3990,10 @@ input[type="range"]::-moz-range-progress {
     height: 176px;
     width: 176px;
   }
+
+  .allsub_img {
+    display: none;
+  }
 }
 
 @media (max-width: 576px) {
@@ -3997,6 +4042,10 @@ input[type="range"]::-moz-range-progress {
   padding: 10px;
   border-radius: 3px;
   background-color: #f0f0f0;
+}
+
+.subimg-ali-gn {
+  display: none;
 }
 
 .logindetail {

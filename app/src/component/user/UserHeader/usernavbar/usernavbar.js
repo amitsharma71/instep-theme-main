@@ -134,13 +134,13 @@ const Usernavbar = () => {
             <Row>
               <Col lg={12}>
                 <div className="subnewbar_nav">
-                  <div className="intcrt">
+                  {/* <div className="intcrt">
                     <p> {header && header.heading}</p>
-                  </div>
-                  <div className="intcrt">
+                  </div> */}
+                  {/* <div className="intcrt">
                     <AiOutlineMail />
                     {header && header.Email}
-                  </div>
+                  </div> */}
                   {/* <i class="fas fa-divide    ">{header && header.sitename}</i> */}
                   <div className="onmobiled-show">
                     <Link to="/" className="card_deco">

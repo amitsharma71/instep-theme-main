@@ -74,15 +74,42 @@ const ProductDetails = () => {
         <>
           <div className="container mainrowdata">
             <Row>
-              <Col className="singlecard_posit" lg={4}>
+              <Col lg={1}>
+                <div className="allsub_img">
+                  {productDetail?.images && (
+                    <>
+                      <div className="main_image">
+                        {productDetail?.images?.map((item, index) => {
+                          if (item) {
+                            return (
+                              <img
+                                key={index}
+                                className="subphotof_main"
+                                src={
+                                  item?.split("https").length > 1
+                                    ? item
+                                    : `http://localhost:5000/uploads/${item}`
+                                }
+                                onMouseEnter={() => setImageState(item)}
+                                alt=""
+                              />
+                            );
+                          }
+                        })}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </Col>
+              <Col className="singlecard_posit" lg={5}>
                 <Card className="shoppingcard_bor">
                   <div className="margin_bottom magni_fieralign">
                     <ReactImageMagnify
                       {...{
                         smallImage: {
-                          // isFluidWidth: true,
-                          width: 400,
-                          height: 400,
+                          isFluidWidth: true,
+                          // width: 400,
+                          // height: 400,
                           alt: "Wristwatch by Ted Baker London",
                           src: imageState
                             ? imageState?.split("http").length > 1
@@ -116,9 +143,10 @@ const ProductDetails = () => {
                       }}
                     />
                   </div>
+                  <div className="">
                   {productDetail?.images && (
                     <>
-                      <div className="main_image">
+                      <div className="subimg-ali-gn">
                         {productDetail?.images?.map((item, index) => {
                           if (item) {
                             return (
@@ -139,6 +167,7 @@ const ProductDetails = () => {
                       </div>
                     </>
                   )}
+                </div>
                   {console.log(productDetail?.stock, "Asdassssssssssssssssss")}
                   <Card.Body>
                     <Card.Text>
@@ -180,7 +209,7 @@ const ProductDetails = () => {
                   </Card.Body>
                 </Card>
               </Col>
-              <Col lg={8}>
+              <Col lg={6}>
                 <Card className="shoppingcard_bor">
                   <Card.Body>
                     <Card.Title>

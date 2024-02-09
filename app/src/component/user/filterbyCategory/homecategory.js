@@ -102,7 +102,7 @@ const Homecategory = () => {
                       filterbyPrice?.map((item) => {
                         return (
                           <>
-                            <div className="subcatkitechenmaindiv row margin_bottom">
+                            {/* <div className="subcatkitechenmaindiv row margin_bottom">
                               <Col lg={4} md={4} sm={4}>
                                 <div className="d-flex justify-content-end mt-2 mx-2">
                                   <BsFillHeartFill
@@ -164,7 +164,54 @@ const Homecategory = () => {
                                   </div>
                                 </Link>
                               </Col>
-                            </div>
+                            </div> */}
+                            <Col lg={3} md={4} className="d-flex">
+                              <Card className=" forcatcards_htwd ">
+                                <Link
+                                  className="carddecorationnone_cat text_edit"
+                                  reloadDocumen={true}
+                                  to={`/productdetail/${item?._id}`}
+                                >
+                                  <div className="">
+                                    <Card.Img
+                                      variant="top"
+                                      src={
+                                        item?.image
+                                          ? item?.image
+                                          : item?.thumbnail?.split(":").length >
+                                            1
+                                          ? item?.thumbnail
+                                          : `http://localhost:5000/uploads/${item.thumbnail}`
+                                      }
+                                      alt=""
+                                    />
+                                  </div>
+                                  <Card.Body>
+                                    <div className="item_rating">
+                                      <p className="homerating_cat">
+                                        {item?.category[0]?.category}
+                                      </p>
+                                    </div>
+                                    <Card.Title className="crad_text">
+                                      {item?.title}
+                                    </Card.Title>
+                                    <Card.Text className="crad_text"></Card.Text>
+                                    <Card.Text className="crad_text">
+                                      <h5> ₹ {item?.totalprice}</h5>
+                                    </Card.Text>
+                                    <Card.Text className="crad_text">
+                                      {item.stock > 0 ? (
+                                        <h6> </h6>
+                                      ) : (
+                                        <p className="text-danger">
+                                          Out of stock
+                                        </p>
+                                      )}
+                                    </Card.Text>
+                                  </Card.Body>
+                                </Link>
+                              </Card>
+                            </Col>
                           </>
                         );
                       })}
