@@ -6,59 +6,64 @@ const subcategorytable = require("../models/subcategorytable");
 const categorytable = require("../models/categorytable");
 const typeofsubcategorytable = require("../models/typesubcarte");
 
-const adddCategory = async (req, res) => {
-  console.log(req.body.userData, "data");
+const fs = require("fs");
 
-  try {
-    const userData = JSON.parse(req.body.userData);
 
-    // const imagesFilenames = req.files["images"].map((file) => file.filename);
-    // console.log(req.files.images[0].filename, "req.files");
+// console.log(categorytable,"categorytable")
 
-    const imagesFilenames = req.files.images[0].filename;
+// const adddCategory = async (req, res) => {
+//   console.log(req.body.userData, "data");
 
-    const category_data = await modelcategory.find();
-    if (category_data.length > 0) {
-      let checking = false;
-      for (let i = 0; i < category_data.length; i++) {
-        if (
-          category_data[i]["category"].toLowerCase() ===
-          userData?.category.toLowerCase()
-        ) {
-          checking = true;
-          break;
-        }
-      }
+//   try {
+//     const userData = JSON.parse(req.body.userData);
 
-      if (checking == false) {
-        const savecategory = new modelcategory({
-          category: userData?.category,
-          images: imagesFilenames,
-        });
-        const cat_data = await savecategory.save();
-        res
-          .status(200)
-          .send({ success: true, msg: "category data", data: cat_data });
-      } else {
-        res.status(200).send({
-          success: true,
-          msg: "this category (" + userData?.category + ") is already exist.",
-        });
-      }
-    } else {
-      const savecategory = new modelcategory({
-        category: userData?.category,
-        images: imagesFilenames,
-      });
-      const cat_data = await savecategory.save();
-      res
-        .status(200)
-        .send({ success: true, msg: "category data", data: cat_data });
-    }
-  } catch (error) {
-    res.status(400).send({ succes: false, msg: error.message });
-  }
-};
+//     // const imagesFilenames = req.files["images"].map((file) => file.filename);
+//     // console.log(req.files.images[0].filename, "req.files");
+
+//     const imagesFilenames = req.files.images[0].filename;
+
+//     const category_data = await modelcategory.find();
+//     if (category_data.length > 0) {
+//       let checking = false;
+//       for (let i = 0; i < category_data.length; i++) {
+//         if (
+//           category_data[i]["category"].toLowerCase() ===
+//           userData?.category.toLowerCase()
+//         ) {
+//           checking = true;
+//           break;
+//         }
+//       }
+
+//       if (checking == false) {
+//         const savecategory = new modelcategory({
+//           category: userData?.category,
+//           images: imagesFilenames,
+//         });
+//         const cat_data = await savecategory.save();
+//         res
+//           .status(200)
+//           .send({ success: true, msg: "category data", data: cat_data });
+//       } else {
+//         res.status(200).send({
+//           success: true,
+//           msg: "this category (" + userData?.category + ") is already exist.",
+//         });
+//       }
+//     } else {
+//       const savecategory = new modelcategory({
+//         category: userData?.category,
+//         images: imagesFilenames,
+//       });
+//       const cat_data = await savecategory.save();
+//       res
+//         .status(200)
+//         .send({ success: true, msg: "category data", data: cat_data });
+//     }
+//   } catch (error) {
+//     res.status(400).send({ succes: false, msg: error.message });
+//   }
+// };
 
 const getcategorydata = async (req, res) => {
   try {
@@ -204,6 +209,71 @@ const categoryfull = async (req, res) => {
     res.status(500).send({
       error: "An error occurred while deleting categories and associated items",
     });
+  }
+};
+
+const adddCategory = async (req, res) => {
+  try {
+    const userData = JSON.parse(req.body.userData);
+    console.log(userData, "userData");
+
+    // const imagesFilenames = req.files["images"].map((file) => file.filename);
+    // console.log(req.files.images[0].filename, "req.files");
+
+    const findCategoryData = await modelcategory.findOne({
+      category: userData.category,
+    });
+
+    console.log(findCategoryData.images,"findCategoryData.images")
+
+    let imagesFilenames;
+    if (req.files && req.files.images) {
+      if (findCategoryData && findCategoryData.images) {
+        // Delete the existing categoryimg image
+        fs.unlink(`./categoryimg/${findCategoryData.images}`, (err) => {
+          if (err) {
+            console.error(`Error deleting ${findCategoryData.images}:`, err);
+          } else {
+            console.log(`${findCategoryData.images} deleted successfully`);
+          }
+        });
+      }
+      imagesFilenames = req.files.images[0].filename;
+    }
+
+    let createData;
+
+    if (findCategoryData && findCategoryData._id.toString() !== userData._id) {
+      console.log("iffffffffff");
+      res.status(200).send({ success: true, msg: "duplicate Value" });
+    } else if (userData._id) {
+      console.log("elseIffffffffffffffffffff");
+      createData = await modelcategory.findByIdAndUpdate(
+        { _id: userData._id },
+        {
+          category: userData?.category,
+          images: imagesFilenames,
+        }
+      );
+    } else {
+      console.log("aaaaaaaaaaaaaaaa");
+      createData = await modelcategory.create({
+        category: userData?.category,
+        images: imagesFilenames,
+      });
+    }
+
+    if (createData) {
+      const cat_data = await modelcategory.findOne({
+        _id: createData._id,
+      });
+      res
+        .status(200)
+        .send({ success: true, msg: "category data", data: cat_data });
+    }
+  } catch (error) {
+    console.log(error, "errorrrrrrrrrrrrrrrrr");
+    res.status(400).send({ succes: false, msg: error.message });
   }
 };
 

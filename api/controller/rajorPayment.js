@@ -61,7 +61,7 @@ const captures = expressAsyncHandler(async (req, res) => {
         method: "POST",
         url: `https://${process.env.RAZORPAY_KEY_ID}:${process.env.RAZORPAY_SECRET}@api.razorpay.com/v1/payments/${req.body.paymentId}/capture`,
         form: {
-          amount: 10 * 100, // amount == Rs 10 // Same As Order amount
+          amount: 50 * 100, // amount == Rs 10 // Same As Order amount
           currency: "INR",
         },
       },
