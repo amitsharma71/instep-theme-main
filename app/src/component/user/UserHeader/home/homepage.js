@@ -19,6 +19,7 @@ import Spinner from "../../loader/spinner";
 import Scrolltotopbutton from "../../ScoolToTop/scrolltotopbutton";
 import { AllFilterationData } from "../../../../Redux/action/allFilterationAction";
 import { allSubCategoryList } from "../../../../Redux/action/getSubcategoryAction";
+import { typesubcategoryget } from "../../../../Redux/action/typesubcatpost";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -66,13 +67,24 @@ const Home = () => {
   );
   console.log(subcatalldata, "subcatalldata");
 
+  const typesubcatgory = useSelector(
+    (state) => state?.typesubcategory?.typesublist?.data?.data
+  );
+  console.log(typesubcatgory, "sherowalimata");
+
   useEffect(() => {
     dispatch(getProductAction());
     dispatch(allCategoryList()).then((res, i) => {
       if (res && res?.payload?.data && res?.payload?.data[2]?._id) {
         const id = res?.payload?.data;
         console.log(id, "kakakakakaka");
-        dispatch(allSubCategoryList({ category_id: id }));
+        dispatch(allSubCategoryList({ category_id: id })).then((res) => {
+          if (res && res?.payload?.data && res.payload.data[0]?._id) {
+            const subcatid = res.payload.data;
+            console.log(subcatid, "checkone+");
+            dispatch(typesubcategoryget({ subcategory_id: subcatid }));
+          }
+        });
       }
     });
     dispatch(allCategoryList());
@@ -170,11 +182,18 @@ const Home = () => {
                         }}
                       >
                         {allcatgorydata &&
-                          allcatgorydata?.map((data) => {
+                          allcatgorydata?.map((data, index) => {
                             console.log(data, "dataaaaaaaa");
                             const Id = data?._id;
                             return (
-                              <SwiperSlide className="" key={data?.id}>
+                              <SwiperSlide
+                                className={` ${
+                                  index === allcatgorydata.length - 1
+                                    ? "lastSwepper"
+                                    : ""
+                                }`}
+                                key={data?.id}
+                              >
                                 <Link
                                   className="carddecorationnone_cat"
                                   
@@ -184,25 +203,48 @@ const Home = () => {
                                   <Card className="cat_card_homep hovered">
                                     <div className="hoveron_arrow">
                                       <div className="HoveredText">
-                                        <div className="d-flex gap-5">
-                                          {subcatalldata &&
-                                            subcatalldata?.map((item) => {
-                                              console.log(
-                                                item,
-                                                "dataaaaaaaa-itemmmm"
-                                              );
-                                              return (
-                                            item?.category_id  ===  Id  && (
-                                                  <>
-                                                    <ul>
+                                        <div className="">
+                                          <ul>
+                                            {subcatalldata &&
+                                              subcatalldata?.map((item) => {
+                                                console.log(
+                                                  item,
+                                                  "dataaaaaaaa-itemmmm"
+                                                );
+                                                return (
+                                                  item?.category_id === Id && (
+                                                    <>
                                                       <li>
-                                                        {item?.subcategory}
+                                                        <div className="ItemSubCategary">
+                                                          <p>
+                                                            {item?.subcategory}
+                                                          </p>
+                                                          <ul className="ItemSubCategaryUL">
+                                                            {typesubcatgory &&
+                                                              typesubcatgory?.map(
+                                                                (item) => {
+                                                                  return (
+                                                                    item?.subcategory_id ===
+                                                                      subcatid && (
+                                                                      <>
+                                                                        <li>
+                                                                          {
+                                                                            item?.typesubcategory
+                                                                          }
+                                                                        </li>
+                                                                      </>
+                                                                    )
+                                                                  );
+                                                                }
+                                                              )}
+                                                          </ul>
+                                                        </div>
                                                       </li>
-                                                    </ul>
-                                                  </>
-                                                )
-                                              );
-                                            })}
+                                                    </>
+                                                  )
+                                                );
+                                              })}
+                                          </ul>
                                         </div>
                                       </div>
                                       <div className="top_catcard">

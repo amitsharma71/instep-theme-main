@@ -4790,6 +4790,13 @@ input::file-selector-button {
 /* / new css for category hover /  */
 .HoveredText {
   background: #fff;
+}
+
+/* new css for category hover */
+
+.HoveredText{
+
+  background: #e9e8ef;
   display: none;
   position: absolute;
   top: 98%;
@@ -4807,6 +4814,14 @@ input::file-selector-button {
   font-size: 19px;
   font-weight: 400 !important;
   margin-bottom: 10px;
+}
+
+.HoveredText ul li{
+    padding: 10px 20px 0 20px;
+    list-style: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
 }
 
 .ItemSubCategaryUL li {
