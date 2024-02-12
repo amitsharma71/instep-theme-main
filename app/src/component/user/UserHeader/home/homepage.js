@@ -82,15 +82,15 @@ const Home = () => {
           if (res && res?.payload?.data && res.payload.data[0]?._id) {
             const subcatid = res.payload.data;
             console.log(subcatid, "checkone+");
+            dispatch(typesubcategoryget({ subcategory_id: subcatid }));
           }
-          
+
           // if(res && res?.payload?.data)
         });
       }
     });
     dispatch(allCategoryList());
     dispatch(adminGetSlider());
-   
   }, []);
 
   const productClick = (_id) => {
@@ -215,35 +215,26 @@ const Home = () => {
                                                       <li>
                                                         <div className="ItemSubCategary">
                                                           <p>
-                                                            {" "}
                                                             {item?.subcategory}
                                                           </p>
                                                           <ul className="ItemSubCategaryUL">
-                                                            {}
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
+                                                            {typesubcatgory &&
+                                                              typesubcatgory?.map(
+                                                                (item) => {
+                                                                  return (
+                                                                    item?.subcategory_id ===
+                                                                      subcatid && (
+                                                                      <>
+                                                                        <li>
+                                                                          {
+                                                                            item?.typesubcategory
+                                                                          }
+                                                                        </li>
+                                                                      </>
+                                                                    )
+                                                                  );
+                                                                }
+                                                              )}
                                                           </ul>
                                                         </div>
                                                       </li>
