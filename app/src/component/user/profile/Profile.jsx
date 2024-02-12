@@ -78,8 +78,7 @@ export default function Profile() {
   };
 
   const orderdetail = useSelector(
-    (state) =>
-      state?.getallorderdetail?.listdata?.data?.ordersWithProducts
+    (state) => state?.getallorderdetail?.listdata?.data?.ordersWithProducts
   );
   console.log(orderdetail?.length, "orderdetailorderdetail");
 
@@ -219,9 +218,9 @@ export default function Profile() {
                     "goiwjep"
                   )}
                   {profilegetdata?.Profileimage &&
-                    imgFound(
-                      `http://localhost:5000/profile/${profilegetdata?.Profileimage}`
-                    ) ? (
+                  imgFound(
+                    `http://localhost:5000/profile/${profilegetdata?.Profileimage}`
+                  ) ? (
                     <>
                       <img
                         crossOrigin="anonymous"
@@ -365,7 +364,7 @@ export default function Profile() {
                 <Col lg={3} md={6} sm={6} xs={6}>
                   <div className="userhistory_icons">
                     <p>Orders</p>
-                    <div className="history_detail">
+                    <div className="history_detail" id="v-pills-profile-tab">
                       <MdShoppingCartCheckout className="historyneworder_icon" />
                       <h3>{orderdetail?.length}</h3>
                     </div>

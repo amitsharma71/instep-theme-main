@@ -78,9 +78,9 @@ const Home = () => {
       if (res && res?.payload?.data && res?.payload?.data[2]?._id) {
         const id = res?.payload?.data;
         console.log(id, "kakakakakaka");
-        dispatch(allSubCategoryList({ category_id: id })).then((res) => {
+        dispatch(allSubCategoryList({ category_id: id })).then((res, i) => {
           if (res && res?.payload?.data && res.payload.data[0]?._id) {
-            const subcatid = res.payload.data;
+            const subcatid = res.payload.data[i]?._id;
             console.log(subcatid, "checkone+");
             dispatch(typesubcategoryget({ subcategory_id: subcatid }));
           }
@@ -342,36 +342,37 @@ const Home = () => {
                                                     <>
                                                       <li className="catlist_align">
                                                         <div className="ItemSubCategary">
-                                                          <p>
-                                                            {" "}
+                                                          <p
+                                                            onMouseOver={(
+                                                              e
+                                                            ) => {
+                                                              dispatch(
+                                                                typesubcategoryget(
+                                                                  {
+                                                                    subcategory_id:
+                                                                      item?._id,
+                                                                  }
+                                                                )
+                                                              );
+                                                            }}
+                                                          >
                                                             {item?.subcategory}
                                                           </p>
                                                           <ul className="ItemSubCategaryUL">
-                                                            {}
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
-                                                            <li>
-                                                              ItemSubCategary
-                                                            </li>
+                                                            {typesubcatgory &&
+                                                              typesubcatgory?.map(
+                                                                (item) => {
+                                                                  return (
+                                                                    <>
+                                                                      <li>
+                                                                        {
+                                                                          item?.typesubcategory
+                                                                        }
+                                                                      </li>
+                                                                    </>
+                                                                  );
+                                                                }
+                                                              )}
                                                           </ul>
                                                         </div>
                                                       </li>
