@@ -134,9 +134,9 @@ const Usernavbar = () => {
             <Row>
               <Col lg={12}>
                 <div className="subnewbar_nav">
-                  {/* <div className="intcrt">
+                  <div className="intcrt">
                     <p> {header && header.heading}</p>
-                  </div> */}
+                  </div>
                   {/* <div className="intcrt">
                     <AiOutlineMail />
                     {header && header.Email}
@@ -199,7 +199,6 @@ const Usernavbar = () => {
                                 {navcategorydata &&
                                   navcategorydata?.map((item, index) => {
                                     const categoryId = item?._id;
-                                    console.log(categoryId, "amitsssss" )
                                     return (
                                       <Col
                                         md={6}
