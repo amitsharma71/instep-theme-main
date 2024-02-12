@@ -1041,43 +1041,291 @@ const Home = () => {
                     return (
                       <>
                         <Col lg={4} md={12}>
-                          <Link
-                            className="homefashion_border"
-                            to={`/category/${categoryId}`}
-                            onClick={() => handleExplore(categoryId)}
-                          >
-                            <div className="sportscontent_align">
-                              <div>
-                                <h2>Stay Fit & Active</h2>
-                              </div>
-                              <div className="margin_bottom shop_roe">
-                                <p>
-                                  Shop from our Fitness & Sports Equipment
-                                  Collection
-                                </p>
-                              </div>
-                              <div>
-                                {/* <button
+                          <div className="homefashion_border">
+                            <Link
+                              className="text_decoration"
+                              to={`/category/${categoryId}`}
+                              onClick={() => handleExplore(categoryId)}
+                            >
+                              <div className="sportscontent_align">
+                                <div>
+                                  <h2>Stay Fit & Active</h2>
+                                </div>
+                                <div className="margin_bottom shop_roe">
+                                  <p>
+                                    Shop from our Fitness & Sports Equipment
+                                    Collection
+                                  </p>
+                                </div>
+                                <div>
+                                  {/* <button
 
                                   className="slider_rightbutton margin_bottom"
                                 >
                                   Explore
                                 </button> */}
+                                </div>
                               </div>
-                            </div>
-                            <div>
-                              <img
-                                className="homebackground_img"
-                                src="https://img.freepik.com/free-vector/box-full-sport-equipments_1308-37207.jpg?w=2000"
-                                alt=""
-                              />
-                            </div>
-                          </Link>
+                              <div>
+                                <img
+                                  className="homebackground_img"
+                                  src="https://img.freepik.com/free-vector/box-full-sport-equipments_1308-37207.jpg?w=2000"
+                                  alt=""
+                                />
+                              </div>
+                            </Link>
+                          </div>
                         </Col>
                       </>
                     );
                   }
                 })}
+              </Row>
+            </div>
+            <div className="homeelectnics_carouse margin_bottom">
+              <Row>
+                <Col lg={2} className="fistcardof_elct">
+                  <Card className=" ">
+                    {allcatgorydata?.map((e) => {
+                      if (e?.category === "Men") {
+                        const categoryId = e?._id;
+                        console.log(categoryId, "fgdghfd");
+                        return (
+                          <>
+                            <div className="fistcardof_elct">
+                              <div className="viewallcard_div">
+                                <Card.Text className="text-center">
+                                  <h5> Mens Fashion</h5>
+                                </Card.Text>
+
+                                <Link
+                                  className=""
+                                  // to={`/category/${"65365a04a77fe5ede8b05bc8"}`}
+                                  to={`/category/${categoryId}`}
+                                  onClick={() => handleExplore(categoryId)}
+                                >
+                                  <button
+                                    className="electrnicswiewall_button"
+                                    type="button"
+                                  >
+                                    VIEW ALL
+                                  </button>
+                                </Link>
+                                <div className="viewimg_hide">
+                                  <Card.Body>
+                                    <img
+                                      className="homedecor_image"
+                                      src="https://png.pngtree.com/png-clipart/20210430/ourmid/pngtree-charm-fashion-men-wearing-png-image_3251052.jpg"
+                                      alt=""
+                                    />
+                                  </Card.Body>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      }
+                    })}
+                  </Card>
+                </Col>
+                <Col lg={10}>
+                  <Swiper
+                    modules={[Navigation]}
+                    spaceBetween={10}
+                    navigation
+                    pagination={{ clickable: true }}
+                    onSwiper={(swiper) => console.log(swiper)}
+                    onSlideChange={() => console.log("slide change")}
+                    breakpoints={{
+                      320: {
+                        slidesPerView: 1,
+                      },
+                      480: {
+                        slidesPerView: 2,
+                      },
+                      768: {
+                        slidesPerView: 3,
+                      },
+                      1024: {
+                        slidesPerView: 4,
+                      },
+                    }}
+                  >
+                    {categorydata &&
+                      categorydata?.products
+                        ?.filter(
+                          (item) => item?.category?.[0]?.category === "Men"
+                        )
+                        .slice(0, 6)
+                        .map((item, index) => {
+                          const subcategoryid = item?.subcategory[0]?._id;
+                          console.log(subcategoryid, "amitsh");
+                          const categoryid = item?.category[0]?._id;
+                          console.log(categoryid, "categoryidss");
+                          return (
+                            <>
+                              <SwiperSlide
+                                className="shopping_card"
+                                key={index}
+                              >
+                                <Link
+                                  className="card_deco"
+                                  to={`/category/${categoryid}/${subcategoryid}`}
+                                  onClick={() => productClicks(subcategoryid)}
+                                >
+                                  <Card className="shoppingcard_bor">
+                                    <div className="img_div">
+                                      <Card.Img
+                                        variant="top"
+                                        src={
+                                          item?.image
+                                            ? item?.image
+                                            : item?.thumbnail?.split(":")
+                                                .length > 1
+                                            ? item?.thumbnail
+                                            : `http://localhost:5000/uploads/${item.thumbnail}`
+                                        }
+                                      />
+                                    </div>
+                                    <Card.Body>
+                                      <Card.Title className="crad_text">
+                                        {item?.title}
+                                      </Card.Title>
+                                      <Card.Text className="crad_text">
+                                        <h6> ₹ {item?.price}</h6>
+                                      </Card.Text>
+                                    </Card.Body>
+                                  </Card>
+                                </Link>
+                              </SwiperSlide>
+                            </>
+                          );
+                        })}
+                  </Swiper>
+                </Col>
+              </Row>
+            </div>
+            <div className="homeelectnics_carouse margin_bottom">
+              <Row>
+                <Col lg={2} className="fistcardof_elct">
+                  <Card className=" ">
+                    {allcatgorydata?.map((e) => {
+                      if (e?.category === "women") {
+                        const categoryId = e?._id;
+                        console.log(categoryId, "fgdghfd");
+                        return (
+                          <>
+                            <div className="fistcardof_elct">
+                              <div className="viewallcard_div">
+                                <Card.Text className="text-center">
+                                  <h5> Women's Fashion</h5>
+                                </Card.Text>
+
+                                <Link
+                                  className=""
+                                  // to={`/category/${"65365a04a77fe5ede8b05bc8"}`}
+                                  to={`/category/${categoryId}`}
+                                  onClick={() => handleExplore(categoryId)}
+                                >
+                                  <button
+                                    className="electrnicswiewall_button"
+                                    type="button"
+                                  >
+                                    VIEW ALL
+                                  </button>
+                                </Link>
+                                <div className="viewimg_hide">
+                                  <Card.Body>
+                                    <img
+                                      className="homedecor_image"
+                                      src="https://image.similarpng.com/very-thumbnail/2021/09/Red-fashion-women-shoes-and-handbag-on-transparent-background-PNG.png"
+                                      alt=""
+                                    />
+                                  </Card.Body>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      }
+                    })}
+                  </Card>
+                </Col>
+                <Col lg={10}>
+                  <Swiper
+                    modules={[Navigation]}
+                    spaceBetween={10}
+                    navigation
+                    pagination={{ clickable: true }}
+                    onSwiper={(swiper) => console.log(swiper)}
+                    onSlideChange={() => console.log("slide change")}
+                    breakpoints={{
+                      320: {
+                        slidesPerView: 1,
+                      },
+                      480: {
+                        slidesPerView: 2,
+                      },
+                      768: {
+                        slidesPerView: 3,
+                      },
+                      1024: {
+                        slidesPerView: 4,
+                      },
+                    }}
+                  >
+                    {categorydata &&
+                      categorydata?.products
+                        ?.filter(
+                          (item) => item?.category?.[0]?.category === "women"
+                        )
+                        .slice(0, 6)
+                        .map((item, index) => {
+                          const subcategoryid = item?.subcategory[0]?._id;
+                          console.log(subcategoryid, "amitsh");
+                          const categoryid = item?.category[0]?._id;
+                          console.log(categoryid, "categoryidss");
+                          return (
+                            <>
+                              <SwiperSlide
+                                className="shopping_card"
+                                key={index}
+                              >
+                                <Link
+                                  className="card_deco"
+                                  to={`/category/${categoryid}/${subcategoryid}`}
+                                  onClick={() => productClicks(subcategoryid)}
+                                >
+                                  <Card className="shoppingcard_bor">
+                                    <div className="img_div">
+                                      <Card.Img
+                                        variant="top"
+                                        src={
+                                          item?.image
+                                            ? item?.image
+                                            : item?.thumbnail?.split(":")
+                                                .length > 1
+                                            ? item?.thumbnail
+                                            : `http://localhost:5000/uploads/${item.thumbnail}`
+                                        }
+                                      />
+                                    </div>
+                                    <Card.Body>
+                                      <Card.Title className="crad_text">
+                                        {item?.title}
+                                      </Card.Title>
+                                      <Card.Text className="crad_text">
+                                        <h6> ₹ {item?.price}</h6>
+                                      </Card.Text>
+                                    </Card.Body>
+                                  </Card>
+                                </Link>
+                              </SwiperSlide>
+                            </>
+                          );
+                        })}
+                  </Swiper>
+                </Col>
               </Row>
             </div>
           </div>
