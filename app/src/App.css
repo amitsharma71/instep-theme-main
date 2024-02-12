@@ -4787,15 +4787,16 @@ input::file-selector-button {
   border-color: #4eb529;
 }
 
+/* / new css for category hover /  */
+.HoveredText {
+  background: #fff;
+}
+
 /* new css for category hover */
 
 .HoveredText{
 
   background: #e9e8ef;
-}
-/* / new css for category hover /  */
-.HoveredText {
-  background: #fff;
   display: none;
   position: absolute;
   top: 98%;
@@ -4807,19 +4808,20 @@ input::file-selector-button {
 .HoveredText ul {
   padding-left: 0;
 }
+.HoveredText ul li {
+  padding: 10px 0px 0 0px;
+  list-style: none;
+  font-size: 19px;
+  font-weight: 400 !important;
+  margin-bottom: 10px;
+}
+
 .HoveredText ul li{
     padding: 10px 20px 0 20px;
     list-style: none;
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 10px;
-}
-    .HoveredText ul li {
-  padding: 10px 0px 0 0px;
-  list-style: none;
-  font-size: 19px;
-  font-weight: 400 !important;
-  margin-bottom: 10px;
 }
 
 .ItemSubCategaryUL li {
