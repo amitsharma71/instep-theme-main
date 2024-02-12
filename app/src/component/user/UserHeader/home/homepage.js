@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col, Button, Container } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FiArrowUpRight } from "react-icons/fi";
@@ -87,6 +87,7 @@ const Home = () => {
 
           // if(res && res?.payload?.data)
         });
+     // dispatch(allSubCategoryList({ category_id: id }));
       }
     });
     dispatch(allCategoryList());
@@ -115,6 +116,10 @@ const Home = () => {
     dispatch(AllFilterationData({ categoryId: categoryId }));
 
     dispatch(allSubCategoryList({ category_id: categoryId }));
+  };
+
+  const toAllCategory = () => {
+    navigate("/allcategory");
   };
 
   const banner = [
@@ -151,7 +156,7 @@ const Home = () => {
         <div className="container-fluid">
           <div className=" slider_col margin_bottom">
             <div>
-              <Row>
+              {/* <Row>
                 <Col lg={12}>
                   <div className="margin_bottom">
                     <h2 className="ourtopcategories_home margin_bottom"></h2>
@@ -194,7 +199,7 @@ const Home = () => {
                               >
                                 <Link
                                   className="carddecorationnone_cat"
-                                  // to={`/category/${data._id}?sub?${data._id}`}
+                                  
                                   to={`/category/${Id}`}
                                   onClick={() => handleExplore(Id)}
                                 >
@@ -257,7 +262,141 @@ const Home = () => {
                                       </div>
                                       <div className="hoverarrow_direc">
                                         <div className="right_bottomborder">
-                                          {/* <div className="nav_Filter nav_filterchanges">
+                                          
+                                          <div>
+                                            <FiArrowUpRight className="arrow-icon" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Card>
+                                </Link>
+                              </SwiperSlide>
+                            );
+                          })}
+                      </Swiper>
+                    </div>
+                  </div>
+                </Col>
+              </Row> */}
+              <Container>
+                <Row>
+                  <Col lg={12}>
+                    {/* <h2 className="ourtopcategories_home margin_bottom"></h2> */}
+                    <div className="category_borderdiv margin_bottom">
+                      {/* <Swiper
+                        modules={[Navigation]}
+                        spaceBetween={10}
+                        className="ourcate_swiper"
+                        navigation
+                        pagination={{ clickable: true }}
+                        onSwiper={(swiper) => console.log(swiper)}
+                        onSlideChange={() => console.log("slide change")}
+                        breakpoints={{
+                          320: {
+                            slidesPerView: 2,
+                          },
+                          480: {
+                            slidesPerView: 3,
+                          },
+                          768: {
+                            slidesPerView: 4,
+                          },
+                          1024: {
+                            slidesPerView: 6,
+                          },
+                        }}
+                      > */}
+                      <Row>
+                        {allcatgorydata &&
+                          allcatgorydata
+                            ?.filter((item) => item)
+                            ?.slice(0, 6)
+                            ?.map((data, index) => {
+                              const Id = data?._id;
+                              return (
+                                <Col lg={2} className="catborder_align">
+                                  <div
+                                    className={` ${
+                                      index === allcatgorydata.length - 1
+                                        ? "lastSwepper"
+                                        : ""
+                                    }`}
+                                    key={data?.id}
+                                  >
+                                    <Link
+                                      className="carddecorationnone_cat"
+                                      // to={`/category/${data._id}?sub?${data._id}`}
+                                      to={`/category/${Id}`}
+                                      onClick={() => handleExplore(Id)}
+                                    >
+                                      <Card className="cat_card_homep hovered">
+                                        {/* <div className="hoveron_arrow"> */}
+                                        <div className="HoveredText">
+                                          <ul>
+                                            {subcatalldata &&
+                                              subcatalldata?.map((item) => {
+                                                console.log(
+                                                  item,
+                                                  "dataaaaaaaa-itemmmm"
+                                                );
+                                                return (
+                                                  item?.category_id === Id && (
+                                                    <>
+                                                      <li className="catlist_align">
+                                                        <div className="ItemSubCategary">
+                                                          <p>
+                                                            {" "}
+                                                            {item?.subcategory}
+                                                          </p>
+                                                          <ul className="ItemSubCategaryUL">
+                                                            {}
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                            <li>
+                                                              ItemSubCategary
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                      </li>
+                                                    </>
+                                                  )
+                                                );
+                                              })}
+                                          </ul>
+                                        </div>
+                                        <div className="top_catcard">
+                                          <div className="pos_catimage">
+                                            <img
+                                              className="topcatimage_home"
+                                              src={`http://localhost:5000/categoryimg/${data.images}`}
+                                              alt=""
+                                            />
+                                          </div>
+                                          <p>{data?.category}</p>
+                                        </div>
+                                        {/* <div className="hoverarrow_direc">
+                                        <div className="right_bottomborder">
+                                          <div className="nav_Filter nav_filterchanges">
                                             <ul>
                                               <Row>
                                                 <Col
@@ -275,23 +414,28 @@ const Home = () => {
                                                 </Col>
                                               </Row>
                                             </ul>
-                                          </div> */}
+                                          </div>
                                           <div>
                                             <FiArrowUpRight className="arrow-icon" />
                                           </div>
                                         </div>
-                                      </div>
-                                    </div>
-                                  </Card>
-                                </Link>
-                              </SwiperSlide>
-                            );
-                          })}
-                      </Swiper>
+                                      </div> */}
+                                        {/* </div> */}
+                                      </Card>
+                                    </Link>
+                                  </div>
+                                </Col>
+                              );
+                            })}
+                      </Row>
+                      {/* </Swiper> */}
+                      <div className="viewallcat_egory">
+                        <p onClick={toAllCategory}>View All</p>
+                      </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
+              </Container>
             </div>
             <div className="slider">
               <Row>
