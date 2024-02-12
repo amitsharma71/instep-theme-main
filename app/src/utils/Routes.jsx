@@ -164,6 +164,8 @@ const protects = {
         { path: "GrievanceRedressal", element: <GrievanceRedressal /> },
         { path: "/allcategory", element: <AllCategories /> },
         { path: "/filterbycategory", element: < SubCategoryfilter /> },
+        { path: "/category/:categoryName/:subcategoryName", element: <Homecategory /> },
+        { path: "/category/:categoryName", element: <Homecategory /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
     },
