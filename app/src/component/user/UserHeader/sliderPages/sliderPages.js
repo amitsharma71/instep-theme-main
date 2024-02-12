@@ -1,90 +1,117 @@
-import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import React, { useEffect } from "react";
+import { Card, Col, Container, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { allCategoryList } from "../../../../Redux/action/getCategoryAction";
+import Spinner from "../../loader/spinner";
+import { Link } from "react-router-dom";
 
 const SliderPages = () => {
-    return (
-        <>
-            <Container fluid>
-                <div className="slider_col ">
-                    <div className='silderSale'>
-                        <div>Big Sale</div>
-                    </div>
-                    <Row>
-                        <Col>
-                            <div className='static_image margin_bottom'>
-                                <img src='https://cdn.zeebiz.com/sites/default/files/styles/zeebiz_850x478/public/2017/12/31/27443-sale-discount-pixabay.jpg?itok=F5N8dl5d' alt='' />
-                            </div>
-                        </Col>
-                    </Row>
-                    <Container>
-                        <Row>
-                            <Col>
-                                <div className='dealscategory'>
-                                    <div><h3>Deals</h3></div>
-                                    <div><h3>From Our Categories</h3></div>
-                                    <div className='static_image margin_bottom'>
-                                        <img src='https://t3.ftcdn.net/jpg/02/37/43/52/360_F_237435208_lAF8SgGPX9Ya9BUlIcIHXtcJbEzvSwn3.jpg' alt='' />
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Container>
-                    <div className='margin_bottom'>
-                        <Row>
-                            <Col lg={3}>
-                                <div className='fourcolumnbacground'>
-                                    <div className='foursalecolumn'>
-                                        <div>
-                                            <img src='https://th.bing.com/th/id/OIG.hSKc.XhLnL7SPxOdkRsU' alt='' />
-                                        </div>
-                                        <div>
-                                            <p>Shoes and more</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col lg={3}>
-                                <div className='fourcolumnbacground'>
-                                    <div className='foursalecolumn'>
-                                        <div>
-                                            <img src='https://th.bing.com/th/id/OIG.hSKc.XhLnL7SPxOdkRsU' alt='' />
-                                        </div>
-                                        <div>
-                                            <p>Shoes and more</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col lg={3}>
-                                <div className='fourcolumnbacground'>
-                                    <div className='foursalecolumn'>
-                                        <div>
-                                            <img src='https://th.bing.com/th/id/OIG.hSKc.XhLnL7SPxOdkRsU' alt='' />
-                                        </div>
-                                        <div>
-                                            <p>Shoes and more</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col lg={3}>
-                                <div className='fourcolumnbacground'>
-                                    <div className='foursalecolumn'>
-                                        <div>
-                                            <img src='https://th.bing.com/th/id/OIG.hSKc.XhLnL7SPxOdkRsU' alt='' />
-                                        </div>
-                                        <div>
-                                            <p>Shoes and more</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </div>
-            </Container>
-        </>
-    )
-}
+  const dispatch = useDispatch();
+  const categorydata = useSelector((state) => state?.getproductdata?.listdata);
+  console.log(categorydata, "fdsfdsfds");
 
-export default SliderPages
+  const loading = useSelector((state) => state?.getproductdata?.isLoading);
+  useEffect(() => {
+    dispatch(allCategoryList());
+  }, []);
+  return (
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className=" container slider_col">
+            <Row>
+              {/* <Col lg={2} md={4} sm={4}>
+                                <Subcategorymobilefilter />
+                                <SubCategoryfilter />
+                            </Col> */}
+              <Col lg={12} md={8} sm={8}>
+                <Row>
+                  {categorydata &&
+                    categorydata?.products?.map((item, index) => {
+                      if (item?.category?.[0]?.category === "Men") {
+                        return (
+                          <Col lg={3} md={4} key={index}>
+                            <Link
+                              className="card_deco"
+                              to={`/productdetail/${item._id}`}
+                            >
+                              <Card className="shopping_card margin_bottom">
+                                <div className="">
+                                  <Card.Img
+                                    variant="top"
+                                    src={
+                                      item?.image
+                                        ? item?.image
+                                        : item?.thumbnail?.split(":").length > 1
+                                        ? item?.thumbnail
+                                        : `http://localhost:5000/uploads/${item.thumbnail}`
+                                    }
+                                  />
+                                </div>
+                                <Card.Body>
+                                  <Card.Title className="crad_text">
+                                    {item?.title}
+                                  </Card.Title>
+                                  <Card.Text className="crad_text">
+                                    <h6> ₹ {item?.price}</h6>
+                                  </Card.Text>
+                                </Card.Body>
+                              </Card>
+                            </Link>
+                          </Col>
+                        );
+                      }
+                    })}
+                </Row>
+              </Col>
+              <Col lg={12} md={8} sm={8}>
+                <Row>
+                  {categorydata &&
+                    categorydata?.products?.map((item, index) => {
+                      if (item?.category?.[0]?.category === "women") {
+                        return (
+                          <Col lg={3} md={4} key={index}>
+                            <Link
+                              className="card_deco"
+                              to={`/productdetail/${item._id}`}
+                            >
+                              <Card className="shopping_card margin_bottom">
+                                <div className="">
+                                  <Card.Img
+                                    variant="top"
+                                    src={
+                                      item?.image
+                                        ? item?.image
+                                        : item?.thumbnail?.split(":").length > 1
+                                        ? item?.thumbnail
+                                        : `http://localhost:5000/uploads/${item.thumbnail}`
+                                    }
+                                  />
+                                </div>
+                                <Card.Body>
+                                  <Card.Title className="crad_text">
+                                    {item?.title}
+                                  </Card.Title>
+                                  <Card.Text className="crad_text">
+                                    <h6> ₹ {item?.price}</h6>
+                                  </Card.Text>
+                                </Card.Body>
+                              </Card>
+                            </Link>
+                          </Col>
+                        );
+                      }
+                    })}
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </>
+      )}
+    </>
+  );
+};
+
+export default SliderPages;

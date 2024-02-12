@@ -58,6 +58,7 @@ import GrievanceRedressal from "../component/user/Grievance Redressal/GrievanceR
 import ContactUs from "../component/user/contactUs/contactUs";
 import OrderReport from "../component/admin/dashboardPage/sideNavOption/orders/orderReport";
 import AllCategories from "../component/user/Allcategories/allCategories";
+import Discount from "../component/user/UserHeader/sliderPages/discount";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -74,7 +75,10 @@ const protects = {
         { path: "/subcategory/:subcategory", element: <Subcategory /> },
         { path: "/search", element: <Searchproduct /> },
         { path: "/addtocart", element: <AddToCartProduct /> },
-        { path: "/category/:categoryName/:subcategoryName", element: <Homecategory /> },
+        {
+          path: "/category/:categoryName/:subcategoryName",
+          element: <Homecategory />,
+        },
         { path: "/category/:categoryName", element: <Homecategory /> },
         { path: "/profile", element: <Profile /> },
         { path: "/allproduct", element: <AllProductDetail /> },
@@ -95,7 +99,8 @@ const protects = {
         { path: "/slidersubcategory", element: <Onlymobile /> },
         { path: "/wishlist", element: <Wishlistinform /> },
         { path: "/allcategory", element: <AllCategories /> },
-        { path: "/filterbycategory", element: < SubCategoryfilter /> },
+        { path: "/discountproducts", element: <Discount /> },
+        { path: "/filterbycategory", element: <SubCategoryfilter /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
     },
@@ -129,7 +134,10 @@ const protects = {
         { path: "/possystem", element: <PosSystem /> },
         { path: "/slider", element: <Sliderpost /> },
         { path: "/customerdetail", element: <Customer /> },
-        { path: "/productspecification/:id", element: <ProductSpecification /> },
+        {
+          path: "/productspecification/:id",
+          element: <ProductSpecification />,
+        },
         { path: "/trending", element: <Trendingproducts /> },
         { path: "/Headeradmin", element: <Headeradmin /> },
         { path: "*", element: "NO PAGE FOUND" },
@@ -166,6 +174,7 @@ const protects = {
         { path: "/filterbycategory", element: < SubCategoryfilter /> },
         { path: "/category/:categoryName/:subcategoryName", element: <Homecategory /> },
         { path: "/category/:categoryName", element: <Homecategory /> },
+        { path: "/discountproducts", element: <Discount /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
     },

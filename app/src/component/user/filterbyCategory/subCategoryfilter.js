@@ -179,7 +179,8 @@ const SubCategoryfilter = () => {
                     <Field name="category">
                       {({ input, meta }) => (
                         <select
-                          className="addnewproduct_changes right_Addnew"
+                        style={{border:"0 "}}
+                          className=""
                           {...input}
                           component="select"
                           disabled={categoryName ? true : false}
@@ -390,7 +391,7 @@ const SubCategoryfilter = () => {
                       <Field name="subcategory">
                         {({ input, meta }) => (
                           <select
-                            className="addnewproduct_changes right_Addnew"
+                            className="addnewproduct_changes right_Addnew newfilter_" 
                             {...input}
                             component="select"
                             onChange={(e) => {
