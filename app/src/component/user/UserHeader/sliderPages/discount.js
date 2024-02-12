@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { allCategoryList } from "../../../../Redux/action/getCategoryAction";
+import Spinner from "../../loader/spinner";
 import { Link } from "react-router-dom";
-import { allCategoryList } from "../../../Redux/action/getCategoryAction";
-import Subcategorymobilefilter from "../filterbyCategory/SubcaregoryMobilefilter";
-import SubCategoryfilter from "../filterbyCategory/subCategoryfilter";
-import Spinner from "../loader/spinner";
 
-const Onlymobile = () => {
+const Discount = () => {
   const dispatch = useDispatch();
   const categorydata = useSelector((state) => state?.getproductdata?.listdata);
-  console.log(categorydata, "dafdsafds");
+  console.log(categorydata, "fdsfdsfds");
 
   const loading = useSelector((state) => state?.getproductdata?.isLoading);
   useEffect(() => {
@@ -32,15 +30,15 @@ const Onlymobile = () => {
                 <Row>
                   {categorydata &&
                     categorydata?.products?.map((item, index) => {
-                      if (item?.subcategory?.[0]?.subcategory === "mobile") {
+                      if (item?.discountpercentage == "10") {
                         return (
                           <Col lg={3} md={4} key={index}>
                             <Link
                               className="card_deco"
                               to={`/productdetail/${item._id}`}
                             >
-                              <Card className="shopping_card">
-                                <div className="img_div">
+                              <Card className="shopping_card margin_bottom">
+                                <div className="">
                                   <Card.Img
                                     variant="top"
                                     src={
@@ -58,6 +56,9 @@ const Onlymobile = () => {
                                   </Card.Title>
                                   <Card.Text className="crad_text">
                                     <h6> ₹ {item?.price}</h6>
+                                    <h6 className="text-danger">
+                                      {item?.discountpercentage} %off
+                                    </h6>
                                   </Card.Text>
                                 </Card.Body>
                               </Card>
@@ -76,4 +77,4 @@ const Onlymobile = () => {
   );
 };
 
-export default Onlymobile;
+export default Discount;

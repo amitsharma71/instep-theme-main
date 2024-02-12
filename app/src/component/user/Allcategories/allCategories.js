@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { allCategoryList } from "../../../Redux/action/getCategoryAction";
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { allSubCategoryList } from "../../../Redux/action/getSubcategoryAction";
+import { AllFilterationData } from "../../../Redux/action/allFilterationAction";
 
 const AllCategories = () => {
   const navigate = useNavigate();
@@ -13,8 +15,10 @@ const AllCategories = () => {
   );
 
   const productClicks = (categoryId) => {
-    console.log(categoryId, "sfdsfd");
     navigate(`/category/${categoryId}`);
+    dispatch(AllFilterationData({ categoryId: categoryId }));
+
+    dispatch(allSubCategoryList({ category_id: categoryId }));
   };
 
   useEffect(() => {
@@ -41,9 +45,9 @@ const AllCategories = () => {
                                 className="top_catcard"
                                 onClick={() => productClicks(categoryId)}
                               >
-                                <div className="pos_catimage">
+                                <div className="pos_catimage posalignimg">
                                   <img
-                                    className="topcatimage_home"
+                                    className="topcatimage_home align-imgcat"
                                     src={`http://localhost:5000/categoryimg/${item.images}`}
                                     alt=""
                                   />
