@@ -57,6 +57,7 @@ import Careers from "../component/user/Careers/Careers";
 import GrievanceRedressal from "../component/user/Grievance Redressal/GrievanceRedressal";
 import ContactUs from "../component/user/contactUs/contactUs";
 import OrderReport from "../component/admin/dashboardPage/sideNavOption/orders/orderReport";
+import AllCategories from "../component/user/Allcategories/allCategories";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -93,6 +94,7 @@ const protects = {
         { path: "/salespage", element: <SliderPages /> },
         { path: "/slidersubcategory", element: <Onlymobile /> },
         { path: "/wishlist", element: <Wishlistinform /> },
+        { path: "/allcategory", element: <AllCategories /> },
         { path: "/filterbycategory", element: < SubCategoryfilter /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
@@ -160,6 +162,7 @@ const protects = {
         { path: "/contactus", element: <ContactUs /> },
         { path: "careers", element: <Careers /> },
         { path: "GrievanceRedressal", element: <GrievanceRedressal /> },
+        { path: "/allcategory", element: <AllCategories /> },
         { path: "/filterbycategory", element: < SubCategoryfilter /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
