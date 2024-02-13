@@ -224,7 +224,7 @@ const adddCategory = async (req, res) => {
       category: userData.category,
     });
 
-    console.log(findCategoryData.images,"findCategoryData.images")
+    // console.log(findCategoryData.images,"findCategoryData.images")
 
     let imagesFilenames;
     if (req.files && req.files.images) {

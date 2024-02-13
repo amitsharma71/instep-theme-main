@@ -20,7 +20,11 @@ export const addcategory = createAsyncThunk(
 
 export const removeFromCategory = createAsyncThunk(
   "removeFromCategory",
-  async (payload) =>{
-    return axiosInstance.post('/Deletecategory', payload)
+  async (payload) => {
+    return axiosInstance.post("/Deletecategory", payload);
   }
-)
+);
+
+export const editCatgory = createAsyncThunk("editcategory", async (payload) => {
+  return axiosInstance.post("/addcategory", payload);
+});
