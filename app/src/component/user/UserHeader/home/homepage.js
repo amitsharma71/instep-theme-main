@@ -620,7 +620,13 @@ const Home = () => {
                                         {item?.title}
                                       </Card.Title>
                                       <Card.Text className="crad_text">
-                                        <h6> ₹ {item?.price}</h6>
+                                        <h6>
+                                          {" "}
+                                          ₹{" "}
+                                          {parseInt(item?.totalprice)?.toFixed(
+                                            0
+                                          )}
+                                        </h6>
                                       </Card.Text>
                                     </Card.Body>
                                   </Card>
@@ -736,7 +742,10 @@ const Home = () => {
                                     </Card.Title>
 
                                     <Card.Text className="crad_text">
-                                      <h6> ₹ {e?.price}</h6>
+                                      <h6>
+                                        {" "}
+                                        ₹ {parseInt(e?.totalprice)?.toFixed(0)}
+                                      </h6>
                                     </Card.Text>
                                   </Card.Body>
                                 </Card>
@@ -901,7 +910,10 @@ const Home = () => {
                                       </Card.Title>
 
                                       <Card.Text className="crad_text">
-                                        <h6> ₹ {e?.price}</h6>
+                                        <h6>
+                                          ₹{" "}
+                                          {parseInt(e?.totalprice)?.toFixed(0)}
+                                        </h6>
                                       </Card.Text>
                                     </Card.Body>
                                   </Card>
@@ -1235,7 +1247,7 @@ const Home = () => {
                                         {item?.title}
                                       </Card.Title>
                                       <Card.Text className="crad_text">
-                                        <h6> ₹ {item?.price}</h6>
+                                        <h6> ₹ {item?.totalprice}</h6>
                                       </Card.Text>
                                     </Card.Body>
                                   </Card>
@@ -1358,7 +1370,7 @@ const Home = () => {
                                         {item?.title}
                                       </Card.Title>
                                       <Card.Text className="crad_text">
-                                        <h6> ₹ {item?.price}</h6>
+                                        <h6> ₹ {item?.totalprice}</h6>
                                       </Card.Text>
                                     </Card.Body>
                                   </Card>

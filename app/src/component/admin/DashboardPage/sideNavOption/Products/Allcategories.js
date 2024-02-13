@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addcategory,
+  editCatgory,
   removeFromCategory,
 } from "../../../../../Redux/action/createNewCategoryAction";
 import {
@@ -21,11 +22,13 @@ import Allpagination from "../../../Pagination/pagination";
 import Delete from "../../../deleteModel/delete";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
+import { CiEdit } from "react-icons/ci";
 
 const Allcategories = () => {
   const [selectedImagesforpost, setselectedImagesforpost] = useState();
   const [selectedImages, setSelectedImages] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [edit, setEdit] = useState();
 
   const dispatch = useDispatch();
 
@@ -44,28 +47,53 @@ const Allcategories = () => {
 
   // const [readMoreState, setReadMoreState] = useState(null);
 
+  console.log(edit, "ffsadfdsafds");
   const onSubmit = (values, form) => {
-    var formData = new FormData();
-    const payload = {
-      category: values?.category,
-      // images: selectedImagesforpost,
-    };
+    if (edit) {
+      var categoryData = new FormData();
+      const payload = {
+        category: values?.category,
+        _id: values?._id,
+      };
+      if (selectedImagesforpost && selectedImagesforpost.file) {
+        categoryData.append("images", selectedImagesforpost.file);
+      }
+      categoryData.append("userData", JSON.stringify(payload));
 
-    formData.append("images", selectedImagesforpost.file);
-    formData.append("userData", JSON.stringify(payload));
+      console.log(payload, "ffdasdasfff");
+      console.log(JSON.parse(categoryData.getAll("userData")), "dadsata");
+      dispatch(editCatgory(categoryData)).then((res) => {
+        console.log(res, "fadsfdsfdd");
+        setSelectedImages([]);
+        resetFileInput();
+        setEdit(null);
+      });
+      toast.success("Successfully!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      var formData = new FormData();
+      const payload = {
+        category: values?.category,
+        // images: selectedImagesforpost,
+      };
 
-    console.log(selectedImagesforpost, "fffff");
-    console.log(JSON.parse(formData.getAll("userData")), "data");
+      formData.append("images", selectedImagesforpost.file);
+      formData.append("userData", JSON.stringify(payload));
 
-    dispatch(addcategory(formData)).then((res) => {
-      console.log(res, "Response from dispatch");
-      form.reset();
-      setSelectedImages("");
-      resetFileInput();
-    });
-    toast.success("Successfully!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+      console.log(selectedImagesforpost, "fffff");
+      console.log(JSON.parse(formData.getAll("userData")), "data");
+
+      dispatch(addcategory(formData)).then((res) => {
+        console.log(res, "Response from dispatch");
+        // form.reset();
+        setSelectedImages("");
+        resetFileInput();
+      });
+      toast.success("Successfully!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const resetFileInput = () => {
@@ -95,6 +123,7 @@ const Allcategories = () => {
   }, [currentPage]);
 
   const handleImgeFile = (e) => {
+    console.log(e, "fasfdfdas");
     const files = e.target.files;
     const image = e.target.files[0];
 
@@ -187,10 +216,21 @@ const Allcategories = () => {
     }
   };
 
-  const onKeyDownHandler = (e) => {
-    if (e.keyCode === 13) {
-      // handleSearch();
+  const handleEdit = (e) => {
+    console.log(e, "gdsgdshgkfld");
+    setEdit(e);
+  };
+
+  const initialValues = () => {
+    let initialValues = {};
+
+    if (edit) {
+      initialValues = { category: edit.category, _id: edit?._id };
+    } else {
+      initialValues = { category: "", _id: "" };
     }
+    console.log(initialValues, "gyhdhttgchg");
+    return initialValues;
   };
   return (
     <>
@@ -207,6 +247,7 @@ const Allcategories = () => {
             <div className="leftcategory_add">
               <Form
                 onSubmit={(values, form) => onSubmit(values, form)}
+                initialValues={useMemo(() => initialValues(), [edit])}
                 render={({
                   handleSubmit,
                   form,
@@ -237,7 +278,7 @@ const Allcategories = () => {
                           className="form-control signup_form_input margin_bottom"
                           onChange={handleImgeFile}
                         />
-                        {selectedImages?.length > 0 && (
+                        {selectedImages?.length > 0 ? (
                           <div>
                             <h2>Selected Images:</h2>
                             <ul className="row">
@@ -255,14 +296,33 @@ const Allcategories = () => {
                               ))}
                             </ul>
                           </div>
+                        ) : (
+                          edit && (
+                            <ul className="row">
+                              <li className=" productupload_item col-md-3">
+                                <img
+                                  className="categorygetimage"
+                                  src={`http://localhost:5000/categoryimg/${edit?.images}`}
+                                  crossOrigin="anonymous"
+                                  alt=""
+                                />
+                              </li>
+                            </ul>
+                          )
                         )}
                       </div>
                     </div>
                     <div>
                       <div className="buttons d-flex justify-content-end">
-                        <button className="addcatsubit_button" type="submit">
-                          Submit
-                        </button>
+                        {!edit ? (
+                          <button className="addcatsubit_button" type="submit">
+                            Submit
+                          </button>
+                        ) : (
+                          <button className="addcatsubit_button" type="submit">
+                            Update
+                          </button>
+                        )}
                       </div>
                     </div>
                   </form>
@@ -329,6 +389,12 @@ const Allcategories = () => {
                                 </td>
                                 <td>
                                   <div className="d-flex justify-content-end">
+                                    <CiEdit
+                                      className="editic_on"
+                                      onClick={() => {
+                                        handleEdit(e);
+                                      }}
+                                    />
                                     <MdDelete
                                       className="deleteicn_forpro"
                                       onClick={() => {
