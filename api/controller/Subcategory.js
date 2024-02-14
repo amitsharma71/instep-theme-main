@@ -12,11 +12,30 @@ const create_subcategory = async (req, res) => {
 
     req.body.subcategoryData.map(async (item) => {
       console.log(item, "first");
-      const subcategrySave = new SUBCATEGORY({
-        category_id: item.category_id,
-        subcategory: item.subcategory,
-      });
-      const sub_cat_data = await subcategrySave.save();
+      let subCategory
+      if (item._id) {
+        console.log("update data")
+        subCategory = await SUBCATEGORY.findByIdAndUpdate(
+          { _id: item._id },
+          {
+            subcategory: item.subcategory,
+          }
+        )
+      } else {
+        console.log("create data")
+        subCategory = await SUBCATEGORY.create({
+          category_id: item.category_id,
+          subcategory: item.subcategory,
+        });
+      }
+      // const sub_cat_data = new SUBCATEGORY.create({
+      //   category_id: item.category_id,
+      //   subcategory: item.subcategory,
+      // });
+      // const sub_cat_data = await subcategrySave.save();
+      let sub_cat_data = await SUBCATEGORY.findById({
+        _id: subCategory._id,
+      })
       res
         .status(200)
         .send({ sucess: true, msg: "subcategory details", data: sub_cat_data });
