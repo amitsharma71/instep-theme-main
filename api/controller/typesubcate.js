@@ -5,34 +5,33 @@ const typeofsubcategorytable = require("../models/typesubcarte");
 
 const create_typesubcategory = async (req, res) => {
   try {
-    const check_sub = await subcategorytable.find({
-      category_id: req.body.category_id,
-    });
+    let typesubcategrySave;
 
-    if (check_sub) {
-      console.log(req.body);
+    if (req.body._id) {
+      typesubcategrySave = await typeofsubcategorytable.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          typesubcategory: req.body.typesubcategory,
+        });
 
-      // req.body.subcategoryData.map(async (item) => {
-      const typesubcategrySave = new typeofsubcategorytable({
+    } else {
+      typesubcategrySave = await typeofsubcategorytable.create({
         category_id: req.body.category_id,
         subcategory_id: req.body.subcategory_id,
         typesubcategory: req.body.typesubcategory,
       });
-      const typesub_cat_data = await typesubcategrySave.save();
-      res.status(200).send({
-        sucess: true,
-        msg: "type_subcategory details",
-        data: typesub_cat_data,
-      });
-      // }
-      // )
-    } else {
-      res.status(400).send({
-        sucess: false,
-        msg: "give me categoryid ",
-        data: sub_cat_data,
-      });
     }
+
+    const typesub_cat_data = await typeofsubcategorytable.findById({
+      _id: typesubcategrySave._id,
+    })
+
+    res.status(200).send({
+      sucess: true,
+      msg: "type_subcategory details",
+      data: typesub_cat_data,
+    });
+
   } catch (error) {
     res.status(400).send({ sucess: false, msg: error.message });
   }
@@ -45,8 +44,8 @@ const get_typesubcategory = async (req, res) => {
     } catch (error) {
       res.status(400).send({ success: false, msg: error.message });
     }
-  }  else {
-    
+  } else {
+
     try {
       const page = parseInt(req.body.page); // Default to page 1
       const perPage = parseInt(req.body.perPage); // Default to 10 items per page

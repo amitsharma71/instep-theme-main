@@ -55,21 +55,40 @@ const Allsubcategory = () => {
   console.log(typesubcatgory, "typesubcatgory");
 
   const onSubmit = (values, form) => {
-    let asd = {
-      subcategoryData: [
-        {
-          category_id: values.category,
-          subcategory: values.subcategory,
-        },
-      ],
-    };
+    if (edit) {
+      let asd = {
+        subcategoryData: [
+          {
+            category: values.category_id,
+            _id: values?._id,
+            subcategory: values?.subcategory
+          }
+        ]
+      }
+      dispatch(addsubcategory(asd)).then((Res) => {
+        form.reset();
+        setSelectedCategoryId("");
+        setEdit(null)
+      })
+      toast.success("Successfuly added");
+    } else {
 
-    dispatch(addsubcategory(asd)).then((res) => {
-      console.log(res, "gddgdfgfd")
-    })
-    toast.success("Successfuly added");
-    form.reset();
-    setSelectedCategoryId("");
+      let asd = {
+        subcategoryData: [
+          {
+            category_id: values.category,
+            subcategory: values.subcategory,
+          },
+        ],
+      };
+
+      dispatch(addsubcategory(asd)).then((res) => {
+        console.log(res, "gddgdfgfd")
+      })
+      toast.success("Successfuly added");
+      form.reset();
+      setSelectedCategoryId("");
+    }
   };
 
   useEffect(() => {
@@ -138,7 +157,6 @@ const Allsubcategory = () => {
     }
   };
   const handleEdit = (id) => {
-    console.log(id, "fdsfdssdgfsf");
     setEdit(id);
   };
 
@@ -148,6 +166,7 @@ const Allsubcategory = () => {
       initialValues = {
         subcategory: edit?.subcategory,
         category: edit?.category_id,
+        _id: edit._id
       };
     } else {
       initialValues = {
@@ -157,6 +176,7 @@ const Allsubcategory = () => {
     }
     return initialValues;
   };
+  console.log(initialValues, "gfsdgfjdsgjhdskjfdskjgfd")
   return (
     <>
       <Row>
@@ -182,8 +202,8 @@ const Allsubcategory = () => {
                         <select
                           {...input}
                           className="subcategory_drop margin_bottom"
-                          // onChange={handleCategoryChange}
-                          // value={selectedCategoryId}
+                        // onChange={handleCategoryChange}
+                        // value={selectedCategoryId}
                         >
                           <option value="">Select a category</option>
                           {getscat &&
