@@ -27,7 +27,7 @@ const AllCategories = () => {
   return (
     <>
       <Container>
-        <div className="slider_col margin_bottom" style={{ height: "100vh" }}>
+        <div className="slider_col margin_bottom">
           <Row>
             <Col lg={12}>
               {/* <h2 className="ourtopcategories_home margin_bottom"></h2> */}
@@ -38,7 +38,7 @@ const AllCategories = () => {
                       console.log(item, "Gdsgdsgd");
                       const categoryId = item?._id;
                       return (
-                        <Col lg={2} className="catborder_align margin_bottom">
+                        <Col lg={2} md={3} sm={4} s={2} className="catborder_align margin_bottom">
                           <div key={index}>
                             <Card>
                               <div

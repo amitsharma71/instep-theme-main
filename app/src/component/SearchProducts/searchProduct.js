@@ -46,7 +46,7 @@ function Searchproduct() {
                               to={`/productdetail/${item._id}`}
                             >
                               <Card className=" forcatcards_htwd">
-                                <div className="img_div">
+                                <div className="">
                                   <Card.Img
                                     variant="top"
                                     src={
