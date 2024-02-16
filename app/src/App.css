@@ -5037,3 +5037,15 @@ input::file-selector-button {
 .Emptywishlist p {
   font-size: 20px;
 }
+
+
+  /* css of range slider */
+
+
+  .rc-slider-track, .rc-slider-tracks{
+    background-color: #007bff !important;
+  }
+  .rc-slider-handle{
+    border-color: #007bff !important;
+  }
+
