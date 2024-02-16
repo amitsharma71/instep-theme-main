@@ -38,14 +38,20 @@ const AllCategories = () => {
                       console.log(item, "Gdsgdsgd");
                       const categoryId = item?._id;
                       return (
-                        <Col lg={2} md={3} sm={4} s={2} className="catborder_align margin_bottom">
+                        <Col
+                          lg={2}
+                          md={3}
+                          sm={4}
+                          s={2}
+                          className="catborder_align margin_bottom"
+                        >
                           <div key={index}>
                             <Card>
-                              <div
-                                className="top_catcard"
-                                onClick={() => productClicks(categoryId)}
-                              >
-                                <div className="pos_catimage posalignimg">
+                              <div className="top_catcard">
+                                <div
+                                  className="pos_catimage posalignimg"
+                                  onClick={() => productClicks(categoryId)}
+                                >
                                   <img
                                     className="topcatimage_home align-imgcat"
                                     src={`http://localhost:5000/categoryimg/${item.images}`}

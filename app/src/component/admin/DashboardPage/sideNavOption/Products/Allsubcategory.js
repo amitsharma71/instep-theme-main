@@ -5,33 +5,36 @@ import {
   addsubcategory,
   removeFromSubcategory,
 } from "../../../../../Redux/action/createNewSubcategoryAction";
-import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
+import { Col, Row, Spinner, Table } from "react-bootstrap";
 import { allSubCategoryList } from "../../../../../Redux/action/getSubcategoryAction";
-
 import Allpagination from "../../../Pagination/pagination";
 import { MdDelete } from "react-icons/md";
 import Delete from "../../../deleteModel/delete";
 import { allCategoryList } from "../../../../../Redux/action/getCategoryAction";
 import { toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
-import { AiOutlineSearch } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 
 const Allsubcategory = () => {
   const dispatch = useDispatch();
-  // const [selectedsubCategoryId, setselectedsubCategoryId] = useState("");
+
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState("");
+
   const [loading, setLoading] = useState(false); // State to store the selected category
+
   const [searchQuery, setSearchQuery] = useState("");
+
   const [edit, setEdit] = useState();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(5);
 
   const listCount = useSelector(
     (state) => state?.getsubsategorylistdata?.listdata?.totalDocs
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage, setPostPerPage] = useState(5);
   const getscat = useSelector(
     (state) => state?.getcategorylistdata?.listdata.data
   );
@@ -45,15 +48,6 @@ const Allsubcategory = () => {
     (state) => state?.getsubsategorylistdata?.isLoading
   );
 
-  // const getsubcate = useSelector(
-  //   (state) => state?.getsubsategorylistdata?.listdata?.data
-  // );
-
-  const typesubcatgory = useSelector(
-    (state) => state?.typesubcategory?.typesublist?.data?.data
-  );
-  console.log(typesubcatgory, "typesubcatgory");
-
   const onSubmit = (values, form) => {
     if (edit) {
       let asd = {
@@ -61,18 +55,26 @@ const Allsubcategory = () => {
           {
             category: values.category_id,
             _id: values?._id,
-            subcategory: values?.subcategory
-          }
-        ]
-      }
-      dispatch(addsubcategory(asd)).then((Res) => {
+            subcategory: values?.subcategory,
+          },
+        ],
+      };
+      dispatch(addsubcategory(asd)).then((res) => {
+        if (res.payload.sucess) {
+          dispatch(
+            allSubCategoryList({
+              search: searchQuery,
+              page: currentPage,
+              perPage: postPerPage,
+            })
+          );
+        }
         form.reset();
         setSelectedCategoryId("");
-        setEdit(null)
-      })
-      toast.success("Successfuly added");
+        setEdit(null);
+        toast.success("Successfuly Edited");
+      });
     } else {
-
       let asd = {
         subcategoryData: [
           {
@@ -83,11 +85,20 @@ const Allsubcategory = () => {
       };
 
       dispatch(addsubcategory(asd)).then((res) => {
-        console.log(res, "gddgdfgfd")
-      })
-      toast.success("Successfuly added");
-      form.reset();
-      setSelectedCategoryId("");
+        console.log(res, "fddsfdss");
+        if (res.payload.sucess) {
+          dispatch(
+            allSubCategoryList({
+              search: searchQuery,
+              page: currentPage,
+              perPage: postPerPage,
+            })
+          );
+        }
+        form.reset();
+        setSelectedCategoryId("");
+        toast.success("Successfuly added");
+      });
     }
   };
 
@@ -104,12 +115,10 @@ const Allsubcategory = () => {
         perPage: postPerPage,
       })
     ).then((res) => {
-      // console.log(res,)
       setLoading(false);
     });
   }, [currentPage]);
 
-  console.log(selectedCategoryId, "selectedCategoryId");
   const handleCategoryChange = (event) => {
     const selectedId = event.target.value;
     setSelectedCategoryId(selectedId);
@@ -136,7 +145,9 @@ const Allsubcategory = () => {
     });
   };
   const [show, setShow] = useState(false);
+
   const [categoryid, setCategoryid] = useState(null);
+
   const handleShow = (id) => {
     setCategoryid(id);
     setShow(true);
@@ -158,6 +169,7 @@ const Allsubcategory = () => {
   };
   const handleEdit = (id) => {
     setEdit(id);
+    window.scrollTo({ top: 0, behaviour: "smooth" });
   };
 
   const initialValues = () => {
@@ -166,7 +178,7 @@ const Allsubcategory = () => {
       initialValues = {
         subcategory: edit?.subcategory,
         category: edit?.category_id,
-        _id: edit._id
+        _id: edit._id,
       };
     } else {
       initialValues = {
@@ -176,7 +188,6 @@ const Allsubcategory = () => {
     }
     return initialValues;
   };
-  console.log(initialValues, "gfsdgfjdsgjhdskjfdskjgfd")
   return (
     <>
       <Row>
@@ -202,8 +213,6 @@ const Allsubcategory = () => {
                         <select
                           {...input}
                           className="subcategory_drop margin_bottom"
-                        // onChange={handleCategoryChange}
-                        // value={selectedCategoryId}
                         >
                           <option value="">Select a category</option>
                           {getscat &&
@@ -229,13 +238,18 @@ const Allsubcategory = () => {
                   />
                 </div>
                 <div className="d-flex justify-content-end margin_bottom">
-                  {!edit ? (
-                    <button type="submit" className="addcatsubit_button">
-                      Submit
-                    </button>
-                  ) : (
-                    <button type="submit" className="addcatsubit_button">
-                      update
+                  <button type="submit" className="addcatsubit_button">
+                    {edit ? "Update" : "Submit"}
+                  </button>
+                  {edit && (
+                    <button
+                      className="cancel_but-ton"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEdit(null);
+                      }}
+                    >
+                      cancel
                     </button>
                   )}
                 </div>
@@ -254,15 +268,9 @@ const Allsubcategory = () => {
                   type="search"
                   className=" mr-sm-2 adminsearch_bar"
                   value={searchQuery}
-                  // onKeyDown={onKeyDownHandler}
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
-              {/* <div className="btngroup">
-                <Button className="select_button " type="submit" onClick={handleSearch}>
-                  <AiOutlineSearch /> search
-                </Button>
-              </div> */}
             </div>
             {isLoading ? (
               <div className="table_Spinner">
