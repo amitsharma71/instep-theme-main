@@ -13,10 +13,15 @@ import { selectTypesubcategoryFilter } from "../../../Redux/action/filterByTypeS
 import { useParams } from "react-router-dom";
 import { findbrandfilter } from "../../../Redux/action/typesubcatpost";
 import { AllFilterationData } from "../../../Redux/action/allFilterationAction";
+// import Slider from "rc-slider";
+import Slider from "rc-slider";
+// import "rc-slider/assets/index.css";
+import "rc-slider/assets/index.css";
 
 const SubCategoryfilter = () => {
   const dispatch = useDispatch();
 
+  const [isAccordionDisabled, setIsAccordionDisabled] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   console.log(selectedCategory, "dsjhhf");
@@ -26,7 +31,21 @@ const SubCategoryfilter = () => {
   const [brand, setbrand] = useState("");
   const [typsubcat, setTypSubcat] = useState("");
   const [typsubcatId, setTypSubcatId] = useState("");
+  const [value, setValue] = useState([20, 80]);
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
   console.log(brandcategory, "zzzz");
+
+  const [minprices, setMinprices] = useState("");
+
+  const [maxprices, setMaxprices] = useState("");
+  console.log(minprices, maxprices, "asasasasasacsddxcvfvc");
+
+  console.log(setMinprices, "dsfdgfhgfdsfg");
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const [selectedthumbnalFile, setselectedthumbnalFile] = useState([]);
   const [thumbnail, setthumbnail] = useState("");
@@ -81,13 +100,13 @@ const SubCategoryfilter = () => {
   // };
 
   useEffect(() => {
-    console.log(
-      // selectedCategoryId,
-      // subcategoryid,
-      // brandcategory,
-      // typsubcatId,
-      "idds"
-    );
+    // console.log(
+    //   // selectedCategoryId,
+    //   // subcategoryid,
+    //   // brandcategory,
+    //   // typsubcatId,
+    //   "idds"
+    // );
     // if (subcategoryid) {
     //   dispatch(selectBrandFilter({ type_subcategory_id: typsubcatId }));
     // }
@@ -158,6 +177,11 @@ const SubCategoryfilter = () => {
     "iddsub"
   );
 
+  const handlePricechange = (e) => {
+    console.log(e, "skdjfnkdsjfkjdsgj");
+    dispatch(AllFilterationData({ minPrice: minprices, maxPrice: maxprices }));
+  };
+
   const onSubmit = () => {};
   return (
     <FinalForm
@@ -179,7 +203,7 @@ const SubCategoryfilter = () => {
                     <Field name="category">
                       {({ input, meta }) => (
                         <select
-                        style={{border:"0 "}}
+                          style={{ border: "0 " }}
                           className=""
                           {...input}
                           component="select"
@@ -212,28 +236,170 @@ const SubCategoryfilter = () => {
                 </div>
               </div>
               <div>
-                <div className="pricealign margin_bottom">
-                  <div>Price</div>
-                  <input className="pricerange_filter" type="range" />
-                </div>
-                <div className="d-flex  margin_bottom">
-                  <div className="leftpricefilter_wid">
-                    <select className="pricefilter_left" name="cars" id="cars">
-                      <option value="">Min</option>
-                      <option value="">100</option>
-                      <option value="">500</option>
-                      <option value="">999</option>
-                    </select>
+                {/* <div className="pricealign margin_bottom">
+                  <div>Select Range</div>
+                  <input
+                    name="price"
+                    className="pricerange_filter"
+                    type="range"
+                    min={minprices}
+                    max={maxprices}
+                    // value={price}
+                    // onChange={}
+                  />
+                </div> */}
+                {/* <Field>
+                  {({ input, meta }) => (
+                    <div className="d-flex  margin_bottom">
+                      <div className="leftpricefilter_wid">
+                        <select
+                          className="pricefilter_left"
+                          name="cars"
+                          id="cars"
+                          {...input}
+                          component="select"
+                        >
+                          <option value="">Min</option>
+                          <option value="">100</option>
+                          <option value="">500</option>
+                          <option value="">999</option>
+                        </select>
+                      </div>
+                      <div className="priceoption"> to</div>
+                      <div className="leftpricefilter_wid">
+                        <select
+                          className="pricefilter_left"
+                          name="cars"
+                          id="cars"
+                          {...input}
+                          component="select"
+                        >
+                          <option value="">700</option>
+                          <option value="">1500</option>
+                          <option value="">1999</option>
+                          <option value="">2499+</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </Field> */}
+                {/* <Field>
+                  {({ input, meta }) => (
+                    <div className="d-flex  margin_bottom">
+                      <div className="leftpricefilter_wid">
+                        <select
+                          className="pricefilter_left"
+                          name="minPrice"
+                          id="minPrice"
+                          value={minprices}
+                          onChange={(e) => setMinprices(e.target.value)}
+                        >
+                          <option value="">Min</option>
+                          <option value="100">100</option>
+                          <option value="500">500</option>
+                          <option value="999">999</option>
+                        </select>
+                      </div>
+                      <div className="priceoption"> to</div>
+                      <div className="leftpricefilter_wid">
+                        <select
+                          className="pricefilter_left"
+                          name="maxPrice"
+                          id="maxPrice"
+                          value={maxprices}
+                          onChange={(e) => {
+                            // console.log(
+                            //   e.target.value,
+                            //   "e.target.valuee.target.value"
+                            // );
+                            setMaxprices(e.target.value);
+                          }}
+                        >
+                          <option value="">Max</option>
+                          <option value="700">700</option>
+                          <option value="1500">1500</option>
+                          <option value="1999">1999</option>
+                          <option value="2499+">2499+</option>
+                        </select>
+                      </div>
+                      <button
+                        onChange={handlePricechange}
+                        //  onClick={() => handlePricechange()}
+                      >
+                        Apply Filter
+                      </button>
+                    </div>
+                  )}
+                </Field> */}
+                <div>
+                  {/* <div className="pricealign margin_bottom">
+                    <div>Select Range</div>
+                    <input
+                      name="price"
+                      className="pricerange_filter"
+                      type="range"
+                      min={minprices}
+                      max={maxprices}
+                    />
+                  </div> */}
+                  <div className="mt-5">
+                    <Slider
+                      min={0}
+                      max={100}
+                      step={5}
+                      value={value}
+                      onChange={handleChange}
+                      range
+                    />
+                    <div className="d-flex gap-5">
+                      <span>Min: {value[0]}</span>
+                      <span>Max: {}</span>
+                    </div>
                   </div>
-                  <div className="priceoption"> to</div>
-                  <div className="leftpricefilter_wid">
-                    <select className="pricefilter_left" name="cars" id="cars">
-                      <option value="">700</option>
-                      <option value="">1500</option>
-                      <option value="">1999</option>
-                      <option value="">2499+</option>
-                    </select>
-                  </div>
+                  <Field>
+                    {({ input, meta }) => (
+                      <div className="d-flex  margin_bottom">
+                        <div className="leftpricefilter_wid">
+                          <select
+                            className="pricefilter_left"
+                            name="minPrice"
+                            id="minPrice"
+                            value={minprices}
+                            onChange={(e) => setMinprices(e.target.value)}
+                          >
+                            <option value="">Min</option>
+                            <option value="100">100</option>
+                            <option value="500">500</option>
+                            <option value="999">999</option>
+                          </select>
+                        </div>
+                        <div className="priceoption"> to</div>
+                        <div className="leftpricefilter_wid">
+                          <select
+                            className="pricefilter_left"
+                            name="maxPrice"
+                            id="maxPrice"
+                            value={maxprices}
+                            onChange={(e) => setMaxprices(e.target.value)}
+                          >
+                            <option value="">Max</option>
+                            <option value="700">700</option>
+                            <option value="1500">1500</option>
+                            <option value="1999">1999</option>
+                            <option value="2499+">2499+</option>
+                          </select>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handlePricechange();
+                          }}
+                        >
+                          Apply Filter
+                        </button>
+                      </div>
+                    )}
+                  </Field>
                 </div>
               </div>
               {/* <div className="d-flex newpeo_div">
@@ -268,12 +434,50 @@ const SubCategoryfilter = () => {
                 {/* <div className="brands_filters">
                   <Accordion defaultActiveKey={["0"]} alwaysOpen>
                     <Accordion defaultActiveKey="">
-                      <Accordion.Item
-                        onChange={(e) => {
-                          handleChange(e);
-                        }}
+                      <Field>
+                        {({ input, meta }) => (
+                          <Accordion.Item>
+                            <Accordion.Header
+                              className="leftbrand_filter"
+                              style={{ border: "0 " }}
+                              {...input}
+                              component="select"
+                              disabled={
+                                categoryName ? true : isAccordionDisabled
+                              }
+                              onChange={(e) => {
+                                input.onChange(e);
+                                // handleChange(e);
+                              }}
+                              eventKey="0"
+                            >
+                              Select Category
+                            </Accordion.Header>
+                            {filterdata &&
+                              filterdata.map((e) => {
+                                return (
+                                  <>
+                                    <Accordion.Body
+                                      name="option"
+                                      key={e._id}
+                                      value={e._id}
+                                    >
+                                      {e.category}
+                                    </Accordion.Body>
+                                  </>
+                                );
+                              })}
+                          </Accordion.Item>
+                        )}
+                      </Field>
+
+                       <Accordion.Item
+                        // onChange={(e) => {
+                        //   handleChange(e);
+                        // }}
                         eventKey="0"
                       >
+                       
                         <Accordion.Header className="leftbrand_filter">
                           Select Category
                         </Accordion.Header>
@@ -283,7 +487,7 @@ const SubCategoryfilter = () => {
                               {e.category}
                             </Accordion.Body>
                           ))}
-                      </Accordion.Item>
+                          </Accordion.Item>
                     </Accordion>
 
                     <Accordion.Item eventKey="0">
@@ -297,7 +501,6 @@ const SubCategoryfilter = () => {
                             className="margin_right"
                             onChange={(e) => handlesubcategory()}
                           />
-                          {}
                           <lable className="fontweight">Subcategory</lable>
                           <br />
                         </from>
@@ -312,7 +515,7 @@ const SubCategoryfilter = () => {
                           <input
                             type="checkbox"
                             className="margin_right"
-                            onChange={(e) => handlesChage()}
+                            // onChange={(e) => handlesChage()}
                           />
                           <lable className="fontweight">HAVELLES</lable>
                           <br />
@@ -349,6 +552,7 @@ const SubCategoryfilter = () => {
                 </div> */}
                 <div className=" Addnewpeoduct margin_bottom">
                   <h3 className="margin_bottom"> Basic Information</h3>
+
                   {/* <div className="margin_bottom">
                     <h5 className="margin_bottom">Product Categories</h5>
                     <div className="d-flex newpeo_div">
@@ -384,14 +588,15 @@ const SubCategoryfilter = () => {
                         )}
                       </Field>
                     </div>
-                  </div> */}
+                  </div>  */}
+
                   <div className="margin_bottom">
                     <h5 className="margin_bottom">Subcategory</h5>
                     <div className="d-flex newpeo_div">
                       <Field name="subcategory">
                         {({ input, meta }) => (
                           <select
-                            className="addnewproduct_changes right_Addnew newfilter_" 
+                            className="addnewproduct_changes right_Addnew newfilter_"
                             {...input}
                             component="select"
                             onChange={(e) => {
