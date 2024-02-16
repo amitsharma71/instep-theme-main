@@ -16,9 +16,17 @@ export const axiosInstance = axios.create({
 export const AllFilterationData = createAsyncThunk(
   "filterationAlldata",
   async (payload) => {
-    const { categoryId, subcategoryId, typesubcategory_id, brandId } = payload;
-    return axiosInstance.post(
-      `/filteralldata?categoryId=${categoryId}&subcategoryId=${subcategoryId}&typesubcategory_id=${typesubcategory_id}&brandId=${brandId}`
+    const {
+      categoryId,
+      subcategoryId,
+      typesubcategory_id,
+      brandId,
+      minPrice,
+      maxPrice,
+    } = payload;
+    console.log(payload, "payloadpayload");
+    return await axiosInstance.post(
+      `/filteralldata?categoryId=${categoryId}&subcategoryId=${subcategoryId}&typesubcategory_id=${typesubcategory_id}&brandId=${brandId}&minPrice=${minPrice}&maxPrice=${maxPrice}`
       // `/filteralldata?${subcategoryId ? "subcategoryId=" + subcategoryId : ""}${
       //   typesubcategory_id ? "typesubcategory_id=" + typesubcategory_id : ""
       // }`,
@@ -26,6 +34,30 @@ export const AllFilterationData = createAsyncThunk(
     );
   }
 );
+
+// export const AllFilterationData = createAsyncThunk(
+//   "filterationAlldata",
+//   async (payload) => {
+//     try {
+//       const {
+//         categoryId,
+//         subcategoryId,
+//         typesubcategory_id,
+//         brandId,
+//         minPrice,
+//         maxPrice,
+//       } = payload;
+
+//       const response = await axiosInstance.post(
+//         `/filteralldata?categoryId=${categoryId}&subcategoryId=${subcategoryId}&typesubcategory_id=${typesubcategory_id}&brandId=${brandId}&minPrice=${minPrice}&maxPrice=${maxPrice}`
+//       );
+//       console.log("Filtered data:1111", response);
+//       return response;
+//     } catch (error) {
+//       console.log(error, "errorerrorerrorerror");
+//     }
+//   }
+// );
 
 // export const AllFilterationDatatype = createAsyncThunk(
 //   "filterationAlldata",

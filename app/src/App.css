@@ -4965,3 +4965,13 @@ input::file-selector-button {
   width: 125px;
   height: 125px;
 }
+
+  /* css of range slider */
+
+
+  .rc-slider-track, .rc-slider-tracks{
+    background-color: #007bff !important;
+  }
+  .rc-slider-handle{
+    border-color: #007bff !important;
+  }

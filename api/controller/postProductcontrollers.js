@@ -416,7 +416,7 @@ const getfilter = expressAsyncHandler(async (req, res) => {
 const categoryfilter = expressAsyncHandler(async (req, res) => {
   try {
     const categoryId = req.params.category; // Assuming you're using "categoryid" as the parameter name
-    console.log(categoryId, "categoryId");
+    // console.log(categoryId, "categoryId");
     // Use the Mongoose model for Userproducts
     const products = await Userproducts.aggregate([
       {
@@ -478,7 +478,7 @@ const categoryfilter = expressAsyncHandler(async (req, res) => {
 const subcategoryfilter = expressAsyncHandler(async (req, res) => {
   try {
     const subcategoryId = req.params.subcategory; // Assuming you're using "categoryid" as the parameter name
-    console.log(subcategoryId, "categoryId");
+    // console.log(subcategoryId, "categoryId");
     // Use the Mongoose model for Userproducts
     const products = await Userproducts.aggregate([
       {
