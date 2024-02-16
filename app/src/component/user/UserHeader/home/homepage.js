@@ -27,6 +27,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const [subcatid, setSubcatid] = useState();
+  
 
   const data = useSelector((state) => state?.getproductdata?.listdata);
   console.log(data, "usedata");
@@ -156,8 +157,8 @@ const Home = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="container-fluid">
-          <div className=" slider_col margin_bottom">
+        <>
+          <div className=" container-fluid slider_col margin_bottom">
             <div>
               {/* <Row>
                 <Col lg={12}>
@@ -972,7 +973,7 @@ const Home = () => {
                               >
                                 <div className="hometop_fashionbo_der">
                                   <img
-                                    className="homedecorimag_e"
+                                    className="homedecorimag_e margin_bottom"
                                     variant="top"
                                     src={
                                       item?.image
@@ -986,7 +987,10 @@ const Home = () => {
                                     <p className="top_cattitle">
                                       {item?.title}
                                     </p>
-                                    <p> {item?.discountpercentage}% off</p>
+                                    <p className="discoun-t_per">
+                                      {" "}
+                                      {item?.discountpercentage}% off
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -1035,7 +1039,7 @@ const Home = () => {
                               >
                                 <div className="hometop_fashionbo_der">
                                   <img
-                                    className="homedecorimag_e"
+                                    className="homedecorimag_e margin_bottom"
                                     variant="top"
                                     src={
                                       item?.image
@@ -1050,7 +1054,10 @@ const Home = () => {
                                     <p className="top_cattitle">
                                       {item?.title}
                                     </p>
-                                    <p> {item?.discountpercentage}% off</p>
+                                    <p className="discoun-t_per">
+                                      {" "}
+                                      {item?.discountpercentage}% off
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -1421,7 +1428,7 @@ const Home = () => {
                               >
                                 <div className="hometop_fashionbo_der">
                                   <img
-                                    className="homedecorimag_e"
+                                    className="homedecorimag_e margin_bottom"
                                     variant="top"
                                     src={
                                       item?.image
@@ -1435,7 +1442,9 @@ const Home = () => {
                                     <p className="top_cattitle">
                                       {item?.title}
                                     </p>
-                                    <p> {item?.discountpercentage}% off</p>
+                                    <p className="discoun-t_per">
+                                      {item?.discountpercentage}% off
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -1450,7 +1459,7 @@ const Home = () => {
             </div>
           </div>
           <Scrolltotopbutton />
-        </div>
+        </>
       )}
     </>
   );

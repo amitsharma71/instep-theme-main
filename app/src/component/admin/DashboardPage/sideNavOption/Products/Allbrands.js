@@ -78,8 +78,12 @@ const Allsubcategory = () => {
   };
   useEffect(() => {
     dispatch(allCategoryList());
-    dispatch(allSubCategoryList());
-    dispatch(typesubcategoryget());
+    if (selectedCategoryId) {
+      dispatch(allSubCategoryList({ category_id: selectedCategoryId }));
+    }
+    if (selectedSubcategoryId) {
+      dispatch(typesubcategoryget({ subcategory_id: selectedSubcategoryId }));
+    }
     dispatch(
       allBrandsList({
         search: "",
@@ -87,7 +91,7 @@ const Allsubcategory = () => {
         perPage: postPerPage,
       })
     );
-  }, [currentPage]);
+  }, [currentPage, selectedSubcategoryId, selectedCategoryId]);
 
   var selectedId;
   const handleCategoryChangeCat = (e) => {
@@ -153,9 +157,18 @@ const Allsubcategory = () => {
     }
   };
 
-  const handleEdit = (id) => {
-    console.log(id, "dfdsfds");
-    setEdit(id);
+  const handleEdit = (e) => {
+    setEdit(e);
+    setSelectedCategoryId(e.category_id);
+    setSelectedSubcategoryId(e.subcategory_id);
+    SetTypeSubCategory(e.type_subcategory_id);
+    console.log(
+      e.subcategory_id,
+      e.type_subcategory_id,
+      e.category_id,
+      e,
+      "id.subcategory_id"
+    );
   };
 
   const initialValues = () => {
@@ -166,6 +179,7 @@ const Allsubcategory = () => {
         category: edit?.category_id,
         subcategory: edit?.subcategory_id,
         typesubcategory: edit?.type_subcategory_id,
+        _id: edit?._id,
       };
     } else {
       initialValues = {
@@ -173,16 +187,19 @@ const Allsubcategory = () => {
         category: "",
         subcategory: "",
         typesubcategory: "",
+        _id: "",
       };
     }
+
+    console.log(initialValues, "fadfdasfds");
     return initialValues;
   };
   return (
     <>
       <Row>
         <Col lg={12}>
-          <div className="admin_toppadding ">
-            <Col className="Admin_dashboard " lg={12}>
+          <div className="admin_toppadding">
+            <Col className="Admin_dashboard" lg={12}>
               <h3> Add New Brands</h3>
             </Col>
           </div>
@@ -192,7 +209,7 @@ const Allsubcategory = () => {
         <Col lg={8}>
           <Form
             onSubmit={onSubmit}
-            // initialValues={useMemo(() => initialValues(), [edit])}
+            initialValues={useMemo(() => initialValues(), [edit])}
             render={({ handleSubmit, form, submitting, pristine }) => (
               <form onSubmit={handleSubmit}>
                 <div>
@@ -201,8 +218,12 @@ const Allsubcategory = () => {
                       <select
                         {...input}
                         className="subcategory_drop margin_bottom"
-                        onChange={handleCategoryChangeCat}
-                        value={selectedCategoryId}
+                        // onChange={handleCategoryChangeCat}
+                        // value={selectedCategoryId}
+                        onChange={(e) => {
+                          input.onChange(e);
+                          handleCategoryChangeCat(e);
+                        }}
                       >
                         <option value="">Select Category</option>
                         {getcategorylist &&
@@ -219,8 +240,12 @@ const Allsubcategory = () => {
                       <select
                         {...input}
                         className="subcategory_drop margin_bottom"
-                        onChange={handleCategoryChange2}
-                        value={selectedSubcategoryId}
+                        // onChange={handleCategoryChange2}
+                        // value={selectedSubcategoryId}
+                        onChange={(e) => {
+                          input.onChange(e);
+                          handleCategoryChange2(e);
+                        }}
                       >
                         <option value="">Select a Subcategory</option>
                         {getsubcat?.map((i) => (
@@ -236,8 +261,12 @@ const Allsubcategory = () => {
                       <select
                         {...input}
                         className="subcategory_drop margin_bottom"
-                        onChange={handleCategoryChange3}
-                        value={typeSubCategory}
+                        // onChange={handleCategoryChange3}
+                        // value={typeSubCategory}
+                        onChange={(e) => {
+                          input.onChange(e);
+                          handleCategoryChange3(e);
+                        }}
                       >
                         <option value="">Select a typesubcategory</option>
                         {typesubcatgory?.map((i) => (
@@ -262,8 +291,19 @@ const Allsubcategory = () => {
                 </div>
                 <div className="d-flex justify-content-end margin_bottom">
                   <button type="submit" className="addcatsubit_button">
-                    Submit
+                    {edit ? "Update" : "Submit"}
                   </button>
+                  {edit && (
+                    <button
+                      className="cancel_but-ton"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEdit(null);
+                      }}  
+                    >
+                      cancel
+                    </button>
+                  )}
                 </div>
               </form>
             )}
@@ -320,12 +360,12 @@ const Allsubcategory = () => {
                                   <td>{e.brand}</td>
                                   <td>
                                     <div className="d-flex justify-content-end">
-                                      {/* <CiEdit
+                                      <CiEdit
                                         className="editic_on"
                                         onClick={() => {
                                           handleEdit(e);
                                         }}
-                                      /> */}
+                                      />
                                       <MdDelete
                                         className="deleteicn_forpro"
                                         onClick={() => {
