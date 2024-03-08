@@ -211,7 +211,7 @@ const AllProductDetail = () => {
                                   </Card.Title>
                                   <Card.Text className="crad_text"></Card.Text>
                                   <Card.Text className="crad_text">
-                                    <h5> ₹ {e?.totalprice}</h5>
+                                    <h5> ₹ {parseInt(e?.totalprice)}</h5>
                                   </Card.Text>
                                   <Card.Text className="crad_text">
                                     {e.stock > 0 ? (

@@ -49,9 +49,21 @@ function Alllocation(params) {
 
   const handleSearch = () => {
     if (searchQuery) {
-      dispatch(allAdminProductList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+      dispatch(
+        allAdminProductList({
+          search: searchQuery,
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
     } else {
-      dispatch(allAdminProductList({ search: '', page: currentPage, perPage: postPerPage }));
+      dispatch(
+        allAdminProductList({
+          search: "",
+          page: currentPage,
+          perPage: postPerPage,
+        })
+      );
     }
   };
 
@@ -63,9 +75,14 @@ function Alllocation(params) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(allAdminProductList({ search: searchQuery, page: currentPage, perPage: postPerPage }));
+    dispatch(
+      allAdminProductList({
+        search: searchQuery,
+        page: currentPage,
+        perPage: postPerPage,
+      })
+    );
     // dispatch(searchAction({ name: searchQuery }));
-
   }, [currentPage, searchQuery]);
   const handleProduct = () => {
     navigate("/product");
@@ -146,9 +163,7 @@ function Alllocation(params) {
                   className=" mr-sm-2 adminsearch_bar"
                   value={searchQuery}
                   onKeyDown={onKeyDownHandler}
-                  onChange={(e) =>
-                    setSearchQuery(e?.target?.value)
-                  }
+                  onChange={(e) => setSearchQuery(e?.target?.value)}
                 />
               </div>
               {/* <div className="btngroup">
@@ -163,7 +178,7 @@ function Alllocation(params) {
               </div>
             ) : (
               <>
-                <Table responsive="lg" className="position-relative">
+                <Table responsive="md" className="position-relative">
                   <thead>
                     <tr>
                       <th>S/L</th>
@@ -176,7 +191,6 @@ function Alllocation(params) {
                     </tr>
                   </thead>
                   <tbody>
-
                     {data &&
                       data?.products?.map((product, index) => {
                         console.log(product, "asdasdasdasd");
@@ -187,7 +201,6 @@ function Alllocation(params) {
                                 {(currentPage - 1) * postPerPage + (index + 1)}
                               </td>
                               <td>
-
                                 {product.title.substring(
                                   0,
                                   readMoreState === product?._id
@@ -214,13 +227,21 @@ function Alllocation(params) {
                               <td>{product?.brand[0]?.brand}</td>
                               <td>{product?.category[0]?.category}</td>
                               <td>{product?.price}</td>
-                              <td>{product?.stock}</td>
+                              <td>
+                                {product && product.stock === "out of stock" ? (
+                                  <div className="outofst-ock">
+                                    {product?.stock}
+                                  </div>
+                                ) : (
+                                  <div className="instock">{product?.stock}</div>
+                                )}
+                              </td>
                               <td>
                                 <Dropdown>
                                   <Dropdown.Toggle
                                     variant=""
                                     id="dropdown-basic"
-                                  // className="focusotoggle"
+                                    // className="focusotoggle"
                                   >
                                     <BiDotsVerticalRounded />
                                   </Dropdown.Toggle>
@@ -253,8 +274,7 @@ function Alllocation(params) {
               </>
             )}
             {searchQuery && searchQuery?.length !== 10 ? (
-              <div className="d-flex justify-content-end">
-              </div>
+              <div className="d-flex justify-content-end"></div>
             ) : (
               <div className="d-flex justify-content-end">
                 <Allpagination
@@ -268,7 +288,11 @@ function Alllocation(params) {
             )}
           </Col>
         </Row>
-        <MydModalWithGrid show={show} handleClose={handleClose} productId={editClick} />
+        <MydModalWithGrid
+          show={show}
+          handleClose={handleClose}
+          productId={editClick}
+        />
         <ConfirmationModal
           show={showModal}
           onHide={() => setShowModal(false)}
