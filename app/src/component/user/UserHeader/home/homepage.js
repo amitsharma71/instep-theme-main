@@ -353,6 +353,8 @@ const Home = () => {
                                                                       item?._id,
                                                                   }
                                                                 )
+                                                              ).then(
+                                                                (res) => {}
                                                               );
                                                             }}
                                                           >

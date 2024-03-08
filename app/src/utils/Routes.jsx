@@ -91,7 +91,7 @@ const protects = {
         { path: "/privacypolicy", element: <Privacy /> },
         { path: "/payment", element: <Payments /> },
         { path: "/contactus", element: <ContactUs /> },
-        { path: "Careers", element: <Careers /> },
+        { path: "careers", element: <Careers /> },
         { path: "grievanceRedressal", element: <GrievanceRedressal /> },
         { path: "/orderconfirmation/:_id", element: <OrderConfirmation /> },
         { path: "/editprofile", element: <Editprofile /> },
