@@ -19,3 +19,10 @@ export const adminPostslider = createAsyncThunk(
     return axiosInstance.post("/sliderpost", payload);
   }
 );
+
+export const updateSliders = createAsyncThunk(
+  "sliderUpdate",
+  async (payload) => {
+    return axiosInstance.post("/sliderpost", payload);
+  }
+);
