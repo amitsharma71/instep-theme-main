@@ -21,6 +21,7 @@ import {
 import { deleteProduct } from "../../../../../Redux/action/deleteProductAction";
 import Allpagination from "../../../Pagination/pagination";
 import { CiEdit } from "react-icons/ci";
+import { LuClipboardEdit } from "react-icons/lu";
 
 function Allproducts(params) {
   const navigate = useNavigate();
