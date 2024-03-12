@@ -22,7 +22,6 @@ import ProductForm from "../component/admin/addProductDetails/addProductFrom";
 import PosSystem from "../component/admin/dashboardPage/sideNavOption/possystem";
 import Usernavbar from "../component/user/UserHeader/usernavbar/usernavbar";
 import SignIn from "../component/user/signin/sign";
-import Orders from "../component/admin/dashboardPage/Orders";
 import Home from "../component/user/UserHeader/home/homepage";
 import Admindashboard from "../component/admin/dashboardPage/sideNavOption/Dashboard";
 import Subcategory from "../component/user/filterbyCategory/subcategory";
