@@ -16,7 +16,7 @@ export const wishlistremove = createAsyncThunk(
   }
 );
 
-export const wishlistadd = createAsyncThunk("wishlistadd", async (payload) => {
+export const wishlistadd = createAsyncThunk("wishlistadds", async (payload) => {
   return axiosInstance.post("/wishlist/add", payload);
 });
 

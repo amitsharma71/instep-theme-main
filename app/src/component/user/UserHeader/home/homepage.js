@@ -320,12 +320,73 @@ const Home = () => {
                                                 return (
                                                   item?.category_id === Id && (
                                                     <>
-                                                      <li className="catlist_align ItemSubCategary">
-                                                        {/* <div className="ItemSubCategary"> */}
-                                                        <p
-                                                          onMouseOver={(e) => {
-                                                            dispatch(
-                                                              typesubcategoryget(
+                                                      {/* <li className="catlist_align ItemSubCategary">
+                                                         {/* <div className="ItemSubCategary"> */}
+                                                         <p
+                                                           onMouseOver={(e) => {
+                                                             dispatch(
+                                                               typesubcategoryget( */}
+                                                      <li className="catlist_align">
+                                                        <div className="ItemSubCategary">
+                                                          <p
+                                                            onMouseOver={(
+                                                              e
+                                                            ) => {
+                                                              dispatch(
+                                                                typesubcategoryget(
+                                                                  {
+                                                                    subcategory_id:
+                                                                      item?._id,
+                                                                  }
+                                                                )
+                                                              ).then(
+                                                                (res) => {}
+                                                              );
+                                                            }}
+                                                          >
+                                                            {item?.subcategory}
+                                                          </p>
+                                                          <ul className="ItemSubCategaryUL">
+                                                            {typesubcatgory &&
+                                                              typesubcatgory?.map(
+                                                                (item) => {
+                                                                  return (
+                                                                    <>
+                                                                      <li>
+                                                                        {
+                                                                          item?.typesubcategory
+                                                                        }
+                                                                      </li>
+                                                                    </>
+                                          <div className="row flex-nowrap">
+                                            <div className="col-7 d-flex">
+                                              <ul className="HoveredTextHeight">
+                                                {subcatalldata &&
+                                                  subcatalldata?.map((item) => {
+                                                    console.log(
+                                                      item,
+                                                      "dataaaaaaaa-itemmmm"
+                                                    );
+                                                    return (
+                                                      item?.category_id ===
+                                                        Id && (
+                                                        <>
+                                                          <li className="catlist_align">
+                                                            <div className="ItemSubCategary">
+                                                              <p
+                                                                onMouseOver={(
+                                                                  e
+                                                                ) => {
+                                                                  dispatch(
+                                                                    typesubcategoryget(
+                                                                      {
+                                                                        subcategory_id:
+                                                                          item?._id,
+                                                                      }
+                                                                    )
+                                                                  );
+                                                                }}
+                                                              >
                                                                 {
                                                                   subcategory_id:
                                                                     item?._id,
