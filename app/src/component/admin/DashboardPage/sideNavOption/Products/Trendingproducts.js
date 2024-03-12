@@ -24,6 +24,7 @@ import { updateProduct } from "../../../../../Redux/action/updateProductAction";
 import { allAdminProductList } from "../../../../../Redux/action/getAllProductListing";
 import { deleteProduct } from "../../../../../Redux/action/deleteProductAction";
 import Allpagination from "../../../Pagination/pagination";
+import { CiEdit } from "react-icons/ci";
 
 const Trendingproducts = () => {
   const navigate = useNavigate();
@@ -223,7 +224,7 @@ const Trendingproducts = () => {
                                     className="editdeleter_button"
                                     onClick={() => editClick(product._id)}
                                   >
-                                    <LuClipboardEdit /> Edit
+                                    <CiEdit /> Edit
                                   </button>
                                 </Dropdown.Item>
                                 <Dropdown.Item href="#/action-2">

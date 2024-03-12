@@ -7,7 +7,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { FiSearch } from "react-icons/fi";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { Spinner, Table } from "react-bootstrap";
-import { LuClipboardEdit, LuEdit3 } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -21,6 +20,7 @@ import {
 } from "../../../../../Redux/action/getAllProductListing";
 import { deleteProduct } from "../../../../../Redux/action/deleteProductAction";
 import Allpagination from "../../../Pagination/pagination";
+import { CiEdit } from "react-icons/ci";
 
 function Allproducts(params) {
   const navigate = useNavigate();
