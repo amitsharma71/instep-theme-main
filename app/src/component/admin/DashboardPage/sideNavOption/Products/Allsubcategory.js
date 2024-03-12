@@ -68,11 +68,9 @@ const Allsubcategory = () => {
               perPage: postPerPage,
             })
           );
+          setEdit(null);
+          toast.success("Successfuly Edited");
         }
-        form.reset();
-        setSelectedCategoryId("");
-        setEdit(null);
-        toast.success("Successfuly Edited");
       });
     } else {
       let asd = {

@@ -27,7 +27,6 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const [subcatid, setSubcatid] = useState();
-  
 
   const data = useSelector((state) => state?.getproductdata?.listdata);
   console.log(data, "usedata");
@@ -166,7 +165,7 @@ const Home = () => {
                     <h2 className="ourtopcategories_home margin_bottom"></h2>
                     <div className="category_borderdiv">
                       <Swiper
-                        modules={[Navigation]}
+                        modules={[Navigation]}n
                         spaceBetween={10}
                         className="ourcate_swiper"
                         navigation
@@ -311,67 +310,66 @@ const Home = () => {
                                     >
                                       <Card className="cat_card_homep hovered">
                                         <div className="HoveredText">
-                                          <div className="row flex-nowrap">
-                                            <div className="col-7 d-flex">
-                                              <ul className="HoveredTextHeight">
-                                                {subcatalldata &&
-                                                  subcatalldata?.map((item) => {
-                                                    console.log(
-                                                      item,
-                                                      "dataaaaaaaa-itemmmm"
-                                                    );
-                                                    return (
-                                                      item?.category_id ===
-                                                        Id && (
-                                                        <>
-                                                          <li className="catlist_align">
-                                                            <div className="ItemSubCategary">
-                                                              <p
-                                                                onMouseOver={(
-                                                                  e
-                                                                ) => {
-                                                                  dispatch(
-                                                                    typesubcategoryget(
-                                                                      {
-                                                                        subcategory_id:
-                                                                          item?._id,
-                                                                      }
-                                                                    )
-                                                                  );
-                                                                }}
-                                                              >
+                                          <ul className="HoveredTextHeight">
+                                            {subcatalldata &&
+                                              subcatalldata?.map((item) => {
+                                                console.log(
+                                                  item,
+                                                  "dataaaaaaaa-itemmmm"
+                                                );
+                                                return (
+                                                  item?.category_id === Id && (
+                                                    <>
+                                                      <li className="catlist_align ItemSubCategary">
+                                                        {/* <div className="ItemSubCategary"> */}
+                                                        <p
+                                                          onMouseOver={(e) => {
+                                                            dispatch(
+                                                              typesubcategoryget(
                                                                 {
-                                                                  item?.subcategory
+                                                                  subcategory_id:
+                                                                    item?._id,
                                                                 }
-                                                              </p>
-                                                            </div>
-                                                          </li>
-                                                        </>
-                                                      )
-                                                    );
-                                                  })}
-                                              </ul>
-                                            </div>
-                                            <div className="col-7 d-flex">
-                                              <ul className="ItemSubCategaryUL HoveredTextHeight">
-                                                {typesubcatgory &&
-                                                  typesubcatgory?.map(
-                                                    (item) => {
-                                                      return (
-                                                        <>
-                                                          <li>
-                                                            {
-                                                              item?.typesubcategory
-                                                            }
-                                                          </li>
-                                                        </>
-                                                      );
-                                                    }
-                                                  )}
-                                              </ul>
-                                            </div>
-                                          </div>
+                                                              )
+                                                            );
+                                                          }}
+                                                        >
+                                                          {item?.subcategory}
+                                                        </p>
+                                                        {/* </div> */}
+                                                        <ul className="ItemSubCategaryUL ">
+                                                          {typesubcatgory &&
+                                                            typesubcatgory?.map(
+                                                              (item) => {
+                                                                return (
+                                                                  <>
+                                                                    <li>
+                                                                      {
+                                                                        item?.typesubcategory
+                                                                      }
+                                                                    </li>
+                                                                  </>
+                                                                );
+                                                              }
+                                                            )}
+                                                        </ul>
+                                                      </li>
+                                                    </>
+                                                  )
+                                                );
+                                              })}
+                                          </ul>
                                         </div>
+
+                                        {/* <div className="parent">
+                                          <h5 className="subparent">
+                                            <span>hello</span>
+                                            <h3 className="child">sub-hello</h3>
+                                          </h5>
+                                        </div> */}
+
+                                        {/* <div className="col-7 d-flex"> */}
+                                        {/* </div> */}
                                         <div className="top_catcard">
                                           <div className="pos_catimage">
                                             <img
@@ -548,7 +546,7 @@ const Home = () => {
                         slidesPerView: 3,
                       },
                       1024: {
-                        slidesPerView: 4,
+                        slidesPerView: 5,
                       },
                     }}
                   >
@@ -595,8 +593,7 @@ const Home = () => {
                                       </Card.Title>
                                       <Card.Text className="crad_text">
                                         <h6>
-                                          {" "}
-                                          ₹{" "}
+                                          ₹
                                           {parseInt(item?.totalprice)?.toFixed(
                                             0
                                           )}
@@ -677,7 +674,7 @@ const Home = () => {
                         slidesPerView: 3,
                       },
                       1024: {
-                        slidesPerView: 4,
+                        slidesPerView: 5,
                       },
                     }}
                   >
@@ -795,7 +792,7 @@ const Home = () => {
                         slidesPerView: 3,
                       },
                       1024: {
-                        slidesPerView: 4,
+                        slidesPerView: 5,
                       },
                     }}
                   >
@@ -1076,18 +1073,22 @@ const Home = () => {
                     return (
                       <>
                         <Col lg={4} md={12}>
-                          <div className="homefashion_border">
+                          <div className="homefashion_border newbackimage p-0">
                             <Link
                               className="text_decoration"
                               to={`/category/${categoryId}`}
                               onClick={() => handleExplore(categoryId)}
                             >
-                              <div className="sportscontent_align">
+                              <div className="sportscontent_align p-4">
                                 <div>
-                                  <h2>Stay Fit & Active</h2>
+                                  <h2 style={{ color: "#fff" }}>
+                                    Stay Fit & Active
+                                  </h2>
                                 </div>
                                 <div className="margin_bottom shop_roe">
-                                  <p>
+                                  <p
+                                    style={{ color: "#fff", fontSize: "18px" }}
+                                  >
                                     Shop from our Fitness & Sports Equipment
                                     Collection
                                   </p>
@@ -1102,11 +1103,11 @@ const Home = () => {
                                 </div>
                               </div>
                               <div>
-                                <img
+                                {/* <img
                                   className="homebackground_img"
                                   src="https://img.freepik.com/free-vector/box-full-sport-equipments_1308-37207.jpg?w=2000"
                                   alt=""
-                                />
+                                /> */}
                               </div>
                             </Link>
                           </div>
@@ -1182,7 +1183,7 @@ const Home = () => {
                         slidesPerView: 3,
                       },
                       1024: {
-                        slidesPerView: 4,
+                        slidesPerView: 5,
                       },
                     }}
                   >
@@ -1304,7 +1305,7 @@ const Home = () => {
                         slidesPerView: 3,
                       },
                       1024: {
-                        slidesPerView: 4,
+                        slidesPerView: 5,
                       },
                     }}
                   >
@@ -1371,13 +1372,13 @@ const Home = () => {
 
                     return (
                       <>
-                        <Col lg={8} md={8} sm={12}>
+                        <Col lg={8} md={6} sm={12}>
                           <Link
                             className="text_decoration"
                             to={`/category/${categoryId}`}
                             onClick={() => handleExplore(categoryId)}
                           >
-                            <div className=" homefashion_borderalign">
+                            <div className=" homefashion_borderalign p-0">
                               <div className="sportscontent_align newshop_roe">
                                 <div>
                                   <h2>Selling Electronics</h2>
@@ -1393,7 +1394,7 @@ const Home = () => {
                     );
                   }
                 })}
-                <Col lg={4} md={4} sm={12}>
+                <Col lg={4} md={6} sm={12}>
                   <div className="homefashion_border">
                     {allcatgorydata?.map((e) => {
                       if (e?.category === "Home &Furniture") {

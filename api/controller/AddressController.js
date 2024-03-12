@@ -56,8 +56,8 @@ const getAddress = expressAsyncHandler(async (req, res) => {
     if (userAddresses.length > 0) {
       res.status(200).json({ success: true, data: userAddresses });
     } else {
-      res.status(404).json({
-        success: false,
+      res.status(200).json({
+        success: true,
         msg: "No addresses found for this user.",
       });
     }

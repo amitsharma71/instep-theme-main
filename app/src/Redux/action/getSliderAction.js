@@ -22,3 +22,12 @@ export const adminGetSlider = createAsyncThunk(
     return axiosInstance.post("/Getslider", payload);
   }
 );
+
+export const deleteSlider = createAsyncThunk(
+  "sliderDelete",
+  async (payload) => {
+    return axiosInstance.post("/deleteSlider", payload);
+  }
+);
+
+

@@ -19,6 +19,7 @@ import {
 } from "../../../Redux/action/wishlistAction";
 import { getUserId } from "../../../utils/auth";
 import { MdDelete } from "react-icons/md";
+import { FaHandHoldingHeart } from "react-icons/fa";
 
 const Wishlistinform = () => {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ const Wishlistinform = () => {
                           <div className="d-flex justify-content-end mt-2 mx-2">
                             <BsFillHeartFill
                               style={{ color: "#FF0000" }}
-                            // onClick={() => handleWishlistClick(item?._id)}
+                              // onClick={() => handleWishlistClick(item?._id)}
                             />
                           </div>
                           <Link
@@ -90,9 +91,9 @@ const Wishlistinform = () => {
                                   item.products[0]?.image
                                     ? item.products[0]?.image
                                     : item.products[0]?.thumbnail?.split(":")
-                                      ?.length > 1
-                                      ? item.products[0]?.thumbnail
-                                      : `http://localhost:5000/uploads/${item?.products[0]?.thumbnail}`
+                                        ?.length > 1
+                                    ? item.products[0]?.thumbnail
+                                    : `http://localhost:5000/uploads/${item?.products[0]?.thumbnail}`
                                 }
                                 alt=""
                               />
@@ -130,7 +131,9 @@ const Wishlistinform = () => {
                             className=""
                             key={"top"}
                             placement={"top"}
-                            overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}
+                            overlay={
+                              <Tooltip id={`tooltip-top`}>Delete</Tooltip>
+                            }
                           >
                             <div className="mt-4 d-flex align-items-center justify-content-center">
                               <MdDelete
@@ -184,9 +187,13 @@ const Wishlistinform = () => {
             </Row>
           </div>
         </>
-      ) :
-        (<div className="Empty_wishlist"><img src="https://t3.ftcdn.net/jpg/05/33/01/02/240_F_533010247_mG91y5k0rKeY7zJ9V94I5Hpfa7Ejy75a.jpg" /><h1>wishlish</h1></div>
-        )}
+      ) : (
+        <div className="Empty_wishlist">
+          <FaHandHoldingHeart className="Emptywishlist"/>
+          <h1>It's empty here</h1>
+          <p>Follow collections you love to find them here</p>
+        </div>
+      )}
     </>
   );
 };

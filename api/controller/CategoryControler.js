@@ -156,7 +156,7 @@ const filtercategory = async (req, res) => {
         res.send({ result: "no category_id found" });
       }
     } else if (subcategory_id) {
-      console.log(subcategory_id, "ggggggg");
+      // console.log(subcategory_id, "ggggggg");
       let data = [];
       const filter = await typeofsubcategorytable.find({
         subcategory_id: subcategory_id,

@@ -1,44 +1,84 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
-import { adminPostslider } from "../../../../../Redux/action/postSliderAction";
+import {
+  adminPostslider,
+  updateSliders,
+} from "../../../../../Redux/action/postSliderAction";
 import { Col, Dropdown, Row } from "react-bootstrap";
-import { adminGetSlider } from "../../../../../Redux/action/getSliderAction";
+import {
+  adminGetSlider,
+  deleteSlider,
+} from "../../../../../Redux/action/getSliderAction";
 import { MdDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { toast } from "react-toastify";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { LuClipboardEdit } from "react-icons/lu";
+import Delete from "../../../deleteModel/delete";
 
 const Sliderpost = () => {
   const [selectedImagesforpost, setselectedImagesforpost] = useState();
   const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState([]);
   const [edit, setEdit] = useState();
+  const [show, setShow] = useState(false);
+
+  const [sliderId, setSliderId] = useState(null);
 
   const sliderpost = useSelector((state) => state?.postsliderData?.listdata);
 
+  const handleClose = () => setShow(false);
+
   const onSubmit = (values, form) => {
-    const formData = new FormData();
-    const payload = {
-      name: values?.name,
-      url: values?.url,
-    };
-    formData.append("sliderimg", selectedImagesforpost.file);
-
-    formData.append("sildername", JSON.stringify(payload));
-
-    // Dispatch the action with the FormData object
-    dispatch(adminPostslider(formData)).then((res) => {
-      console.log(res, "Responsefromdispatch");
-      if (res.payload.data) {
-        dispatch(adminGetSlider());
-        toast.success("Successfuly Submited");
-        form.reset("");
-        setSelectedImage("");
-        resetFileInput("");
+    if (edit) {
+      const formData = new FormData();
+      const payload = {
+        name: values?.name,
+        url: values?.url,
+        _id: values?._id,
+      };
+      if (selectedImagesforpost?.file) {
+        formData.append("sliderimg", selectedImagesforpost.file);
       }
-    });
+      formData.append("sildername", JSON.stringify(payload));
+
+      dispatch(updateSliders(formData)).then((res) => {
+        console.log(res, "Responsefromdispatch");
+        if (res?.payload?.data?.success) {
+          dispatch(adminGetSlider());
+          toast.success("Successfuly Edited");
+          setSelectedImage([]);
+          resetFileInput();
+          setEdit(null);
+        }
+      });
+    } else {
+      const formData = new FormData();
+      const payload = {
+        name: values?.name,
+        url: values?.url,
+      };
+      if (selectedImagesforpost?.file) {
+        formData.append("sliderimg", selectedImagesforpost.file);
+      } else {
+        toast.error("Image is required");
+      }
+
+      formData.append("sildername", JSON.stringify(payload));
+
+      // Dispatch the action with the FormData object
+      dispatch(adminPostslider(formData)).then((res) => {
+        console.log(res, "Responsefrreomdispatch");
+        if (res.payload.data) {
+          dispatch(adminGetSlider());
+          toast.success("Successfuly Submited");
+          form.reset("");
+          setSelectedImage("");
+          resetFileInput("");
+        }
+      });
+    }
   };
 
   const resetFileInput = () => {
@@ -55,6 +95,7 @@ const Sliderpost = () => {
   };
   const handleImgeFile = (e) => {
     console.log(e, "fasfdfdas");
+
     const files = e.target.files;
     const image = e.target.files[0];
 
@@ -118,9 +159,9 @@ const Sliderpost = () => {
 
   const validate = (values) => {
     const errors = {};
-    // if (!values.name) {
-    //   errors.name = "Name is required";
-    // }
+    if (!values.name) {
+      errors.name = "Name is required";
+    }
     if (!selectedImage) {
       errors.image = "Image is required";
     }
@@ -145,6 +186,21 @@ const Sliderpost = () => {
     console.log(initialValues, "ffdsfsdfsd");
     return initialValues;
   };
+  const handleShow = (_id) => {
+    setSliderId(_id);
+    setShow(true);
+  };
+  const handleDeleteSlider = (id) => {
+    console.log(id, "gadsgadf");
+    dispatch(deleteSlider({ _id: id })).then((res) => {
+      console.log(res, "fdasfdsafd");
+      if (res?.payload?.data?.success) {
+        dispatch(adminGetSlider());
+      }
+    });
+    handleClose();
+  };
+
   const handleEdit = (data) => {
     console.log(data, "fafdfdsa");
     setEdit(data);
@@ -197,7 +253,7 @@ const Sliderpost = () => {
                       name="image"
                       type="file"
                       accept="image/*"
-                      required
+                      // required
                       // value={a}
                       onChange={handleImgeFile}
                     />
@@ -233,9 +289,19 @@ const Sliderpost = () => {
                     )}
                     {/* {selectedImage && <p>Selected Image: {selectedImage.name}</p>} */}
                     <div className="d-flex justify-content-end margin_bottom">
-                      <button type="submit" className="addcatsubit_button">
-                        {edit ? "Update" : "Submit"}
-                      </button>
+                      {!selectedImagesforpost && !edit ? (
+                        <button
+                          type="submit"
+                          className="addcatsubit_button"
+                          disabled
+                        >
+                          Submit
+                        </button>
+                      ) : (
+                        <button type="submit" className="addcatsubit_button">
+                          {edit ? "Update" : "Submit"}
+                        </button>
+                      )}
                       {edit && (
                         <button
                           className="cancel_but-ton"
@@ -273,33 +339,25 @@ const Sliderpost = () => {
                           <BiDotsVerticalRounded />
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item href="#/action-1">
+                          <Dropdown.Item>
                             <button
                               className="editdeleter_button"
                               onClick={() => {
                                 handleEdit(item);
                               }}
                             >
-                              <CiEdit
-                                className="editic_on"
-                                // onClick={() => {
-                                //   handleEdit(item);
-                                // }}
-                              />
+                              <CiEdit className="editic_on" />
                               Edit
                             </button>
                           </Dropdown.Item>
-                          <Dropdown.Item href="#/action-2">
+                          <Dropdown.Item>
                             <button
                               className="editdeleter_button"
-                              // onClick={() => deleteClick(product._id)}
+                              onClick={() => {
+                                handleShow(item?._id);
+                              }}
                             >
-                              <MdDelete
-                                className="deleteicn_forpro"
-                                // onClick={() => {
-                                //   handleShow(e?._id);
-                                // }}
-                              />{" "}
+                              <MdDelete className="deleteicn_forpro m-0" />
                               delete
                             </button>
                           </Dropdown.Item>
@@ -311,6 +369,12 @@ const Sliderpost = () => {
               })}
           </Row>
         </Col>
+        <Delete
+          handleDelete={handleDeleteSlider}
+          handleClose={handleClose}
+          show={show}
+          categoryId={sliderId}
+        />
       </Row>
     </>
   );

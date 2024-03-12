@@ -40,7 +40,7 @@ const Allcategories = () => {
         category: values?.category,
         _id: values?._id,
       };
-      if (selectedImagesforpost && selectedImagesforpost.file) {
+      if (selectedImagesforpost?.file) {
         categoryData.append("images", selectedImagesforpost.file);
       }
       categoryData.append("userData", JSON.stringify(payload));
@@ -54,10 +54,10 @@ const Allcategories = () => {
               perPage: postPerPage,
             })
           );
-          setSelectedImages([]);
-          resetFileInput();
           setEdit(null);
         }
+        setSelectedImages([]);
+        resetFileInput();
       });
       toast.success("Successfully!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -67,8 +67,11 @@ const Allcategories = () => {
       const payload = {
         category: values?.category,
       };
-
-      formData.append("images", selectedImagesforpost.file);
+      if (selectedImagesforpost?.file) {
+        formData.append("images", selectedImagesforpost.file);
+      } else {
+        toast.error("Image is required");
+      }
       formData.append("userData", JSON.stringify(payload));
 
       dispatch(addcategory(formData)).then((res) => {
@@ -255,7 +258,7 @@ const Allcategories = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="category_item ">
                       <Field
-                        className="ctegorysearc_h"
+                        className="ctegorysearc_h margin_bottom"
                         name="category"
                         component="input"
                         type="text"
@@ -310,9 +313,19 @@ const Allcategories = () => {
                     </div>
                     <div>
                       <div className="d-flex justify-content-end margin_bottom">
-                        <button type="submit" className="addcatsubit_button">
-                          {edit ? "Update" : "Submit"}
-                        </button>
+                        {!selectedImagesforpost && !edit ? (
+                          <button
+                            type="submit"
+                            className="addcatsubit_button"
+                            disabled
+                          >
+                            Submit{" "}
+                          </button>
+                        ) : (
+                          <button type="submit" className="addcatsubit_button">
+                            Update
+                          </button>
+                        )}
                         {edit && (
                           <button
                             className="cancel_but-ton"

@@ -138,7 +138,7 @@ const findsubacetgory = async (req, res) => {
 const findtypesub = async (req, res) => {
   console.log("test");
   if (req.body.subcategory_id) {
-    console.log(req.body.subcategory_id, "ggggggg");
+    // console.log(req.body.subcategory_id, "ggggggg");
     let data = [];
     const filtertypesucat = await typeofsubcategorytable.find({
       subcategory_id: req.body.subcategory_id,

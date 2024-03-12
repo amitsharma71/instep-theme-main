@@ -187,7 +187,6 @@ function Alllocation(params) {
                       <th>Categories</th>
                       <th>Price</th>
                       <th>Stock</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -236,35 +235,7 @@ function Alllocation(params) {
                                   <div className="instock">{product?.stock}</div>
                                 )}
                               </td>
-                              <td>
-                                <Dropdown>
-                                  <Dropdown.Toggle
-                                    variant=""
-                                    id="dropdown-basic"
-                                    // className="focusotoggle"
-                                  >
-                                    <BiDotsVerticalRounded />
-                                  </Dropdown.Toggle>
-                                  <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1">
-                                      <button
-                                        className="editdeleter_button"
-                                        onClick={() => editClick(product._id)}
-                                      >
-                                        <LuClipboardEdit /> Edit
-                                      </button>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">
-                                      <button
-                                        className="editdeleter_button"
-                                        onClick={() => deleteClick(product._id)}
-                                      >
-                                        <AiOutlineDelete /> delete
-                                      </button>
-                                    </Dropdown.Item>
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                              </td>
+                              
                             </tr>
                           </>
                         );

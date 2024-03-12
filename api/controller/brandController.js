@@ -19,13 +19,12 @@ const create_brand = async (req, res) => {
       console.log("nothing");
     }
 
-    console.log(req.body.typesubcategory_id, req.body.brand, "dddddddddddd");
+    // console.log(req.body.typesubcategory_id, req.body.brand, "dddddddddddd");
     // Check if a brand with the same subcategory_id already exists.
     const existingBrand = await brands.findOne({ brand: req.body.brand });
     // console.log(existingBrand, "exist")
 
-    if (existingBrand) {
-      // If a brand with the same subcategory_id exists, return a response indicating it already exists.
+    if (existingBrand && existingBrand._id !== req.body._id) {
       res.status(200).send({
         success: false,
         msg: "Brand with the same subcategory already exists",
@@ -33,13 +32,27 @@ const create_brand = async (req, res) => {
       });
     } else {
       // If no brand with the same subcategory_id is found, create a new brand.
-      const newBrand = new brands(filter);
-      const brand_cat_data = await newBrand.save();
-      res.status(200).send({
-        success: true,
-        msg: "Brand details created",
-        data: brand_cat_data,
-      });
+      if (req.body._id) {
+        console.log("update data");
+        subCategory = await brands.findByIdAndUpdate(
+          { _id: req.body._id },
+          {
+            brand: req.body.brand,
+          }
+        );
+        res.status(200).send({
+          success: true,
+          msg: "Brand Details Update",
+        });
+      } else {
+        const newBrand = new brands(filter);
+        const brand_cat_data = await newBrand.save();
+        res.status(200).send({
+          success: true,
+          msg: "Brand details created",
+          data: brand_cat_data,
+        });
+      }
     }
   } catch (error) {
     res.status(400).send({ success: false, msg: error.message });
@@ -121,14 +134,11 @@ const deletebrand = async (req, res) => {
 };
 
 const filtertypesubbrand = async (req, res) => {
-  console.log("filtertypesubbrand");
   try {
-    console.log(req.body.typesubcategory_id, "ssssssssssss");
 
     const filter = await brandtable.find({
-      typesubcategory_id: req.body.typesubcategory_id, 
+      typesubcategory_id: req.body.typesubcategory_id,
     });
-    console.log(filter, "filterfilterfilterfilter");
 
     // res.status(200).send({ success: true, data: filter });
     res.status(200).send(filter);

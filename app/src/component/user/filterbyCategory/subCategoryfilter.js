@@ -192,14 +192,20 @@ const SubCategoryfilter = () => {
         return (
           <form>
             <div className="leftfilter_bar">
-              <div className="margin_bottom">
+              <div className="" style={{ padding: "10px 0px 0px 10px" }}>
                 <h4> Filters</h4>
               </div>
               <div className="categorieslefftfilter margin_bottom">
                 {/* {categoryName} */}
-                <div className="margin_bottom">
-                  <h5 className="margin_bottom">Product Categories</h5>
-                  <div className="d-flex newpeo_div">
+                <div
+                  className="margin_bottom"
+                  style={{ padding: "10px 0px 0px 10px" }}
+                >
+                  <h5 className="">Categories</h5>
+                  <div
+                    className="d-flex newpeo_div"
+                    // style={{ padding: "10px 0px 0px 10px" }}
+                  >
                     <Field name="category">
                       {({ input, meta }) => (
                         <select
@@ -351,55 +357,60 @@ const SubCategoryfilter = () => {
                       onChange={handleChange}
                       range
                     />
-                    <div className="d-flex gap-5">
+                    <div className="d-flex gap-5 align-items-center justify-content-center">
                       <span>Min: {value[0]}</span>
-                      <span>Max: {}</span>
+                      <span>Max: {value[1]}</span>
                     </div>
                   </div>
                   <Field>
                     {({ input, meta }) => (
-                      <div className="d-flex  margin_bottom">
-                        <div className="leftpricefilter_wid">
-                          <select
-                            className="pricefilter_left"
-                            name="minPrice"
-                            id="minPrice"
-                            value={minprices}
-                            onChange={(e) => setMinprices(e.target.value)}
-                          >
-                            <option value="">Min</option>
-                            <option value="100">100</option>
-                            <option value="500">500</option>
-                            <option value="999">999</option>
-                          </select>
+                      <>
+                        <div className="d-flex  margin_bottom">
+                          <div className="leftpricefilter_wid">
+                            <select
+                              className="pricefilter_left"
+                              name="minPrice"
+                              id="minPrice"
+                              value={minprices}
+                              onChange={(e) => setMinprices(e.target.value)}
+                            >
+                              <option value="">Min</option>
+                              <option value="100">100</option>
+                              <option value="500">500</option>
+                              <option value="999">999</option>
+                            </select>
+                          </div>
+                          <div className="priceoption"> to</div>
+                          <div className="leftpricefilter_wid">
+                            <select
+                              className="pricefilter_left"
+                              name="maxPrice"
+                              id="maxPrice"
+                              value={maxprices}
+                              onChange={(e) => setMaxprices(e.target.value)}
+                            >
+                              <option value="">Max</option>
+                              <option value="700">700</option>
+                              <option value="1500">1500</option>
+                              <option value="1999">1999</option>
+                              <option value="2499+">2499+</option>
+                            </select>
+                          </div>
                         </div>
-                        <div className="priceoption"> to</div>
-                        <div className="leftpricefilter_wid">
-                          <select
-                            className="pricefilter_left"
-                            name="maxPrice"
-                            id="maxPrice"
-                            value={maxprices}
-                            onChange={(e) => setMaxprices(e.target.value)}
-                          >
-                            <option value="">Max</option>
-                            <option value="700">700</option>
-                            <option value="1500">1500</option>
-                            <option value="1999">1999</option>
-                            <option value="2499+">2499+</option>
-                          </select>
-                        </div>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handlePricechange();
-                          }}
-                        >
-                          Apply Filter
-                        </button>
-                      </div>
+                      </>
                     )}
                   </Field>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <button
+                    className="filterbutton"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePricechange();
+                    }}
+                  >
+                    Apply Filter
+                  </button>
                 </div>
               </div>
               {/* <div className="d-flex newpeo_div">
@@ -551,7 +562,7 @@ const SubCategoryfilter = () => {
                   </Accordion>
                 </div> */}
                 <div className=" Addnewpeoduct margin_bottom">
-                  <h3 className="margin_bottom"> Basic Information</h3>
+                  {/* <h3 className="margin_bottom"> Basic Information</h3> */}
 
                   {/* <div className="margin_bottom">
                     <h5 className="margin_bottom">Product Categories</h5>
@@ -663,45 +674,45 @@ const SubCategoryfilter = () => {
                       </Field>
                     </div>
                   </div>
-                  <div className="Addnewpeoduct margin_bottom py-4">
-                    <div className="margin_bottom">
-                      <h5>Product Brand</h5>
-                      <div className="d-flex newpeo_div">
-                        <Field name="brand">
-                          {({ input, meta }) => (
-                            <select
-                              className="addnewproduct_changes right_Addnew"
-                              name="brand"
-                              {...input}
-                              component="select"
-                              onChange={(e) => {
-                                input.onChange(e);
-                                // handlebrandtype(e);
-                                bybrandchange(e);
-                              }}
-                            >
-                              <option>Select Brand</option>
-                              {filterbrand &&
-                                filterbrand?.map((e) => {
-                                  console.log(e, "eeee");
-                                  return (
-                                    <>
-                                      <option
-                                        name="option"
-                                        key={e._id}
-                                        value={e._id}
-                                      >
-                                        {e.brand}
-                                      </option>
-                                    </>
-                                  );
-                                })}
-                            </select>
-                          )}
-                        </Field>
-                      </div>
+                  {/* <div className="Addnewpeoduct margin_bottom py-4"> */}
+                  <div className="margin_bottom">
+                    <h5>Product Brand</h5>
+                    <div className="d-flex newpeo_div">
+                      <Field name="brand">
+                        {({ input, meta }) => (
+                          <select
+                            className="addnewproduct_changes right_Addnew"
+                            name="brand"
+                            {...input}
+                            component="select"
+                            onChange={(e) => {
+                              input.onChange(e);
+                              // handlebrandtype(e);
+                              bybrandchange(e);
+                            }}
+                          >
+                            <option>Select Brand</option>
+                            {filterbrand &&
+                              filterbrand?.map((e) => {
+                                console.log(e, "eeee");
+                                return (
+                                  <>
+                                    <option
+                                      name="option"
+                                      key={e._id}
+                                      value={e._id}
+                                    >
+                                      {e.brand}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                          </select>
+                        )}
+                      </Field>
                     </div>
                   </div>
+                  {/* </div> */}
                 </div>
               </div>
             </div>

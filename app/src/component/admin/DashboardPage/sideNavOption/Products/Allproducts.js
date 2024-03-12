@@ -75,7 +75,13 @@ function Allproducts(params) {
     dispatch(deleteProduct({ _id: selectedProductId })).then((res) => {
       console.log(res?.meta?.requestStatus);
       if (res?.meta?.requestStatus === "fulfilled") {
-        dispatch(allAdminProductList());
+        dispatch(
+          allAdminProductList({
+            search: "",
+            page: currentPage,
+            perPage: postPerPage,
+          })
+        );
       } else {
         window.alert("Product deletion failed.");
       }
@@ -92,7 +98,6 @@ function Allproducts(params) {
     const formData = new FormData();
     formData.append("userData", JSON.stringify(payload));
     console.log(JSON.parse(formData.getAll("userData")), "datass");
-
     dispatch(
       editProductdetail({
         search: "",
@@ -113,7 +118,7 @@ function Allproducts(params) {
     } else {
       dispatch(
         allAdminProductList({
-          // search: "", 
+          // search: "",
           page: currentPage,
           perPage: postPerPage,
         })
@@ -194,7 +199,7 @@ function Allproducts(params) {
                                       (index + 1)}
                                   </td>
                                   <td>
-                                    {product.title.substring(
+                                    {product?.title?.substring(
                                       0,
                                       readMoreState === product?._id
                                         ? product?.title?.length

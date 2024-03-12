@@ -98,11 +98,9 @@ const Alltypesubcategory = () => {
               perPage: postPerPage,
             })
           );
+          toast.success("Successfuly Edited");
+          setEdit(null);
         }
-        toast.success("Successfuly Edited");
-        form.reset();
-        setselectedsubCategoryId("");
-        setEdit(null);
       });
     } else {
       let typesub = {

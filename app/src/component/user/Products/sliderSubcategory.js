@@ -32,15 +32,19 @@ const Onlymobile = () => {
                 <Row>
                   {categorydata &&
                     categorydata?.products?.map((item, index) => {
-                      if (item?.subcategory?.[0]?.subcategory === "mobile") {
+                      if (
+                        item?.category?.[0]?.category === "Electronics" &&
+                        item &&
+                        item.discountpercentage >= 30
+                      ) {
                         return (
                           <Col lg={3} md={4} key={index}>
                             <Link
                               className="card_deco"
                               to={`/productdetail/${item._id}`}
                             >
-                              <Card className="shopping_card">
-                                <div className="img_div">
+                              <Card className="shopping_card margin_bottom">
+                                <div className="">
                                   <Card.Img
                                     variant="top"
                                     src={
@@ -58,6 +62,9 @@ const Onlymobile = () => {
                                   </Card.Title>
                                   <Card.Text className="crad_text">
                                     <h6> ₹ {item?.price}</h6>
+                                    <h6 className="text-danger">
+                                      {item?.discountpercentage} %off
+                                    </h6>
                                   </Card.Text>
                                 </Card.Body>
                               </Card>

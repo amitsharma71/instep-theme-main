@@ -17,9 +17,19 @@ function Layout() {
         </>
       ) : (
         <>
-          <Usernavbar />
-          <Outlet />
-          <MainFooter />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+            }}
+          >
+            <div style={{ flex: 1 }}>
+              <Usernavbar />
+              <Outlet />
+            </div>
+            <MainFooter />
+          </div>
         </>
       )}
     </>
