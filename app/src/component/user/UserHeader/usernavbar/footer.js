@@ -6,6 +6,7 @@ import {
   BsQuestionCircleFill,
   BsStarHalf,
 } from "react-icons/bs";
+import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 
@@ -75,10 +76,10 @@ export default function MainFooter() {
             </ul>
             <ul>
               <h5>SOCIAL</h5>
-              <li> <a href="https://www.facebook.com/" target="_blank" rel="noreferrer"> Facebook</a></li>
+              <li> <a href="https://www.facebook.com/" target="_blank" rel="noreferrer"><FaFacebook style={{ color: '#3966FF' }} /></a></li>
 
-              <li><a href="https://twitter.com/" target="_blank" rel="noreferrer"> Twitter</a></li>
-              <li><a href="https://www.youtube.com/" target="_blank" rel="noreferrer"> Youtube</a></li>
+              <li><a href="https://twitter.com/" target="_blank" rel="noreferrer"> <FaTwitter style={{ color: '#3C73E9' }} /></a></li>
+              <li><a href="https://www.youtube.com/" target="_blank" rel="noreferrer"> <FaYoutube style={{ color: "#E62E2D" }} /></a></li>
             </ul>
             <ul className="left_border">
               <h5 className="text">Mail Us:</h5>

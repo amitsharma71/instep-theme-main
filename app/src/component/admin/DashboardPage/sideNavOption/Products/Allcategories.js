@@ -6,21 +6,12 @@ import {
   editCatgory,
   removeFromCategory,
 } from "../../../../../Redux/action/createNewCategoryAction";
-import {
-  Button,
-  Col,
-  Dropdown,
-  Modal,
-  Row,
-  Spinner,
-  Table,
-} from "react-bootstrap";
+import { Col, Row, Spinner, Table } from "react-bootstrap";
 import { MdDelete } from "react-icons/md";
 import { allCategoryList } from "../../../../../Redux/action/getCategoryAction";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Allpagination from "../../../Pagination/pagination";
 import Delete from "../../../deleteModel/delete";
-import { AiOutlineSearch } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { CiEdit } from "react-icons/ci";
 
@@ -29,25 +20,19 @@ const Allcategories = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [edit, setEdit] = useState();
-
   const dispatch = useDispatch();
 
   const data = useSelector(
     (state) => state?.getcategorylistdata?.listdata?.data
   );
-  console.log(data, "adat");
 
   const listCount = useSelector(
     (state) => state.getcategorylistdata?.listdata?.totalDocs
   );
-  console.log(listCount, "Cddsdsd");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostPerPage] = useState(5);
 
-  // const [readMoreState, setReadMoreState] = useState(null);
-
-  console.log(edit, "ffsadfdsafds");
   const onSubmit = (values, form) => {
     if (edit) {
       var categoryData = new FormData();
@@ -60,13 +45,19 @@ const Allcategories = () => {
       }
       categoryData.append("userData", JSON.stringify(payload));
 
-      console.log(payload, "ffdasdasfff");
-      console.log(JSON.parse(categoryData.getAll("userData")), "dadsata");
       dispatch(editCatgory(categoryData)).then((res) => {
-        console.log(res, "fadsfdsfdd");
-        setSelectedImages([]);
-        resetFileInput();
-        setEdit(null);
+        if (res.payload.data.success) {
+          dispatch(
+            allCategoryList({
+              search: "",
+              page: currentPage,
+              perPage: postPerPage,
+            })
+          );
+          setSelectedImages([]);
+          resetFileInput();
+          setEdit(null);
+        }
       });
       toast.success("Successfully!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -75,20 +66,25 @@ const Allcategories = () => {
       var formData = new FormData();
       const payload = {
         category: values?.category,
-        // images: selectedImagesforpost,
       };
 
       formData.append("images", selectedImagesforpost.file);
       formData.append("userData", JSON.stringify(payload));
 
-      console.log(selectedImagesforpost, "fffff");
-      console.log(JSON.parse(formData.getAll("userData")), "data");
-
       dispatch(addcategory(formData)).then((res) => {
-        console.log(res, "Response from dispatch");
-        // form.reset();
-        setSelectedImages("");
-        resetFileInput();
+        console.log(res, "fsfsdfsd");
+        if (res.payload.data.success) {
+          dispatch(
+            allCategoryList({
+              search: "",
+              page: currentPage,
+              perPage: postPerPage,
+            })
+          );
+          form.reset();
+          setSelectedImages("");
+          resetFileInput();
+        }
       });
       toast.success("Successfully!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -198,7 +194,9 @@ const Allcategories = () => {
   };
 
   const [show, setShow] = useState(false);
+
   const [categoryid, setCategoryid] = useState(null);
+
   const handleShow = (id) => {
     setCategoryid(id);
     setShow(true);
@@ -217,13 +215,12 @@ const Allcategories = () => {
   };
 
   const handleEdit = (e) => {
-    console.log(e, "gdsgdshgkfld");
     setEdit(e);
+    window.scrollTo({ top: 0, behaviour: "smooth" });
   };
 
   const initialValues = () => {
     let initialValues = {};
-
     if (edit) {
       initialValues = { category: edit.category, _id: edit?._id };
     } else {
@@ -274,7 +271,6 @@ const Allcategories = () => {
                         <input
                           name="images"
                           type="file"
-                          // value={selectedImagesforpost && selectedImagesforpost.length > 0 && selectedImagesforpost[0]}
                           className="form-control signup_form_input margin_bottom"
                           onChange={handleImgeFile}
                         />
@@ -313,14 +309,19 @@ const Allcategories = () => {
                       </div>
                     </div>
                     <div>
-                      <div className="buttons d-flex justify-content-end">
-                        {!edit ? (
-                          <button className="addcatsubit_button" type="submit">
-                            Submit
-                          </button>
-                        ) : (
-                          <button className="addcatsubit_button" type="submit">
-                            Update
+                      <div className="d-flex justify-content-end margin_bottom">
+                        <button type="submit" className="addcatsubit_button">
+                          {edit ? "Update" : "Submit"}
+                        </button>
+                        {edit && (
+                          <button
+                            className="cancel_but-ton"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setEdit(null);
+                            }}
+                          >
+                            cancel
                           </button>
                         )}
                       </div>
@@ -342,15 +343,9 @@ const Allcategories = () => {
                   type="search"
                   className=" mr-sm-2 adminsearch_bar"
                   value={searchQuery}
-                  // onKeyDown={onKeyDownHandler}
                   onChange={(e) => handleSearch(e)}
                 />
               </div>
-              {/* <div className="btngroup">
-                <Button className="select_button " type="submit" onClick={handleSearch}>
-                  <AiOutlineSearch /> search
-                </Button>
-              </div> */}
             </div>
             {isLoading ? (
               <div className="table_Spinner">
@@ -450,7 +445,6 @@ const Allcategories = () => {
         show={show}
         categoryId={categoryid}
       />
-      {/* <ToastContainer /> */}
     </>
   );
 };

@@ -4,6 +4,7 @@ import { Card, Row, Col, Button, Container } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FiArrowUpRight } from "react-icons/fi";
+import { FaArrowCircleRight } from "react-icons/fa";
 import { getProductAction } from "../../../../Redux/action/getProductDetailAction";
 import { Swiper } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -26,6 +27,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const [subcatid, setSubcatid] = useState();
+  
 
   const data = useSelector((state) => state?.getproductdata?.listdata);
   console.log(data, "usedata");
@@ -145,13 +147,18 @@ const Home = () => {
     data?.products?.filter((item) => item.category?.[0]?.category === "Men") ||
     [];
 
+  let furniture =
+    data?.products?.filter(
+      (item) => item.category?.[0]?.category === "Home &Furniture"
+    ) || [];
+
   return (
     <>
       {loading ? (
         <Spinner />
       ) : (
-        <div className="container-fluid">
-          <div className=" slider_col margin_bottom">
+        <>
+          <div className=" container-fluid slider_col margin_bottom">
             <div>
               {/* <Row>
                 <Col lg={12}>
@@ -276,34 +283,10 @@ const Home = () => {
                   </div>
                 </Col>
               </Row> */}
-              <Container>
-                <Row>
-                  <Col lg={12}>
-                    {/* <h2 className="ourtopcategories_home margin_bottom"></h2> */}
-                    <div className="category_borderdiv margin_bottom">
-                      {/* <Swiper
-                        modules={[Navigation]}
-                        spaceBetween={10}
-                        className="ourcate_swiper"
-                        navigation
-                        pagination={{ clickable: true }}
-                        onSwiper={(swiper) => console.log(swiper)}
-                        onSlideChange={() => console.log("slide change")}
-                        breakpoints={{
-                          320: {
-                            slidesPerView: 2,
-                          },
-                          480: {
-                            slidesPerView: 3,
-                          },
-                          768: {
-                            slidesPerView: 4,
-                          },
-                          1024: {
-                            slidesPerView: 6,
-                          },
-                        }}
-                      > */}
+              <div className="category_borderdiv margin_bottom">
+                <Container>
+                  <Row>
+                    <Col lg={11}>
                       <Row>
                         {allcatgorydata &&
                           allcatgorydata
@@ -323,14 +306,12 @@ const Home = () => {
                                   >
                                     <Link
                                       className="carddecorationnone_cat"
-                                      // to={`/category/${data._id}?sub?${data._id}`}
                                       to={`/category/${Id}`}
                                       onClick={() => handleExplore(Id)}
                                     >
                                       <Card className="cat_card_homep hovered">
-                                        {/* <div className="hoveron_arrow"> */}
                                         <div className="HoveredText">
-                                          <ul>
+                                        {/  <ul>
                                             {subcatalldata &&
                                               subcatalldata?.map((item) => {
                                                 console.log(
@@ -372,17 +353,66 @@ const Home = () => {
                                                                         }
                                                                       </li>
                                                                     </>
+                                          <div className="row flex-nowrap">
+                                            <div className="col-7 d-flex">
+                                              <ul className="HoveredTextHeight">
+                                                {subcatalldata &&
+                                                  subcatalldata?.map((item) => {
+                                                    console.log(
+                                                      item,
+                                                      "dataaaaaaaa-itemmmm"
+                                                    );
+                                                    return (
+                                                      item?.category_id ===
+                                                        Id && (
+                                                        <>
+                                                          <li className="catlist_align">
+                                                            <div className="ItemSubCategary">
+                                                              <p
+                                                                onMouseOver={(
+                                                                  e
+                                                                ) => {
+                                                                  dispatch(
+                                                                    typesubcategoryget(
+                                                                      {
+                                                                        subcategory_id:
+                                                                          item?._id,
+                                                                      }
+                                                                    )
                                                                   );
+                                                                }}
+                                                              >
+                                                                {
+                                                                  item?.subcategory
                                                                 }
-                                                              )}
-                                                          </ul>
-                                                        </div>
-                                                      </li>
-                                                    </>
-                                                  )
-                                                );
-                                              })}
-                                          </ul>
+                                                              </p>
+                                                            </div>
+                                                          </li>
+                                                        </>
+                                                      )
+                                                    );
+                                                  })}
+                                              </ul>
+                                            </div>
+                                            <div className="col-7 d-flex">
+                                              <ul className="ItemSubCategaryUL HoveredTextHeight">
+                                                {typesubcatgory &&
+                                                  typesubcatgory?.map(
+                                                    (item) => {
+                                                      return (
+                                                        <>
+                                                          <li>
+                                                            {
+                                                              item?.typesubcategory
+                                                            }
+                                                          </li>
+                                                        </>
+                                                      );
+                                                    }
+                                                  )}
+                                              </ul>
+                                            </div>
+                                          </div>
                                         </div>
                                         <div className="top_catcard">
                                           <div className="pos_catimage">
@@ -394,33 +424,6 @@ const Home = () => {
                                           </div>
                                           <p>{data?.category}</p>
                                         </div>
-                                        {/* <div className="hoverarrow_direc">
-                                        <div className="right_bottomborder">
-                                          <div className="nav_Filter nav_filterchanges">
-                                            <ul>
-                                              <Row>
-                                                <Col
-                                                  md={6}
-                                                  className="navfilter_colalign"
-                                                >
-                                                  <Link
-                                                    className="navcat_deco"
-                                                    // to={`/category/${item?._id}`}
-                                                    // to={`/category/${categoryId}`}
-                                                    // onClick={() => productClicks(categoryId)}
-                                                  >
-                                                    <li>{e?.category}</li>
-                                                  </Link>
-                                                </Col>
-                                              </Row>
-                                            </ul>
-                                          </div>
-                                          <div>
-                                            <FiArrowUpRight className="arrow-icon" />
-                                          </div>
-                                        </div>
-                                      </div> */}
-                                        {/* </div> */}
                                       </Card>
                                     </Link>
                                   </div>
@@ -428,14 +431,25 @@ const Home = () => {
                               );
                             })}
                       </Row>
-                      {/* </Swiper> */}
-                      <div className="viewallcat_egory">
-                        <p onClick={toAllCategory}>View All</p>
+                    </Col>
+                    <Col lg={1}>
+                      <div
+                        className="top_catcard"
+                        onClick={toAllCategory}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <FaArrowCircleRight
+                          className="topcatimage_home"
+                          style={{ color: "#4EB529" }}
+                        />
+                        <div className="viewallcat_egory">
+                          <p>View All</p>
+                        </div>
                       </div>
-                    </div>
-                  </Col>
-                </Row>
-              </Container>
+                    </Col>
+                  </Row>
+                </Container>
+              </div>
             </div>
             <div className="slider">
               <Row>
@@ -1001,7 +1015,7 @@ const Home = () => {
                               >
                                 <div className="hometop_fashionbo_der">
                                   <img
-                                    className="homedecorimag_e"
+                                    className="homedecorimag_e margin_bottom"
                                     variant="top"
                                     src={
                                       item?.image
@@ -1015,7 +1029,10 @@ const Home = () => {
                                     <p className="top_cattitle">
                                       {item?.title}
                                     </p>
-                                    <p> {item?.discountpercentage}% off</p>
+                                    <p className="discoun-t_per">
+                                      {" "}
+                                      {item?.discountpercentage}% off
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -1064,7 +1081,7 @@ const Home = () => {
                               >
                                 <div className="hometop_fashionbo_der">
                                   <img
-                                    className="homedecorimag_e"
+                                    className="homedecorimag_e margin_bottom"
                                     variant="top"
                                     src={
                                       item?.image
@@ -1079,7 +1096,10 @@ const Home = () => {
                                     <p className="top_cattitle">
                                       {item?.title}
                                     </p>
-                                    <p> {item?.discountpercentage}% off</p>
+                                    <p className="discoun-t_per">
+                                      {" "}
+                                      {item?.discountpercentage}% off
+                                    </p>
                                   </div>
                                 </div>
                               </div>
@@ -1280,7 +1300,6 @@ const Home = () => {
 
                                 <Link
                                   className=""
-                                  // to={`/category/${"65365a04a77fe5ede8b05bc8"}`}
                                   to={`/category/${categoryId}`}
                                   onClick={() => handleExplore(categoryId)}
                                 >
@@ -1385,9 +1404,104 @@ const Home = () => {
                 </Col>
               </Row>
             </div>
+            <div className="my-2">
+              <Row>
+                {allcatgorydata?.map((e) => {
+                  if (e?.category === "Electronics") {
+                    console.log(e, "fgdghfd");
+                    const categoryId = e?._id;
+
+                    return (
+                      <>
+                        <Col lg={8} md={8} sm={12}>
+                          <Link
+                            className="text_decoration"
+                            to={`/category/${categoryId}`}
+                            onClick={() => handleExplore(categoryId)}
+                          >
+                            <div className=" homefashion_borderalign">
+                              <div className="sportscontent_align newshop_roe">
+                                <div>
+                                  <h2>Selling Electronics</h2>
+                                </div>
+                                <div className="margin_bottom shop_roe ">
+                                  <p>Latest Technology & Best Brands</p>
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </Col>
+                      </>
+                    );
+                  }
+                })}
+                <Col lg={4} md={4} sm={12}>
+                  <div className="homefashion_border">
+                    {allcatgorydata?.map((e) => {
+                      if (e?.category === "Home &Furniture") {
+                        const categoryId = e?._id;
+                        return (
+                          <>
+                            <Link
+                              className="text_decoration"
+                              to={`/category/${categoryId}`}
+                              onClick={() => handleExplore(categoryId)}
+                            >
+                              <div className="d-flex justify-content-between ">
+                                <h5>Home Decor & Furnishings</h5>
+                                <AiFillRightCircle className="topcategoies_icon" />
+                              </div>
+                            </Link>
+                          </>
+                        );
+                      }
+                    })}
+                    <Row>
+                      {furniture?.map((item, index) => {
+                        return (
+                          index < 4 && (
+                            <Col lg={6} md={6} sm={6}>
+                              <div
+                                className="my-2 onhovermen"
+                                key={index}
+                                onClick={() =>
+                                  navigate(`/productdetail/${item?._id}`)
+                                }
+                              >
+                                <div className="hometop_fashionbo_der">
+                                  <img
+                                    className="homedecorimag_e margin_bottom"
+                                    variant="top"
+                                    src={
+                                      item?.image
+                                        ? item?.image
+                                        : item?.thumbnail?.split(":").length > 1
+                                        ? item?.thumbnail
+                                        : `http://localhost:5000/uploads/${item.thumbnail}`
+                                    }
+                                  />
+                                  <div className="cloths_detail">
+                                    <p className="top_cattitle">
+                                      {item?.title}
+                                    </p>
+                                    <p className="discoun-t_per">
+                                      {item?.discountpercentage}% off
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </Col>
+                          )
+                        );
+                      })}
+                    </Row>
+                  </div>
+                </Col>
+              </Row>
+            </div>
           </div>
           <Scrolltotopbutton />
-        </div>
+        </>
       )}
     </>
   );
