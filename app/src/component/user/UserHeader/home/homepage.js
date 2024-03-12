@@ -27,7 +27,6 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const [subcatid, setSubcatid] = useState();
-  
 
   const data = useSelector((state) => state?.getproductdata?.listdata);
   console.log(data, "usedata");
@@ -311,7 +310,7 @@ const Home = () => {
                                     >
                                       <Card className="cat_card_homep hovered">
                                         <div className="HoveredText">
-                                        {/  <ul>
+                                          <ul>
                                             {subcatalldata &&
                                               subcatalldata?.map((item) => {
                                                 console.log(
@@ -353,6 +352,17 @@ const Home = () => {
                                                                         }
                                                                       </li>
                                                                     </>
+                                                                  );
+                                                                }
+                                                              )}
+                                                          </ul>
+                                                        </div>
+                                                      </li>
+                                                    </>
+                                                  )
+                                                );
+                                              })}
+                                          </ul>
                                           <div className="row flex-nowrap">
                                             <div className="col-7 d-flex">
                                               <ul className="HoveredTextHeight">
@@ -500,31 +510,6 @@ const Home = () => {
                 </Col>
               </Row>
             </div>
-            {/* <Row>
-              <h2 className="ourtopcategories_home"> Trending Products</h2>
-              {banner?.map((item, index) => {
-                return (
-                  <>
-                    <Col lg={4} md={4} sm={4}>
-                      <div className="banner margin_bottom" key={index}>
-                        <div>
-                          <div>
-                            <Button className="banner-button" variant="light">
-                              {item?.value}
-                            </Button>
-                          </div>
-                          <img
-                            className="banner-img"
-                            src={item?.bannerImage}
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    </Col>
-                  </>
-                );
-              })}
-            </Row> */}
             <div className="homeelectnics_carouse margin_bottom">
               <Row>
                 <Col lg={2} className="fistcardof_elct">
@@ -1500,6 +1485,7 @@ const Home = () => {
               </Row>
             </div>
           </div>
+
           <Scrolltotopbutton />
         </>
       )}
