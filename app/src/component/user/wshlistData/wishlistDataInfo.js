@@ -20,7 +20,6 @@ import {
 } from "../../../Redux/action/wishlistAction";
 import { getUserId } from "../../../utils/auth";
 import { MdDelete } from "react-icons/md";
-import { FaHandHoldingHeart } from "react-icons/fa";
 
 const Wishlistinform = () => {
   const dispatch = useDispatch();
@@ -60,7 +59,7 @@ const Wishlistinform = () => {
   const handleShow = (id) => setShow(id);
   const handleClose = () => setShow(null);
 
-  console.log(datas, "asdasdasdasdasd")
+  console.log(datas, "asdasdasdasdasd");
 
   return (
     <>
@@ -101,55 +100,55 @@ const Wishlistinform = () => {
                                 alt=""
                               />
                             </div>
-                            <Link
-                              className="carddecorationnone_cat text_edit"
-                              reloadDocumen={true}
-                              to={`/productdetail/${item?.products[0]?._id}`}
-                            >
-                              <div>
-                                <img
-                                  className="wishimage"
-                                  variant="top"
-                                  // src={item?.image || item?.thumbnail}
-                                  src={
-                                    item.products[0]?.image
-                                      ? item.products[0]?.image
-                                      : item.products[0]?.thumbnail?.split(":")
+                          </Link>
+                          <Link
+                            className="carddecorationnone_cat text_edit"
+                            reloadDocumen={true}
+                            to={`/productdetail/${item?.products[0]?._id}`}
+                          >
+                            <div>
+                              <img
+                                className="wishimage"
+                                variant="top"
+                                // src={item?.image || item?.thumbnail}
+                                src={
+                                  item.products[0]?.image
+                                    ? item.products[0]?.image
+                                    : item.products[0]?.thumbnail?.split(":")
                                         ?.length > 1
-                                        ? item.products[0]?.thumbnail
-                                        : `http://localhost:5000/uploads/${item?.products[0]?.thumbnail}`
-                                  }
-                                  alt=""
-                                />
-                              </div>
-                            </Link>
-                          </Col>
-                          <Col lg={6} md={5} sm={5}>
-                            <Link
-                              className="carddecorationnone_cat text_edit"
-                              reloadDocumen={true}
-                              to={`/productdetail/${item?.products[0]?._id}`}
-                            >
-                              <div className="p-4">
-                                <div className="subcatitem_cont">
-                                  {" "}
-                                  {item?.products[0]?.title}
-                                </div>
-                                <div className="descripmob crad_text">
-                                  {" "}
-                                  {item?.products[0]?.description}
-                                </div>
-                                <div className="kit_homestarticon">
-                                  {item?.products[0]?.rating}
-                                </div>
-                              </div>
-                            </Link>
-                          </Col>
-                          <Col lg={2} md={2} sm={2}>
-                            <div className="p-4">
-                              <h5> ₹{item?.products[0]?.price}</h5>
+                                    ? item.products[0]?.thumbnail
+                                    : `http://localhost:5000/uploads/${item?.products[0]?.thumbnail}`
+                                }
+                                alt=""
+                              />
                             </div>
                           </Link>
+                        </Col>
+                        <Col lg={6} md={5} sm={5}>
+                          <Link
+                            className="carddecorationnone_cat text_edit"
+                            reloadDocumen={true}
+                            to={`/productdetail/${item?.products[0]?._id}`}
+                          >
+                            <div className="p-4">
+                              <div className="subcatitem_cont">
+                                {" "}
+                                {item?.products[0]?.title}
+                              </div>
+                              <div className="descripmob crad_text">
+                                {" "}
+                                {item?.products[0]?.description}
+                              </div>
+                              <div className="kit_homestarticon">
+                                {item?.products[0]?.rating}
+                              </div>
+                            </div>
+                          </Link>
+                        </Col>
+                        <Col lg={2} md={2} sm={2}>
+                          <div className="p-4">
+                            <h5> ₹{item?.products[0]?.price}</h5>
+                          </div>
                         </Col>
                         <Col lg={2} md={2} sm={2}>
                           <div className="p-4">
@@ -219,7 +218,7 @@ const Wishlistinform = () => {
         </>
       ) : (
         <div className="Empty_wishlist">
-          <FaHandHoldingHeart className="Emptywishlist"/>
+          <FaHandHoldingHeart className="Emptywishlist" />
           <h1>It's empty here</h1>
           <p>Follow collections you love to find them here</p>
         </div>
