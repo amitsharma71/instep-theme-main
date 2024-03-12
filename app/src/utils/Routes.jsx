@@ -61,6 +61,7 @@ import Discount from "../component/user/UserHeader/sliderPages/discount";
 import OrderCancellation from "../component/user/Cancellation & return/OrderCancellation";
 import Returnpolicy from "../component/user/Return Policy/returnpolicy";
 import EPRcompliance from "../component/user/EPR/EPRcompliance";
+import Orders from "../component/admin/dashboardPage/orderPage/orders";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -105,6 +106,7 @@ const protects = {
         { path: "/filterbycategory", element: <SubCategoryfilter /> },
         { path: "/ordercancellationandreturn", element: <OrderCancellation /> },
         { path: "/returnpolicy", element: <Returnpolicy /> },
+        { path: "/orders", element: <Orders /> },
         { path: "/e-wastecompliance", element: <EPRcompliance /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
@@ -139,6 +141,7 @@ const protects = {
         { path: "/possystem", element: <PosSystem /> },
         { path: "/slider", element: <Sliderpost /> },
         { path: "/customerdetail", element: <Customer /> },
+        { path: "/orders", element: <Orders /> },
         {
           path: "/productspecification/:id",
           element: <ProductSpecification />,
