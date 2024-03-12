@@ -21,3 +21,8 @@ export const removeFromBrand = createAsyncThunk(
     return data1.data;
   }
 );
+
+export const updateBrands = createAsyncThunk("editbrand", async (payload) => {
+  const data1 = await axiosInstance.post(`/addbrand`, payload);
+  return data1.data;
+});

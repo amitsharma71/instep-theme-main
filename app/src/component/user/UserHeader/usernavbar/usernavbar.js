@@ -6,9 +6,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Accordion, Col, Image, Row } from "react-bootstrap";
 import { React, useEffect, useState } from "react";
-import {
-  getProductAction,
-  myCartList,
+import {getProductAction,
+  myCartList
 } from "../../../../Redux/action/getProductDetailAction";
 import { getUserId } from "../../../../utils/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -156,7 +155,6 @@ const Usernavbar = () => {
                     </Link>
                   </div>
                   <div className="subnewbar_content">
-                    <div>
                       <div className="navbarhead_prop">
                         <Navbar.Brand>
                           <Link to="/" className="card_deco">
@@ -166,14 +164,12 @@ const Usernavbar = () => {
                             )}
                             <img
                               src={`http://localhost:5000/logo/${header?.logo}`}
-
                               alt=""
                               style={{ width: "92px" }}
                             />
                           </Link>
                         </Navbar.Brand>
                       </div>
-                    </div>
                     <div className="alignsearchbar_icon hideonmscree">
                       <input
                         className="navsearch_input"
@@ -191,7 +187,7 @@ const Usernavbar = () => {
                     </div>
                     <div className="subnewbar_rightcont">
                       <div className="mid_navnewconent desktop_mid_navnewconent">
-                        <div className="Nav_link">
+                        {/* <div className="Nav_link">
                           Category
                           <div className="nav_Filter nav_filterchanges">
                             <ul>
@@ -208,7 +204,9 @@ const Usernavbar = () => {
                                           className="navcat_deco"
                                           // to={`/category/${item?._id}`}
                                           to={`/category/${categoryId}`}
-                                          onClick={() => productClicks(categoryId)}
+                                          onClick={() =>
+                                            productClicks(categoryId)
+                                          }
                                         >
                                           <li key={index}>{item?.category}</li>
                                         </Link>
@@ -218,7 +216,7 @@ const Usernavbar = () => {
                               </Row>
                             </ul>
                           </div>
-                        </div>
+                        </div> */}
                         {/* <Link
                           className="Nav_link carddecorationnone_cat"
                           to="/"
@@ -329,7 +327,6 @@ const Usernavbar = () => {
                         )}
                       </div>
                       <Button
-                        variant="primary"
                         className="usernav_toggle"
                         onClick={handleShow}
                       >
@@ -382,13 +379,18 @@ const Usernavbar = () => {
                         </ul>
                         <ul>
                           <h5> Registered Office Address:</h5>
-                          <a href="https://www.google.com/maps/place/InStep+Technologies+Private+Limited/@30.6603992,76.8579138,17z/data=!3m1!4b1!4m6!3m5!1s0x390f93449bb5d4b3:0x914dd5a1fe28cc76!8m2!3d30.6603946!4d76.8604887!16s%2Fg%2F11csqwp2_w?entry=ttu" target="_blank" rel="noreferrer">
+                          <a
+                            href="https://www.google.com/maps/place/InStep+Technologies+Private+Limited/@30.6603992,76.8579138,17z/data=!3m1!4b1!4m6!3m5!1s0x390f93449bb5d4b3:0x914dd5a1fe28cc76!8m2!3d30.6603946!4d76.8604887!16s%2Fg%2F11csqwp2_w?entry=ttu"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
                             <p>
                               Tricity Plaza, Office No. 14
                               <br />
                               Ground, Peer Muchalla <br />
                               Zirakpur, Punjab 140603
-                            </p></a>
+                            </p>
+                          </a>
                           <p className="tele">
                             Telephone: <span>000-000-0000</span>
                           </p>
@@ -408,7 +410,10 @@ const Usernavbar = () => {
                                           className="navcat_deco"
                                           onClick={() => handlecategory(e)}
                                         >
-                                          <div className="mb-2" key={e}>
+                                          <div
+                                            className="mb-2 sign_hover"
+                                            key={e}
+                                          >
                                             {e?.category}
                                           </div>
                                         </div>

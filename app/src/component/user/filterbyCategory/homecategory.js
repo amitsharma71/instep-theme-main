@@ -56,14 +56,14 @@ const Homecategory = () => {
       ) : (
         <>
           <Container fluid>
-            <div className="pt-5">
+            <div className="pt-5 container-fluid">
               <Row>
-                <Col lg={2} md={3} sm={4}>
+                <Col lg={2} md={4} sm={4}>
                   {" "}
                   <Subcaregoryfilter />
                   <SubCategoryfilter />
                 </Col>
-                <Col lg={10} md={9} sm={8}>
+                <Col lg={10} md={8} sm={8}>
                   <div className="subcarhide">
                     <div className="subcategory_topcontent">
                       <div>
@@ -196,18 +196,30 @@ const Homecategory = () => {
                                       {item?.title}
                                     </Card.Title>
                                     <Card.Text className="crad_text"></Card.Text>
-                                    <Card.Text className="crad_text">
-                                      <h5> ₹ {item?.totalprice}</h5>
-                                    </Card.Text>
-                                    <Card.Text className="crad_text">
-                                      {item.stock > 0 ? (
-                                        <h6> </h6>
-                                      ) : (
-                                        <p className="text-danger">
-                                          Out of stock
-                                        </p>
-                                      )}
-                                    </Card.Text>
+                                    <div className="d-flex justify-content-between">
+                                      <Card.Text className="">
+                                        <div className="d-flex align-items-start">
+                                          <h5>
+                                            ₹
+                                            {parseInt(item?.totalprice).toFixed(
+                                              0
+                                            )}
+                                          </h5>
+                                          <p className="allpro_ductdis">
+                                            {item?.discountpercentage}%off
+                                          </p>
+                                        </div>
+                                      </Card.Text>
+                                      <Card.Text className="crad_text">
+                                        {item.stock > 0 ? (
+                                          <h6> </h6>
+                                        ) : (
+                                          <p className="text-danger">
+                                            Out of stock
+                                          </p>
+                                        )}
+                                      </Card.Text>
+                                    </div>
                                   </Card.Body>
                                 </Link>
                               </Card>

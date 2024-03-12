@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import {
   BsFillBagFill,
@@ -7,10 +7,10 @@ import {
   BsStarHalf,
 } from "react-icons/bs";
 import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 export default function MainFooter() {
+  const navigate = useNavigate();
 
   return (
     <div className="container-fluid huuuuuuuuuuuuuu">
@@ -20,13 +20,15 @@ export default function MainFooter() {
             <ul>
               <h5>ABOUT</h5>
               <li>
-                <Link reloadDocument to="/contactus">Contact Us</Link>
+                <Link to="/contactus">Contact Us</Link>
               </li>
               <li>
-                <Link reloadDocument to="/aboutus">About Us</Link>
+                <Link to="/aboutus">About Us</Link>
               </li>
               <li>
-                <Link to="/careers">Careers</Link>
+                <Link style={{ pointerEvents: "none" }} to="/careers">
+                  Careers
+                </Link>
               </li>
               <li>
                 <Link>Press</Link>
@@ -35,61 +37,97 @@ export default function MainFooter() {
             <ul>
               <h5>HELP</h5>
               <li>
-                <Link reloadDocument to="/paymentdetail">Payments</Link>
+                <Link to="/paymentdetail">Payments</Link>
               </li>
               <li>
-                <Link reloadDocument to="/shippingdetail">Shipping</Link>
+                <Link to="/shippingdetail">Shipping</Link>
               </li>
               <li>
-                <a href="dg">Cancellation & Return</a>
+                <Link to="/ordercancellationandreturn">
+                  Cancellation & Return
+                </Link>
+              </li>
+              <li onClick={() => navigate("/ordercancellationandreturn")}>
+                <a>FAQ</a>
               </li>
               <li>
-                <a href="dg">FAQ</a>
-              </li>
-              <li>
-                <a href="dg">Report Infringment</a>
+                <Link>Report Infringment</Link>
               </li>
             </ul>
             <ul>
               <h5>CONSUMER POLICY</h5>
               <li>
-                <a href="dg">Return Policy</a>
+                <Link to="/returnpolicy">Return Policy</Link>
               </li>
               <li>
-                <Link reloadDocument to="/termofuse">Terms Of Use</Link>
+                <Link to="/termofuse">Terms Of Use</Link>
               </li>
               <li>
-                <Link reloadDocument to="/paymentsecurity">Security</Link>
+                <Link to="/paymentsecurity">Security</Link>
               </li>
               <li>
-                <Link reloadDocument to="/privacypolicy">Privacy</Link>
+                <Link to="/privacypolicy">Privacy</Link>
               </li>
               <li>
-                <a href="dg">Sitemap</a>
+                <Link>Sitemap</Link>
               </li>
               <li>
                 <Link to="/grievanceRedressal">Grievance Redressal</Link>
               </li>
               <li>
-                <a href="dg">EPR Compliance</a>
+                <Link to="/e-wastecompliance">EPR Compliance</Link>
               </li>
             </ul>
             <ul>
               <h5>SOCIAL</h5>
-              <li> <a href="https://www.facebook.com/" target="_blank" rel="noreferrer"><FaFacebook style={{ color: '#3966FF' }} /></a></li>
+              <li>
+                {" "}
+                <a
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaFacebook style={{ color: "#3966FF" }} />
+                </a>
+              </li>
 
-              <li><a href="https://twitter.com/" target="_blank" rel="noreferrer"> <FaTwitter style={{ color: '#3C73E9' }} /></a></li>
-              <li><a href="https://www.youtube.com/" target="_blank" rel="noreferrer"> <FaYoutube style={{ color: "#E62E2D" }} /></a></li>
+              <li>
+                <a href="https://twitter.com/" target="_blank" rel="noreferrer">
+                  {" "}
+                  <FaTwitter style={{ color: "#3C73E9" }} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {" "}
+                  <FaYoutube style={{ color: "#E62E2D" }} />
+                </a>
+              </li>
             </ul>
             <ul className="left_border">
               <h5 className="text">Mail Us:</h5>
               <p>
-                <Link className="footer_deCo" to="https://mail.google.com/" target="_blank" rel="noreferrer">mailto:instepcart@mail.com</Link> <br />
+                <Link
+                  className="footer_deCo"
+                  to="https://mail.google.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  mailto:instepcart@mail.com
+                </Link>{" "}
+                <br />
               </p>
             </ul>
             <ul>
               <h5> Registered Office Address:</h5>
-              <Link className="footer_deCo" to="https://www.google.com/maps/place/InStep+Technologies+Private+Limited/@30.6603992,76.8579138,17z/data=!3m1!4b1!4m6!3m5!1s0x390f93449bb5d4b3:0x914dd5a1fe28cc76!8m2!3d30.6603946!4d76.8604887!16s%2Fg%2F11csqwp2_w?entry=ttu">
+              <Link
+                className="footer_deCo"
+                to="https://www.google.com/maps/place/InStep+Technologies+Private+Limited/@30.6603992,76.8579138,17z/data=!3m1!4b1!4m6!3m5!1s0x390f93449bb5d4b3:0x914dd5a1fe28cc76!8m2!3d30.6603946!4d76.8604887!16s%2Fg%2F11csqwp2_w?entry=ttu"
+              >
                 <p>
                   {" "}
                   Tricity Plaza, Office No. 14
@@ -105,24 +143,26 @@ export default function MainFooter() {
           </div>
           <Row>
             <Col className="social">
-              <i>
+              {/* <i>
                 {" "}
                 <BsFillBagFill className="Soc_icon" />
                 Become a Seller
-              </i>
-              <i>
+              </i> */}
+              {/* <i>
                 {" "}
                 <BsStarHalf className="Soc_icon" />
                 Advertise
-              </i>
-              <i>
+              </i> */}
+              {/* <i>
                 {" "}
                 <BsFillGiftFill className="Soc_icon" />
                 Gift Cards
-              </i>
+              </i> */}
               <i>
-                <BsQuestionCircleFill className="Soc_icon" />
-                Help Center
+                <div onClick={() => navigate("/ordercancellationandreturn")}>
+                  <BsQuestionCircleFill className="Soc_icon" />
+                  Help Center
+                </div>
               </i>
               <i> &copy; 2023 Instepcart.com</i>
             </Col>
@@ -135,6 +175,6 @@ export default function MainFooter() {
     </div> */}
         </footer>
       </Row>
-    </div >
+    </div>
   );
 }

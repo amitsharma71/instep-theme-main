@@ -27,6 +27,7 @@ const address = require("./router/addressroute");
 const profile = require("./router/useres/profilesRoute");
 const wishList = require("./router/wishlistRouter")
 const headerforuser = require("./router/adminRouter")
+const sliderRoutes = require("./router/sliderRouter")
 
 dotenv.config();
 
@@ -71,6 +72,7 @@ server.use("/api", address);
 server.use("/api", profile);
 server.use("/api", wishList);
 server.use("/api", headerforuser);
+server.use("/api", sliderRoutes);
 
 // http://localhost:5000/profile
 
@@ -113,31 +115,31 @@ const IMGslider = multer.diskStorage({
 const uploadForImages = multer({
   storage: IMGslider,
 });
-server.post(
-  "/api/sliderpost",
-  uploadForImages.fields([{ name: "sliderimg", maxCount: 4 }]),
-  async (req, res) => {
-    try {
-      const imagesFilenames = req.files["sliderimg"].map(
-        (file) => file.filename
-      );
-      console.log("Images  Filenames:", imagesFilenames);
-      const sildername = JSON.parse(req.body.sildername);
-      console.log(sildername, "sildername");
+// server.post(
+//   "/api/sliderpost",
+//   uploadForImages.fields([{ name: "sliderimg", maxCount: 4 }]),
+//   async (req, res) => {
+//     try {
+//       const imagesFilenames = req.files["sliderimg"].map(
+//         (file) => file.filename
+//       );
+//       console.log("Images  Filenames:", imagesFilenames);
+//       const sildername = JSON.parse(req.body.sildername);
+//       console.log(sildername, "sildername");
 
-      const sliderphotos = new slidertable({
-        images: imagesFilenames,
-        name: sildername.name,
-        url: sildername.url,
-      });
-      await sliderphotos.save();
-      res.status(200).send("Success: slider images uploaded." + sliderphotos);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ error: error.message });
-    }
-  }
-);
+//       const sliderphotos = new slidertable({
+//         images: imagesFilenames,
+//         name: sildername.name,
+//         url: sildername.url,
+//       });
+//       await sliderphotos.save();
+//       res.status(200).send("Success: slider images uploaded." + sliderphotos);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send({ error: error.message });
+//     }
+//   }
+// );
 
 // get slider images
 server.use("/slider", express.static("slider"));

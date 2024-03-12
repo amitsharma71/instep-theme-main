@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addbrands,
   removeFromBrand,
+  updateBrands,
 } from "../../../../../Redux/action/createNewBrandsAction";
 import { allSubCategoryList } from "../../../../../Redux/action/getSubcategoryAction";
-import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
+import { Col, Row, Spinner, Table } from "react-bootstrap";
 import { allBrandsList } from "../../../../../Redux/action/getAllBrandListAction";
 import { allCategoryList } from "../../../../../Redux/action/getCategoryAction";
 import Allpagination from "../../../Pagination/pagination";
@@ -15,7 +16,6 @@ import Delete from "../../../deleteModel/delete";
 import { typesubcategoryget } from "../../../../../Redux/action/typesubcatpost";
 import { ToastContainer, toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
-import { AiOutlineSearch } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 
 const Allsubcategory = () => {
@@ -58,23 +58,48 @@ const Allsubcategory = () => {
 
   const onSubmit = (values, form) => {
     console.log(values.brand, "dddddddddddd");
+    if (edit) {
+      let asd = {
+        category_id: selectedCategoryId,
+        subcategory_id: selectedSubcategoryId,
+        typesubcategory: typeSubCategory,
+        brand: values.brand,
+        _id: values._id,
+      };
 
-    let asd = {
-      category_id: selectedCategoryId,
-      subcategory_id: selectedSubcategoryId,
-      typesubcategory_id: typeSubCategory,
-      brand: values.brand,
-    };
+      dispatch(updateBrands(asd)).then((res) => {
+        console.log(res, "fdsfdf");
+        if (res.payload.success) {
+          dispatch(
+            allBrandsList({
+              search: "",
+              page: currentPage,
+              perPage: postPerPage,
+            })
+          );
+          toast.success("successful Updated");
+          form.reset();
+          setEdit(null);
+        }
+      });
+    } else {
+      let asd = {
+        category_id: selectedCategoryId,
+        subcategory_id: selectedSubcategoryId,
+        typesubcategory_id: typeSubCategory,
+        brand: values.brand,
+      };
 
-    dispatch(addbrands(asd)).then((res) => {
-      console.log(res, "fdsfdf");
-      toast.success("successful Submited");
-      form.reset();
+      dispatch(addbrands(asd)).then((res) => {
+        console.log(res, "saddsadsa");
+        toast.success("successful Submited");
+        form.reset();
 
-      setSelectedCategoryId("");
-      setSelectedSubcategoryId("");
-      SetTypeSubCategory("");
-    });
+        setSelectedCategoryId("");
+        setSelectedSubcategoryId("");
+        SetTypeSubCategory("");
+      });
+    }
   };
   useEffect(() => {
     dispatch(allCategoryList());
@@ -299,7 +324,7 @@ const Allsubcategory = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         setEdit(null);
-                      }}  
+                      }}
                     >
                       cancel
                     </button>

@@ -59,6 +59,9 @@ import ContactUs from "../component/user/contactUs/contactUs";
 import OrderReport from "../component/admin/dashboardPage/sideNavOption/orders/orderReport";
 import AllCategories from "../component/user/Allcategories/allCategories";
 import Discount from "../component/user/UserHeader/sliderPages/discount";
+import OrderCancellation from "../component/user/Cancellation & return/OrderCancellation";
+import Returnpolicy from "../component/user/Return Policy/returnpolicy";
+import EPRcompliance from "../component/user/EPR/EPRcompliance";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -101,6 +104,9 @@ const protects = {
         { path: "/allcategory", element: <AllCategories /> },
         { path: "/discountproducts", element: <Discount /> },
         { path: "/filterbycategory", element: <SubCategoryfilter /> },
+        { path: "/ordercancellationandreturn", element: <OrderCancellation /> },
+        { path: "/returnpolicy", element: <Returnpolicy /> },
+        { path: "/e-wastecompliance", element: <EPRcompliance /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
     },
@@ -178,6 +184,9 @@ const protects = {
         },
         { path: "/category/:categoryName", element: <Homecategory /> },
         { path: "/discountproducts", element: <Discount /> },
+        { path: "/ordercancellationandreturn", element: <OrderCancellation /> },
+        { path: "/returnpolicy", element: <Returnpolicy /> },
+        { path: "/e-wastecompliance", element: <EPRcompliance /> },
         { path: "*", element: "NO PAGE FOUND" },
       ],
     },
