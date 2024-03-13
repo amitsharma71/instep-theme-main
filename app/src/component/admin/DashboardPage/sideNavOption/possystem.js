@@ -7,10 +7,10 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
-export default function PosSystem() {
+const PosSystem = () => {
   return (
     <>
-      <Row >
+      <Row>
         <Col lg={8} className="admin_toppadding boxshadow">
           <div className="pos_buttons">
             <div>
@@ -241,4 +241,6 @@ export default function PosSystem() {
       </Row>
     </>
   );
-}
+};
+
+export default PosSystem;
