@@ -61,7 +61,7 @@ import OrderCancellation from "../component/user/Cancellation & return/OrderCanc
 import Returnpolicy from "../component/user/Return Policy/returnpolicy";
 import EPRcompliance from "../component/user/EPR/EPRcompliance";
 import Orders from "../component/admin/dashboardPage/orderPage/orders";
-import PosSystem from "../component/admin/dashboardPage/sideNavOption/posSystems/possystem";
+import PosSystem from "../component/admin/dashboardPage/sideNavOption/posSystems/possystem.js";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
