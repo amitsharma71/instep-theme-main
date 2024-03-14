@@ -137,7 +137,6 @@ const protects = {
         { path: "/salesamountreport", element: <Salesamount /> },
         { path: "/deliverystatusreport", element: <DeliveryStatus /> },
         { path: "/product", element: <ProductForm /> },
-        // { path: "/possystem", element: <PosSystemtype /> },
         { path: "/possystem", element: <Possystemtype /> },
         { path: "/slider", element: <Sliderpost /> },
         { path: "/customerdetail", element: <Customer /> },
