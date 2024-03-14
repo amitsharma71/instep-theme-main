@@ -23,7 +23,8 @@ import Allpagination from "../../../Pagination/pagination";
 import { CiEdit } from "react-icons/ci";
 import { LuClipboardEdit } from "react-icons/lu";
 
-function Allproducts(params) {
+const Allproducts = (params) => {
+  
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -316,5 +317,5 @@ function Allproducts(params) {
       </div>
     </>
   );
-}
+};
 export default Allproducts;
