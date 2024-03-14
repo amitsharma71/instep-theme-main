@@ -22,7 +22,6 @@ import ProductForm from "../component/admin/addProductDetails/addProductFrom";
 import Usernavbar from "../component/user/UserHeader/usernavbar/usernavbar";
 import SignIn from "../component/user/signin/sign";
 import Home from "../component/user/UserHeader/home/homepage";
-import Admindashboard from "../component/admin/dashboardPage/sideNavOption/Dashboard";
 import Subcategory from "../component/user/filterbyCategory/subcategory";
 import Searchproduct from "../component/SearchProducts/searchProduct";
 import AddToCartProduct from "../component/user/AddCartprouct/addtocart";
@@ -60,8 +59,9 @@ import Discount from "../component/user/UserHeader/sliderPages/discount";
 import OrderCancellation from "../component/user/Cancellation & return/OrderCancellation";
 import Returnpolicy from "../component/user/Return Policy/returnpolicy";
 import EPRcompliance from "../component/user/EPR/EPRcompliance";
-import Orders from "../component/admin/dashboardPage/orderPage/orders";
+import Orders from "../component/admin/dashboardPage/orderPage/orders.js";
 import PosSystemtype from "../component/admin/dashboardPage/sideNavOption/posSystems/systempos.js";
+import Admindashboard from "../component/admin/dashboardPage/sideNavOption/dashboardAdmin/dashboardpage.js";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
