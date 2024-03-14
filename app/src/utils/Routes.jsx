@@ -61,7 +61,7 @@ import Returnpolicy from "../component/user/Return Policy/returnpolicy";
 import EPRcompliance from "../component/user/EPR/EPRcompliance";
 import Orders from "../component/admin/dashboardPage/orderPage/orders.js";
 import Admindashboard from "../component/admin/dashboardPage/sideNavOption/dashboardAdmin/dashboardpage.js";
-import Possystemtype from "../component/admin/dashboardPage/sideNavOption/possystems/Systempos.js";
+import Possystemtypes from "../component/admin/dashboardPage/sideNavOption/possystems/Systempos.js";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -137,8 +137,7 @@ const protects = {
         { path: "/salesamountreport", element: <Salesamount /> },
         { path: "/deliverystatusreport", element: <DeliveryStatus /> },
         { path: "/product", element: <ProductForm /> },
-        // { path: "/possystem", element: <PosSystemtype /> },
-        { path: "/possystem", element: <Possystemtype /> },
+        { path: "/possystem", element: <Possystemtypes /> },
         { path: "/slider", element: <Sliderpost /> },
         { path: "/customerdetail", element: <Customer /> },
         { path: "/orders", element: <Orders /> },
