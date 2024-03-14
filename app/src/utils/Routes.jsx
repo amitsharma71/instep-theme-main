@@ -1,6 +1,6 @@
 import { getToken, getUserId } from "./auth";
 import AdminLayout from "./AdminLayout";
-import Allproducts from "../component/admin/dashboardPage/sideNavOption/Products/Allproducts";
+import Allproducts from "../component/admin/dashboardPage/sideNavOption/Products/Allproducts.js";
 import StockFile from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstock";
 import Alllocation from "../component/admin/dashboardPage/sideNavOption/Stocks/Alllocations";
 import Subscribeuser from "../component/admin/dashboardPage/sideNavOption/Newsletter/Subscriber";
