@@ -18,7 +18,7 @@ const Possystemtype = () => {
                 Categories
               </Button>
               <Button className=" pos_brabutton" variant="secondary">
-                Brands
+                Brands for ceck
               </Button>
             </div>
             <div>
