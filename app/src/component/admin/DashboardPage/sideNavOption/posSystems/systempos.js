@@ -7,7 +7,7 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
-const PosSystem = () => {
+const PosSystemtype = () => {
   return (
     <>
       <Row>
@@ -243,4 +243,4 @@ const PosSystem = () => {
   );
 };
 
-export default PosSystem;
+export default PosSystemtype;
