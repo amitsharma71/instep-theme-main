@@ -19,7 +19,6 @@ import Layout from "./Layout";
 import CustomerLayout from "./CustomerLayout";
 import DeliveryStatus from "../component/admin/dashboardPage/sideNavOption/Reports/Deliverystatusreport";
 import ProductForm from "../component/admin/addProductDetails/addProductFrom";
-import PosSystem from "../component/admin/dashboardPage/sideNavOption/possystem";
 import Usernavbar from "../component/user/UserHeader/usernavbar/usernavbar";
 import SignIn from "../component/user/signin/sign";
 import Home from "../component/user/UserHeader/home/homepage";
@@ -62,6 +61,7 @@ import OrderCancellation from "../component/user/Cancellation & return/OrderCanc
 import Returnpolicy from "../component/user/Return Policy/returnpolicy";
 import EPRcompliance from "../component/user/EPR/EPRcompliance";
 import Orders from "../component/admin/dashboardPage/orderPage/orders";
+import PosSystem from "../component/admin/dashboardPage/sideNavOption/posSystems/possystem";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
