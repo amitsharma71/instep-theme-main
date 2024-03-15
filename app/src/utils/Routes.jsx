@@ -56,7 +56,7 @@ import EPRcompliance from "../component/user/EPR/EPRcompliance";
 import Admindashboard from "../component/admin/dashboardPage/sideNavOption/dashboardAdmin/dashboardpage.js";
 import Possystemtype from "../component/admin/dashboardPage/sideNavOption/posSystems/Systempos.js";
 import Allproductss from "../component/admin/dashboardPage/sideNavOption/Products/Allproducts.js";
-import Orders from "../component/admin/dashboardPage/orderPage/orders.js";
+import Orders from "../component/admin/dashboardPage/orderPage/Orders.js";
 import Alllocations from "../component/admin/dashboardPage/sideNavOption/Stocks/Alllocations";
 import Bulkemail from "../component/admin/dashboardPage/sideNavOption/Newsletter/Bulkemailtype.js";
 import StockFiles from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstocks.js";
