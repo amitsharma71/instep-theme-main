@@ -1,7 +1,6 @@
 import { getToken, getUserId } from "./auth";
 import AdminLayout from "./AdminLayout";
 import StockFile from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstock";
-import Alllocation from "../component/admin/dashboardPage/sideNavOption/Stocks/Alllocations";
 import Subscribeuser from "../component/admin/dashboardPage/sideNavOption/Newsletter/Subscriber";
 import Allcategories from "../component/admin/dashboardPage/sideNavOption/Products/Allcategories";
 import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrands";
@@ -62,6 +61,7 @@ import Admindashboard from "../component/admin/dashboardPage/sideNavOption/dashb
 import Possystemtype from "../component/admin/dashboardPage/sideNavOption/posSystems/Systempos.js";
 import Allproductss from "../component/admin/dashboardPage/sideNavOption/Products/Allproducts.js";
 import Orders from "../component/admin/dashboardPage/orderPage/orders.js";
+import Alllocations from "../component/admin/dashboardPage/sideNavOption/Stocks/Alllocations";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -121,7 +121,7 @@ const protects = {
         { path: "/", element: <Admindashboard /> },
         { path: "/allproduct", element: <Allproductss /> },
         { path: "/addstock", element: <StockFile /> },
-        { path: "/allloation", element: <Alllocation /> },
+        { path: "/allloation", element: <Alllocations /> },
         { path: "/subscriber", element: <Subscribeuser /> },
         { path: "/allcategories", element: <Allcategories /> },
         { path: "/allsubcategory", element: <Allsubcategory /> },
