@@ -1,6 +1,5 @@
 import { getToken, getUserId } from "./auth";
 import AdminLayout from "./AdminLayout";
-import StockFile from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstock";
 import Subscribeuser from "../component/admin/dashboardPage/sideNavOption/Newsletter/Subscriber";
 import Allcategories from "../component/admin/dashboardPage/sideNavOption/Products/Allcategories";
 import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrands";
@@ -62,6 +61,7 @@ import Allproductss from "../component/admin/dashboardPage/sideNavOption/Product
 import Orders from "../component/admin/dashboardPage/orderPage/orders.js";
 import Alllocations from "../component/admin/dashboardPage/sideNavOption/Stocks/Alllocations";
 import Bulkemail from "../component/admin/dashboardPage/sideNavOption/Newsletter/Bulkemailtype.js";
+import StockFiles from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstocks.js";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -120,7 +120,7 @@ const protects = {
       children: [
         { path: "/", element: <Admindashboard /> },
         { path: "/allproduct", element: <Allproductss /> },
-        { path: "/addstock", element: <StockFile /> },
+        { path: "/addstock", element: <StockFiles /> },
         { path: "/allloation", element: <Alllocations /> },
         { path: "/subscriber", element: <Subscribeuser /> },
         { path: "/allcategories", element: <Allcategories /> },

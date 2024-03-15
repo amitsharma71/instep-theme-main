@@ -3,7 +3,7 @@ import { Form, Field } from "react-final-form";
 import { RiMapPinRangeFill } from "react-icons/ri";
 import { FiSave } from "react-icons/fi";
 
-const StockFile = () => {
+const StockFiles = () => {
   const handleSubmit = (values) => {
     console.log(values, "values");
   };
@@ -107,4 +107,4 @@ const StockFile = () => {
     </>
   );
 };
-export default StockFile;
+export default StockFiles;
