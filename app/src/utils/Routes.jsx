@@ -1,6 +1,5 @@
 import { getToken, getUserId } from "./auth";
 import AdminLayout from "./AdminLayout";
-import Allcategories from "../component/admin/dashboardPage/sideNavOption/Products/Allcategories";
 import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrands";
 // import Allunit from "../component/admin/dashboardPage/sideNavOption/Products/Allunit";
 // import Alltaxes from "../component/admin/dashboardPage/sideNavOption/Products/Alltaxes";
@@ -62,6 +61,7 @@ import Alllocations from "../component/admin/dashboardPage/sideNavOption/Stocks/
 import Bulkemail from "../component/admin/dashboardPage/sideNavOption/Newsletter/Bulkemailtype.js";
 import StockFiles from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstocks.js";
 import Subscribeuser from "../component/admin/dashboardPage/sideNavOption/Newsletter/Subscribers.js";
+import Allcategories from "../component/admin/dashboardPage/sideNavOption/Products/Allcategory.js";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
