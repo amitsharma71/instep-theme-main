@@ -24,7 +24,7 @@ import Profile from "../component/user/profile/Profile";
 import AllProductDetail from "../component/user/UserHeader/allProduct/allProductDetail";
 import ProductDetails from "../component/user/Products/productDetails";
 import Aboutus from "../component/user/aboutUs/aboutus";
-import Allsubcategory from "../component/admin/dashboardPage/sideNavOption/Products/Allsubcategory";
+
 import Delieverydetail from "../component/user/placeOrder/delieverydetail";
 import Payment from "../component/user/paymentsdetail/payment";
 import Shipping from "../component/user/shippingDetail/shipping";
@@ -62,6 +62,8 @@ import Bulkemail from "../component/admin/dashboardPage/sideNavOption/Newsletter
 import StockFiles from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstocks.js";
 import Subscribeuser from "../component/admin/dashboardPage/sideNavOption/Newsletter/Subscribers.js";
 import Allcategories from "../component/admin/dashboardPage/sideNavOption/Products/Allcategory.js";
+import Allsubcategorys from "../component/admin/dashboardPage/sideNavOption/Products/Allsubcategory";
+
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -124,7 +126,7 @@ const protects = {
         { path: "/allloation", element: <Alllocations /> },
         { path: "/subscriber", element: <Subscribeuser /> },
         { path: "/allcategories", element: <Allcategories /> },
-        { path: "/allsubcategory", element: <Allsubcategory /> },
+        { path: "/allsubcategory", element: <Allsubcategorys /> },
         { path: "/allsubtypecategory", element: <Alltypesubcategory /> },
         { path: "/allbrands", element: <Allbrands /> },
         // { path: "/allunit", element: <Allunit /> },
