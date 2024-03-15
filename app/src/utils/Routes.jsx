@@ -1,6 +1,5 @@
 import { getToken, getUserId } from "./auth";
 import AdminLayout from "./AdminLayout";
-import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrand.js";
 // import Allunit from "../component/admin/dashboardPage/sideNavOption/Products/Allunit";
 // import Alltaxes from "../component/admin/dashboardPage/sideNavOption/Products/Alltaxes";
 import Productsale from "../component/admin/dashboardPage/sideNavOption/Reports/Productsale";
@@ -24,7 +23,6 @@ import Profile from "../component/user/profile/Profile";
 import AllProductDetail from "../component/user/UserHeader/allProduct/allProductDetail";
 import ProductDetails from "../component/user/Products/productDetails";
 import Aboutus from "../component/user/aboutUs/aboutus";
-
 import Delieverydetail from "../component/user/placeOrder/delieverydetail";
 import Payment from "../component/user/paymentsdetail/payment";
 import Shipping from "../component/user/shippingDetail/shipping";
@@ -63,6 +61,7 @@ import StockFiles from "../component/admin/dashboardPage/sideNavOption/Stocks/Ad
 import Subscribeuser from "../component/admin/dashboardPage/sideNavOption/Newsletter/Subscribers.js";
 import Allcategories from "../component/admin/dashboardPage/sideNavOption/Products/Allcategory.js";
 import Allsubcategorys from "../component/admin/dashboardPage/sideNavOption/Products/Allsubcategory";
+import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrand.js";
 
 
 const role = getUserId() ? getUserId()?.userRole : null;
