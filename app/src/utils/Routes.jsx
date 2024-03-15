@@ -1,6 +1,5 @@
 import { getToken, getUserId } from "./auth";
 import AdminLayout from "./AdminLayout";
-import Allproducts from "../component/admin/dashboardPage/sideNavOption/Products/Allproducts";
 import StockFile from "../component/admin/dashboardPage/sideNavOption/Stocks/Addstock";
 import Alllocation from "../component/admin/dashboardPage/sideNavOption/Stocks/Alllocations";
 import Subscribeuser from "../component/admin/dashboardPage/sideNavOption/Newsletter/Subscriber";
@@ -62,6 +61,7 @@ import EPRcompliance from "../component/user/EPR/EPRcompliance";
 import Orders from "../component/admin/dashboardPage/orderPage/orders.js";
 import Admindashboard from "../component/admin/dashboardPage/sideNavOption/dashboardAdmin/dashboardpage.js";
 import Possystemtype from "../component/admin/dashboardPage/sideNavOption/posSystems/Systempos.js";
+import Allproductss from "../component/admin/dashboardPage/sideNavOption/Products/Allproducts.js";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -119,7 +119,7 @@ const protects = {
       element: isLoggedIn ? <AdminLayout /> : <Navigate to="/" />,
       children: [
         { path: "/", element: <Admindashboard /> },
-        { path: "/allproduct", element: <Allproducts /> },
+        { path: "/allproduct", element: <Allproductss /> },
         { path: "/addstock", element: <StockFile /> },
         { path: "/allloation", element: <Alllocation /> },
         { path: "/subscriber", element: <Subscribeuser /> },
