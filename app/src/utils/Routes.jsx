@@ -1,6 +1,6 @@
 import { getToken, getUserId } from "./auth";
 import AdminLayout from "./AdminLayout";
-import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrands";
+import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrand.js";
 // import Allunit from "../component/admin/dashboardPage/sideNavOption/Products/Allunit";
 // import Alltaxes from "../component/admin/dashboardPage/sideNavOption/Products/Alltaxes";
 import Productsale from "../component/admin/dashboardPage/sideNavOption/Reports/Productsale";
