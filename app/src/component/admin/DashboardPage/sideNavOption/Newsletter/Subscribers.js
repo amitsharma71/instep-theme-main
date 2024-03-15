@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { RiDeleteBin5Fill, RiDeleteBin5Line } from "react-icons/ri";
 import Delete from "../../../deleteModel/delete";
 
-function Subscribeuser() {
+const Subscribeuser = () => {
   const [show, setShow] = useState(false);
 
   const [categoryid, setCategoryid] = useState(null);
@@ -238,6 +238,6 @@ function Subscribeuser() {
       </div>
     </>
   );
-}
+};
 
 export default Subscribeuser;
