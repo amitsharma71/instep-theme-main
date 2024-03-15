@@ -6,7 +6,6 @@ import Allcategories from "../component/admin/dashboardPage/sideNavOption/Produc
 import Allbrands from "../component/admin/dashboardPage/sideNavOption/Products/Allbrands";
 // import Allunit from "../component/admin/dashboardPage/sideNavOption/Products/Allunit";
 // import Alltaxes from "../component/admin/dashboardPage/sideNavOption/Products/Alltaxes";
-import Bulkemails from "../component/admin/dashboardPage/sideNavOption/Newsletter/Bulkemail";
 import Productsale from "../component/admin/dashboardPage/sideNavOption/Reports/Productsale";
 import Orderreport from "../component/admin/dashboardPage/sideNavOption/Reports/Orderreport";
 import Categorywise from "../component/admin/dashboardPage/sideNavOption/Reports/Categorieswisesales";
@@ -62,6 +61,7 @@ import Possystemtype from "../component/admin/dashboardPage/sideNavOption/posSys
 import Allproductss from "../component/admin/dashboardPage/sideNavOption/Products/Allproducts.js";
 import Orders from "../component/admin/dashboardPage/orderPage/orders.js";
 import Alllocations from "../component/admin/dashboardPage/sideNavOption/Stocks/Alllocations";
+import Bulkemail from "../component/admin/dashboardPage/sideNavOption/Newsletter/Bulkemailtype.js";
 
 const role = getUserId() ? getUserId()?.userRole : null;
 // console.log(role, "aaasdfgfds");
@@ -132,7 +132,7 @@ const protects = {
         { path: "/orderreport", element: <Orderreport /> },
         { path: "/trackorder", element: <OrderReport /> },
         { path: "/categorywise", element: <Categorywise /> },
-        { path: "/bulkemails", element: <Bulkemails /> },
+        { path: "/bulkemails", element: <Bulkemail /> },
         { path: "/productsale", element: <Productsale /> },
         { path: "/salesamountreport", element: <Salesamount /> },
         { path: "/deliverystatusreport", element: <DeliveryStatus /> },
