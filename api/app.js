@@ -46,7 +46,11 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(express.json());
 server.use("/profile", express.static("profile"));
-//register api
+//register api\
+
+server.get("/", function (req, res) {
+  res.send("APi Working");
+});
 
 server.get("/", function (req, res) {
   res.send("APi Working");
