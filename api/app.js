@@ -52,6 +52,10 @@ server.get("/", function (req, res) {
   res.send("APi Working");
 });
 
+server.get("/", function (req, res) {
+  res.send("APi Working");
+});
+
 server.use("/api", registerRoutes);
 server.use("/api", loginRoutes);
 server.use("/api", postProductRouters);

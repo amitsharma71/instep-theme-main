@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
 import { CiEdit } from "react-icons/ci";
 
-const Allsubcategory = () => {
+const Allsubcategorys = () => {
   const dispatch = useDispatch();
 
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
@@ -366,4 +366,4 @@ const Allsubcategory = () => {
   );
 };
 
-export default Allsubcategory;
+export default Allsubcategorys;
