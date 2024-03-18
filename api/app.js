@@ -25,9 +25,9 @@ const typesubcategory = require("./router/typeSubcat");
 const razorpay = require("./router/razorpay");
 const address = require("./router/addressroute");
 const profile = require("./router/useres/profilesRoute");
-const wishList = require("./router/wishlistRouter")
-const headerforuser = require("./router/adminRouter")
-const sliderRoutes = require("./router/sliderRouter")
+const wishList = require("./router/wishlistRouter");
+const headerforuser = require("./router/adminRouter");
+const sliderRoutes = require("./router/sliderRouter");
 
 dotenv.config();
 
@@ -45,8 +45,12 @@ server.use(cors());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(express.json());
-server.use('/profile', express.static('profile'));
+server.use("/profile", express.static("profile"));
 //register api
+
+server.get("/", function (req, res) {
+  res.send("APi Working");
+});
 
 server.use("/api", registerRoutes);
 server.use("/api", loginRoutes);
@@ -57,13 +61,12 @@ server.use("/uploads", express.static("uploads"));
 server.use("/categoryimg", express.static("categoryimg"));
 server.use("/logo", express.static("logo"));
 
-
 server.use("/api", addnewcategory);
 server.use("/api", addnewSubcategory);
 server.use("/api", addnewbrand);
 // addto cart api
 server.use("/api", addtocart);
-server.use("/api", typesubcategory)
+server.use("/api", typesubcategory);
 // /razerpay
 server.use("/api", razorpay);
 // address
@@ -99,7 +102,6 @@ server.post("/api/Search", async (req, res) => {
     res.status(500).json({ error: "An error occurred while searching." });
   }
 });
-
 
 //silder .push img
 
