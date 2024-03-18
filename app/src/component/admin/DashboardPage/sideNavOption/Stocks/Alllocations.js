@@ -27,7 +27,7 @@ import Allpagination from "../../../Pagination/pagination";
 import { searchAction } from "../../../../../Redux/action/searchProductAction";
 import { LuClipboardEdit } from "react-icons/lu";
 
-function Alllocation(params) {
+const Alllocations = (params) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
@@ -232,10 +232,11 @@ function Alllocation(params) {
                                     {product?.stock}
                                   </div>
                                 ) : (
-                                  <div className="instock">{product?.stock}</div>
+                                  <div className="instock">
+                                    {product?.stock}
+                                  </div>
                                 )}
                               </td>
-                              
                             </tr>
                           </>
                         );
@@ -273,5 +274,5 @@ function Alllocation(params) {
       </div>
     </>
   );
-}
-export default Alllocation;
+};
+export default Alllocations;
