@@ -15,6 +15,7 @@
     "bootstrap-switch-button-react": "^1.2.0",
     "final-form": "^4.20.9",
     "jwt-decode": "^3.1.2",
+    "node-modules": "^1.0.1",
     "rc-slider": "^10.5.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
@@ -47,7 +48,7 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ] 
+    ]
   },
   "browserslist": {
     "production": [
